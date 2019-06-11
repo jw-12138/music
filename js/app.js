@@ -51,11 +51,12 @@ $(function() {
                 clearTimeout(updateTimer);
             }
             audio.onplay = function(){
-                console.log('play')
                 $('body').addClass('playing');
                 globalAudioPaused = false;
                 clearTimeout(updateTimer);
-                _this.updateTime();
+                setTimeout(function(){
+                    _this.updateTime();
+                }, 200)
             }
             let playPromise = audio.play();
             if (playPromise !== undefined) {
@@ -153,7 +154,9 @@ $(function() {
                 }
                 if(!globalAudioPaused){
                     clearTimeout(updateTimer);
-                    _this.updateTime();
+                    setTimeout(function(){
+                        _this.updateTime();
+                    }, 200)
                 }else{
                     window.clearTimeout(updateTimer);
                 }
@@ -246,7 +249,9 @@ $(function() {
                 _this.updateLyric();
             }
             clearTimeout(updateTimer);
-            _this.updateTime();
+            setTimeout(function(){
+                _this.updateTime();
+            }, 200)
         }
         this.play = function(e) {
             let _this = e.data.this;
@@ -255,14 +260,9 @@ $(function() {
             if (!globalAudioPaused) {
                 $('body').removeClass('playing');
                 audio.pause();
-                clearTimeout(updateTimer);
-                globalAudioPaused = true;
             } else {
                 $('body').addClass('playing');
                 audio.play();
-                globalAudioPaused = false;
-                clearTimeout(updateTimer);
-                _this.updateTime();
             }
         }
         this.nextSong = function() {
