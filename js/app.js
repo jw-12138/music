@@ -17,9 +17,6 @@ $(function() {
         let nolyric = false;
         let lyricContent = '';
         let screeenFits = true;
-        setInterval(function(){
-            console.log(updateTimer)
-        }, 3000)
 
         this.init = function() {
             let _this = this;
@@ -151,7 +148,7 @@ $(function() {
                 if(!nolyric && screeenFits){
                     _this.updateLyric();
                 }
-            },150)
+            },200)
         }
         this.updateLyric = function(){
             let keys = Object.keys(lyricContent);
@@ -244,7 +241,7 @@ $(function() {
             updateTimer = null;
             let vs = setTimeout(function(){
                 _this.updateTime();
-            },50);
+            },200);
         }
         this.play = function(e) {
             let _this = e.data.this;
@@ -262,7 +259,7 @@ $(function() {
                 globalAudioPaused = false;
                 let vs = setTimeout(function(){
                     _this.updateTime();
-                },50);
+                },200);
             }
         }
         this.nextSong = function() {
