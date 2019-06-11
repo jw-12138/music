@@ -17,6 +17,9 @@ $(function() {
         let nolyric = false;
         let lyricContent = '';
         let screeenFits = true;
+        setInterval(function(){
+            console.log(updateTimer)
+        }, 3000)
 
         this.init = function() {
             let _this = this;
@@ -41,6 +44,7 @@ $(function() {
                 audio.load();
                 globalAudioPaused = true;
                 clearInterval(updateTimer);
+                updateTimer = null;
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 audio.src = data.path;
@@ -182,6 +186,7 @@ $(function() {
         this.start = function(e) {
             e.stopPropagation();
             clearInterval(updateTimer);
+            updateTimer = null;
             $('.process_bar').removeClass('t');
             p = $('.process_bar').width();
             $('.player').addClass('on');
@@ -216,7 +221,6 @@ $(function() {
             }
         }
         this.end = function(e) {
-            clearInterval(updateTimer);
             _this = e.data.this;
             e.stopPropagation();
             $('.process_bar').addClass('t');
@@ -236,13 +240,18 @@ $(function() {
             if(screeenFits){
                 _this.updateLyric();
             }
-            _this.updateTime();
+            clearInterval(updateTimer);
+            updateTimer = null;
+            let vs = setTimeout(function(){
+                _this.updateTime();
+            },50);
         }
         this.play = function(e) {
             let _this = e.data.this;
             $('body').addClass('active');
             audio.volume = 1;
             clearInterval(updateTimer);
+            updateTimer = null;
             if (!globalAudioPaused) {
                 $('body').removeClass('playing');
                 audio.pause();
@@ -251,7 +260,9 @@ $(function() {
                 $('body').addClass('playing');
                 audio.play();
                 globalAudioPaused = false;
-                _this.updateTime();
+                let vs = setTimeout(function(){
+                    _this.updateTime();
+                },50);
             }
         }
         this.nextSong = function() {
