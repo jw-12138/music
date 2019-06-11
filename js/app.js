@@ -48,11 +48,14 @@ $(function() {
             audio.onpause = function(){
                 $('body').removeClass('playing');
                 globalAudioPaused = true;
+                clearTimeout(updateTimer);
             }
             audio.onplay = function(){
                 console.log('play')
                 $('body').addClass('playing');
                 globalAudioPaused = false;
+                clearTimeout(updateTimer);
+                _this.updateTime();
             }
             let playPromise = audio.play();
             if (playPromise !== undefined) {
@@ -125,10 +128,10 @@ $(function() {
             let router = Router(routes);
 
             router.init('/');
-            _this.updateTime();
         }
         this.updateTime = function() {
             let _this = this;
+            console.log('111')
             updateTimer = setTimeout(function() {
                 let t = audio.currentTime;
                 let _p = t / dur * 100;
@@ -149,6 +152,7 @@ $(function() {
                     _this.updateLyric();
                 }
                 if(!globalAudioPaused){
+                    clearTimeout(updateTimer);
                     _this.updateTime();
                 }else{
                     window.clearTimeout(updateTimer);
@@ -257,6 +261,7 @@ $(function() {
                 $('body').addClass('playing');
                 audio.play();
                 globalAudioPaused = false;
+                clearTimeout(updateTimer);
                 _this.updateTime();
             }
         }
