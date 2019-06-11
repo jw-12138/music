@@ -40,8 +40,7 @@ $(function() {
                 audio.removeAttribute('src');
                 audio.load();
                 globalAudioPaused = true;
-                clearInterval(updateTimer);
-                updateTimer = null;
+                clearTimeout(updateTimer);
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 audio.src = data.path;
@@ -129,7 +128,7 @@ $(function() {
         }
         this.updateTime = function() {
             let _this = this;
-            updateTimer = setInterval(function() {
+            updateTimer = setTimeout(function() {
                 let t = audio.currentTime;
                 let _p = t / dur * 100;
                 $('.process_bar').css({ 'width': _p + '%' });
@@ -147,6 +146,11 @@ $(function() {
                 $('.text_process .now_time').text(_durStr);
                 if(!nolyric && screeenFits){
                     _this.updateLyric();
+                }
+                if(!globalAudioPaused){
+                    _this.updateTime();
+                }else{
+                    window.clearTimeout(updateTimer);
                 }
             },200)
         }
@@ -182,8 +186,7 @@ $(function() {
         }
         this.start = function(e) {
             e.stopPropagation();
-            clearInterval(updateTimer);
-            updateTimer = null;
+            clearTimeout(updateTimer);
             $('.process_bar').removeClass('t');
             p = $('.process_bar').width();
             $('.player').addClass('on');
@@ -237,8 +240,7 @@ $(function() {
             if(screeenFits){
                 _this.updateLyric();
             }
-            clearInterval(updateTimer);
-            updateTimer = null;
+            clearTimeout(updateTimer);
             let vs = setTimeout(function(){
                 _this.updateTime();
             },200);
@@ -247,8 +249,7 @@ $(function() {
             let _this = e.data.this;
             $('body').addClass('active');
             audio.volume = 1;
-            clearInterval(updateTimer);
-            updateTimer = null;
+            clearTimeout(updateTimer);
             if (!globalAudioPaused) {
                 $('body').removeClass('playing');
                 audio.pause();
