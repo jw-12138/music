@@ -49,13 +49,11 @@ $(function() {
             audio.onpause = function(){
                 $('body').removeClass('playing');
                 globalAudioPaused = true;
-                clearInterval(updateTimer);
             }
             audio.onplay = function(){
                 console.log('play')
                 $('body').addClass('playing');
                 globalAudioPaused = false;
-                _this.updateTime();
             }
             let playPromise = audio.play();
             if (playPromise !== undefined) {
