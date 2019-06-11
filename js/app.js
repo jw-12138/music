@@ -248,10 +248,10 @@ $(function() {
             let _this = e.data.this;
             $('body').addClass('active');
             audio.volume = 1;
-            clearTimeout(updateTimer);
             if (!globalAudioPaused) {
                 $('body').removeClass('playing');
                 audio.pause();
+                clearTimeout(updateTimer);
                 globalAudioPaused = true;
             } else {
                 $('body').addClass('playing');
