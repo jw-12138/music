@@ -125,6 +125,7 @@ $(function() {
             let router = Router(routes);
 
             router.init('/');
+            _this.updateTime();
         }
         this.updateTime = function() {
             let _this = this;
@@ -241,9 +242,7 @@ $(function() {
                 _this.updateLyric();
             }
             clearTimeout(updateTimer);
-            let vs = setTimeout(function(){
-                _this.updateTime();
-            },200);
+            _this.updateTime();
         }
         this.play = function(e) {
             let _this = e.data.this;
@@ -258,9 +257,7 @@ $(function() {
                 $('body').addClass('playing');
                 audio.play();
                 globalAudioPaused = false;
-                let vs = setTimeout(function(){
-                    _this.updateTime();
-                },200);
+                _this.updateTime();
             }
         }
         this.nextSong = function() {
