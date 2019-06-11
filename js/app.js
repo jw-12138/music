@@ -242,6 +242,7 @@ $(function() {
             let _this = e.data.this;
             $('body').addClass('active');
             audio.volume = 1;
+            clearInterval(updateTimer);
             if (!globalAudioPaused) {
                 $('body').removeClass('playing');
                 audio.pause();
