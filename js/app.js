@@ -194,6 +194,7 @@ $(function() {
         }
         this.start = function(e) {
             e.stopPropagation();
+            clearTimeout(updateTimer);
             globalAudioPaused = true;
             $('.process_bar').removeClass('t');
             p = $('.process_bar').width();
@@ -249,7 +250,6 @@ $(function() {
                 _this.updateLyric();
             }
             globalAudioPaused = false;
-            clearTimeout(updateTimer);
             setTimeout(function(){
                 _this.updateTime();
             }, 200)
