@@ -1,6 +1,6 @@
 $(function() {
     let app = function() {
-        let x, p, updateTimer;
+        let x, p;
         let globalAudioPaused = true;
         let data = {
             "name": "Leave - Borgeous / Jordyn Jnoes (Jacky.Q Remix)",
@@ -40,7 +40,6 @@ $(function() {
                 audio.removeAttribute('src');
                 audio.load();
                 globalAudioPaused = true;
-                clearTimeout(updateTimer);
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 audio.src = data.path;
@@ -48,15 +47,10 @@ $(function() {
             audio.onpause = function(){
                 $('body').removeClass('playing');
                 globalAudioPaused = true;
-                clearTimeout(updateTimer);
             }
             audio.onplay = function(){
                 $('body').addClass('playing');
                 globalAudioPaused = false;
-                clearTimeout(updateTimer);
-                setTimeout(function(){
-                    _this.updateTime();
-                }, 200)
             }
             let playPromise = audio.play();
             if (playPromise !== undefined) {
@@ -64,8 +58,10 @@ $(function() {
                     audio.pause();
                     audio.currentTime = 0;
                     audio.volume = 1;
+                    console.log('played')
                 }).catch(function(error) {
                     console.log(error)
+                    console.log('err played')
                 });
             }
             $.ajax({
@@ -127,40 +123,33 @@ $(function() {
             }
 
             let router = Router(routes);
-
             router.init('/');
+            _this.updateTime();
         }
         this.updateTime = function() {
             let _this = this;
-            console.log('111')
-            updateTimer = setTimeout(function() {
-                let t = audio.currentTime;
-                let _p = t / dur * 100;
-                $('.process_bar').css({ 'width': _p + '%' });
-                let _min = Math.floor(audio.currentTime / 60);
-                let _sec = audio.currentTime % 60;
-                _sec = _sec.toFixed(0);
-                if (_sec < 10) _sec = '0' + _sec;
-                if (_sec > 59) { _sec = '00';
-                    _min++; }
-                let _durStr = _min + ':' + _sec;
-                if (audio.currentTime === 0) {
-                    $('.text_process .now_time').text('0:00');
-                    return false;
-                }
-                $('.text_process .now_time').text(_durStr);
-                if(!nolyric && screeenFits){
-                    _this.updateLyric();
-                }
+            setInterval(function() {
                 if(!globalAudioPaused){
-                    clearTimeout(updateTimer);
-                    setTimeout(function(){
-                        _this.updateTime();
-                    }, 200)
-                }else{
-                    window.clearTimeout(updateTimer);
+                    let t = audio.currentTime;
+                    let _p = t / dur * 100;
+                    $('.process_bar').css({ 'width': _p + '%' });
+                    let _min = Math.floor(audio.currentTime / 60);
+                    let _sec = audio.currentTime % 60;
+                    _sec = _sec.toFixed(0);
+                    if (_sec < 10) _sec = '0' + _sec;
+                    if (_sec > 59) { _sec = '00';
+                        _min++; }
+                    let _durStr = _min + ':' + _sec;
+                    if (audio.currentTime === 0) {
+                        $('.text_process .now_time').text('0:00');
+                        return false;
+                    }
+                    $('.text_process .now_time').text(_durStr);
+                    if(!nolyric && screeenFits){
+                        _this.updateLyric();
+                    }
                 }
-            },50)
+            },200)
         }
         this.updateLyric = function(){
             let keys = Object.keys(lyricContent);
@@ -194,7 +183,6 @@ $(function() {
         }
         this.start = function(e) {
             e.stopPropagation();
-            clearTimeout(updateTimer);
             globalAudioPaused = true;
             $('.process_bar').removeClass('t');
             p = $('.process_bar').width();
@@ -250,9 +238,6 @@ $(function() {
                 _this.updateLyric();
             }
             globalAudioPaused = false;
-            setTimeout(function(){
-                _this.updateTime();
-            }, 200)
         }
         this.play = function(e) {
             let _this = e.data.this;
