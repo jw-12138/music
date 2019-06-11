@@ -44,7 +44,6 @@ $(function() {
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 audio.src = data.path;
-                _this.updateTime();
             }
             audio.onpause = function(){
                 $('body').removeClass('playing');
@@ -217,6 +216,7 @@ $(function() {
             }
         }
         this.end = function(e) {
+            clearInterval(updateTimer);
             _this = e.data.this;
             e.stopPropagation();
             $('.process_bar').addClass('t');
@@ -247,7 +247,6 @@ $(function() {
                 $('body').removeClass('playing');
                 audio.pause();
                 globalAudioPaused = true;
-                clearInterval(updateTimer);
             } else {
                 $('body').addClass('playing');
                 audio.play();
