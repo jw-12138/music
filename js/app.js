@@ -160,7 +160,7 @@ $(function() {
                 }else{
                     window.clearTimeout(updateTimer);
                 }
-            },200)
+            },50)
         }
         this.updateLyric = function(){
             let keys = Object.keys(lyricContent);
