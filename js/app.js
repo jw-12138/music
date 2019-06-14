@@ -4,9 +4,9 @@ $(function() {
         let globalAudioPaused = true;
         let data = {
             "name": "Leave - Borgeous / Jordyn Jnoes (Jacky.Q Remix)",
-            "path": "src/addictionToYou/audio.mp3",
-            "lyric":"src/addictionToYou/lyric.json",
-            "duration": "232"
+            "path": "src/leave/audio.mp3",
+            "lyric":"src/leave/lyric.json",
+            "duration": "198"
         };
         let winW = $(window).width();
         let audio = $('.audio')[0];
@@ -26,13 +26,11 @@ $(function() {
             $(window).off('resize').on('resize', this.resize);
             this.resize();
             $('.text_process .all_time').text(durStr);
-            $('.ctrl-icon').off().on('click', {this:this}, this.play);
-            $('.playnpause').off().on('click', {this:this}, this.play);
+            $('.global_play_btn').off().on('click', {this:this}, this.play);
             audio.src = data.path;
             audio.volume = 0;
             console.log($(audio))
             audio.onended = function() {
-                console.log('ended')
                 $('body').removeClass('playing');
                 $('.text_process .now_time').text('0:00');
                 $('.process_bar').css({'width':'0%'});
@@ -58,10 +56,8 @@ $(function() {
                     audio.pause();
                     audio.currentTime = 0;
                     audio.volume = 1;
-                    console.log('played')
                 }).catch(function(error) {
                     console.log(error)
-                    console.log('err played')
                 });
             }
             $.ajax({
@@ -128,7 +124,7 @@ $(function() {
         }
         this.updateTime = function() {
             let _this = this;
-            setInterval(function() {
+            setTimeout(function() {
                 if(!globalAudioPaused){
                     let t = audio.currentTime;
                     let _p = t / dur * 100;
@@ -142,14 +138,14 @@ $(function() {
                     let _durStr = _min + ':' + _sec;
                     if (audio.currentTime === 0) {
                         $('.text_process .now_time').text('0:00');
-                        return false;
                     }
                     $('.text_process .now_time').text(_durStr);
                     if(!nolyric && screeenFits){
                         _this.updateLyric();
                     }
                 }
-            },200)
+                _this.updateTime();
+            },100)
         }
         this.updateLyric = function(){
             let keys = Object.keys(lyricContent);
@@ -224,7 +220,6 @@ $(function() {
             $('.player').removeClass('on');
             p = $('.process_bar').width();
             let percent = p / winW * 100;
-            $('.process_bar').css({ 'width': percent + '%' });
             let nowTime = dur * (p / winW);
             if (isNaN(nowTime)) {
                 return false;
@@ -237,17 +232,17 @@ $(function() {
             if(screeenFits){
                 _this.updateLyric();
             }
-            globalAudioPaused = false;
+            if(!audio.paused){
+                globalAudioPaused = false;
+            }
         }
         this.play = function(e) {
             let _this = e.data.this;
             $('body').addClass('active');
             audio.volume = 1;
             if (!globalAudioPaused) {
-                $('body').removeClass('playing');
                 audio.pause();
             } else {
-                $('body').addClass('playing');
                 audio.play();
             }
         }
