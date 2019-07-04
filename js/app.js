@@ -255,4 +255,5 @@ $(function() {
     }
     app = new app();
     app.init();
+    alert('On Building...');
 });
