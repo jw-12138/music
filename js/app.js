@@ -3,10 +3,10 @@ $(function() {
         let x, p;
         let globalAudioPaused = true;
         let data = {
-            "name": "Leave - Borgeous / Jordyn Jnoes (Jacky.Q Remix)",
-            "path": "src/leave/audio.mp3",
-            "lyric":"src/leave/lyric.json",
-            "duration": "198"
+            "name": "Addiction To You",
+            "path": "src/addictionToYou/audio.mp3",
+            "lyric":"src/addictionToYou/lyric.json",
+            "duration": "232"
         };
         let winW = $(window).width();
         let audio = $('.audio')[0];
