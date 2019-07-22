@@ -7,7 +7,7 @@
 - [x] ~~歌词播放~~
 - [ ] Songs made by me 列表
 - [ ] About me 页面
-- [ ] 图片优化
+- [x] 图片优化
 - [ ] 列表播放
 
 there is more...
