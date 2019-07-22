@@ -266,5 +266,7 @@ $(function() {
     }
     app = new app();
     app.init();
-    // alert('On Building...');
+    setTimeout(function () {
+        alert('On Building...')
+    }, 1000)
 });
