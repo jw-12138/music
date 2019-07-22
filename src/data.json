@@ -1,3 +1,10 @@
 [
-    
+    {
+        "id":20190309,
+        "name":"Addiction to You - OneCandy (Jacky.Q remix)",
+        "src":"src/addictionToYou/audio.mp3",
+        "lyric":"src/addictionToYou/lyric.json",
+        "duration":232,
+        "artwork":"src/addictionToYou/cover.jpg"
+    }
 ]

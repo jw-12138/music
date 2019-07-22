@@ -3,7 +3,7 @@ $(function() {
         let x, p;
         let globalAudioPaused = true;
         let data = {
-            "name": "Addiction To You",
+            "name": "对你上瘾 - OneCandy (Jacky.Q remix)",
             "path": "src/addictionToYou/audio.mp3",
             "lyric":"src/addictionToYou/lyric.json",
             "duration": "232"
@@ -27,9 +27,10 @@ $(function() {
             this.resize();
             $('.text_process .all_time').text(durStr);
             $('.global_play_btn').off().on('click', {this:this}, this.play);
+            $('.dismiss_queue').off().on('click',this.dismissQueue);
+            $('.queue_btn').off().on('click',this.showQueue);
             audio.src = data.path;
             audio.volume = 0;
-            console.log($(audio))
             audio.onended = function() {
                 $('body').removeClass('playing');
                 $('.text_process .now_time').text('0:00');
@@ -41,14 +42,17 @@ $(function() {
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 audio.src = data.path;
+                $('title').html('Jacky.Q');
             }
             audio.onpause = function(){
                 $('body').removeClass('playing');
                 globalAudioPaused = true;
+                $('title').html('Paused - ' + data.name);
             }
             audio.onplay = function(){
                 $('body').addClass('playing');
                 globalAudioPaused = false;
+                $('title').html(data.name);
             }
             let playPromise = audio.play();
             if (playPromise !== undefined) {
@@ -244,6 +248,7 @@ $(function() {
                 audio.pause();
             } else {
                 audio.play();
+                $('title').html(data.name);
             }
         }
         this.nextSong = function() {
@@ -252,8 +257,14 @@ $(function() {
         this.prevSong = function() {
 
         }
+        this.dismissQueue = function(){
+            $('body').removeClass('show_queue');
+        }
+        this.showQueue = function(){
+            $('body').addClass('show_queue');
+        }
     }
     app = new app();
     app.init();
-    alert('On Building...');
+    // alert('On Building...');
 });
