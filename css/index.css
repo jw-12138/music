@@ -96,6 +96,7 @@ body.playing .control .playnpause svg.play{display: none;}
     .player{padding:0 20px;}
 }
 @media screen and (max-width: 800px) {
+    .worklist li:hover .cover_block img{filter: brightness(1) grayscale(0);}
     .worklist{width:440px;}
     .worklist li{width:100%;}
     .worklist li .workname .song_title{transform: translateY(0px);}
