@@ -80,7 +80,7 @@ body.playing .control .playnpause svg.play{display: none;}
 .worklist li:last-child{margin-bottom:0;}
 .worklist li img{width:100%;border-radius: 10px;transition: filter .3s ease;}
 .worklist li .cover_block{position: relative;}
-.worklist li:hover .cover_block img{filter: brightness(.5) grayscale(1);}
+.worklist li:hover .cover_block img{filter: brightness(.5) grayscale(.5);}
 .worklist li .workname{padding:20px;line-height: 26px;overflow:hidden;color:#fff;position: absolute;bottom:0;left:0;opacity: 0;z-index: -99999;pointer-events: none;transition: opacity .3s ease,transform .3s ease;transform:translateY(-10px);}
 .worklist li .workname .song_title{font-weight: bold;font-size: 24px;transform: translateY(-10px);transition: transform .4s ease;margin-bottom: 20px;}
 .worklist li .workname .hashtag{background: rgba(255,255,255,.5);line-height: 1;padding:4px 10px;border-radius: 30px;color:#fff;}
