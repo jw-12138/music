@@ -40,8 +40,8 @@ header .nav{height:40px;display: flex;justify-content: center;align-items: cente
 .section_album{display: flex;position: relative;overflow:hidden;justify-content: center;flex-wrap: wrap;}
 .section_album .bg{position: absolute;width:100%;height:auto;z-index: 2;filter: blur(10px) brightness(0.5) saturate(200%);transform: scale(2);top:50%;margin-top:-40%;}
 .play_section{width:800px;position: relative;z-index: 3;padding:100px;}
-.play_section img{border-radius: 4px;transition: box-shadow .3s ease,transform .3s ease;}
-.play_section:hover img{box-shadow: 0 0 70px rgba(0,0,0,.3);transform: scale(1.05);}
+.play_section img{border-radius: 4px;transition: box-shadow .3s ease,transform .3s ease,filter .3s ease;}
+.play_section:hover img{box-shadow: 0 0 70px rgba(0,0,0,.3);transform: scale(1.05);filter: brightness(.9);}
 .play_section .ctrl-icon{position: absolute;z-index: 4;width:200px;height: 200px;top:50%;margin-top: -100px;left:50%;margin-left: -100px;opacity: 0;cursor: pointer;transition: opacity .3s ease;}
 body .play_section:hover .ctrl-icon.play{opacity: 1;}
 body.playing .play_section:hover .ctrl-icon.pause{opacity: 1;}
@@ -70,28 +70,45 @@ body.playing .control .playnpause svg.play{display: none;}
 .lyric ul li{opacity: 0;pointer-events: none;transition: top .2s ease,opacity .3s ease;text-align: center;position: absolute;width:100%;height:100px;top:10px;left:0;line-height: 100px;}
 .lyric ul li.ready{opacity: 0.3;top:20px;}
 .lyric ul li.on{opacity: 1;top:0;}
-.process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: rgba(255,255,255,.15);height: 100px;pointer-events: none;}
-.process_bar.t{transition: width .3s ease;}
+.process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: rgba(255,255,255,.15);height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;}
+.process_bar .handle{width:24px;height: 24px;position: absolute;top:50%;margin-top:-12px;right:0;}
+.process_bar.t{transition: width .1s ease;}
 .audio{position: absolute;top:-9999999px;width:1px;height:1px;opacity: 0;pointer-events: none;}
 .play_all{margin:30px auto;width:200px;background-color: #fff;border-radius: 50px;height:50px;font-size: 18px;color:#333;line-height: 50px;text-align: center;background:#fff;}
-.worklist{width:440px;margin:40px auto 0;}
-.worklist li{width:100%;padding:0 20px;margin-bottom:30px;}
+.worklist{width:440px;margin:40px auto 0;cursor: pointer;padding: 20px;}
+.worklist li{width:100%;margin-bottom:30px;}
 .worklist li:last-child{margin-bottom:0;}
-.worklist li img{width:100%;border-radius: 10px;}
-.worklist li .workname{padding:10px 0;line-height: 26px;overflow:hidden;color:#fff;text-align: center;}
+.worklist li img{width:100%;border-radius: 10px;transition: filter .3s ease;}
+.worklist li .cover_block{position: relative;}
+.worklist li:hover .cover_block img{filter: brightness(.5) grayscale(1);}
+.worklist li .workname{padding:20px;line-height: 26px;overflow:hidden;color:#fff;position: absolute;bottom:0;left:0;opacity: 0;z-index: -99999;pointer-events: none;transition: opacity .3s ease,transform .3s ease;transform:translateY(-10px);}
+.worklist li .workname .song_title{font-weight: bold;font-size: 24px;transform: translateY(-10px);transition: transform .4s ease;margin-bottom: 20px;}
+.worklist li .workname .hashtag{background: rgba(255,255,255,.5);line-height: 1;padding:4px 10px;border-radius: 30px;color:#fff;}
+.worklist li:hover .workname .song_title{transform: translateY(0px);}
+.worklist li:hover .workname {opacity: 1;z-index: 999;pointer-events: auto;transform: translateY(0px);}
 .worklist li .play_this{text-decoration: underline;cursor: pointer;transition: transform .3s ease;}
 .worklist li:nth-child(even){margin-right: 0;}
 .worklist li .release_date{padding:10px 0;line-height: 26px;overflow:hidden;color:#fff;text-align: center;}
 .queue_btn{background: #000;width:50px;height: 50px;position: fixed;bottom:120px;right:20px;border-radius: 10px;line-height: 50px;text-align: center;z-index: 9999999;box-shadow: 0 0 15px rgba(0,0,0,.3);cursor: pointer;}
+.aboutme_wrap{width:800px;padding:20px;}
 @media screen and (max-width: 1000px) {
     .lyric{display: none;}
     .player{padding:0 20px;}
 }
 @media screen and (max-width: 800px) {
+    .worklist{width:440px;}
+    .worklist li{width:100%;}
+    .worklist li .workname .song_title{transform: translateY(0px);}
+    .worklist li .workname{position: static;text-align: center;opacity: 1;z-index: 999;pointer-events: auto;transform: translateY(0px);}
+    .aboutme_wrap{width:100%;}
     .play_section{width:100%;height:auto;padding:50px;}
     .play_section .ctrl-icon{width:100px;height: 100px;margin-top:-50px;margin-left: -50px;}
     body .play_section .ctrl-icon.play{opacity: 1;}
     body.playing .play_section .ctrl-icon.pause{opacity: 1;}
+    .play_section:hover img{box-shadow: 0 0 70px rgba(0,0,0,.3);transform: scale(1);filter: brightness(1);}
+}
+@media screen and (max-width: 440px) {
+    .worklist{width:100%;}
 }
 @media screen and (max-width: 350px) {
     header .nav{display: block;text-align: center;height: auto;}

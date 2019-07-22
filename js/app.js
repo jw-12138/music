@@ -1,13 +1,22 @@
-$(function() {
-    let app = function() {
+$(function () {
+    let app = function () {
         let x, p;
         let globalAudioPaused = true;
         let data = {
-            "name": "对你上瘾 - OneCandy (Jacky.Q remix)",
-            "path": "src/addictionToYou/audio.mp3",
-            "lyric":"src/addictionToYou/lyric.json",
-            "duration": "232"
-        };
+            "id": 20180515,
+            "name": "Sparks (Jacky.Q remix)",
+            "src": "src/sparks/audio.mp3",
+            "lyric": "src/sparks/lyric.json",
+            "duration": 269,
+            "artwork": "src/sparks/cover.jpg",
+            "genre": ["#ElectroHouse"],
+            "release_date":"2018-05-15",
+            "album_discription": "",
+            "other_paltform": [{
+                "name": "Netease Music (网易云音乐)",
+                "href": "https://music.163.com/#/song?id=562050540"
+            }]
+        }
         let winW = $(window).width();
         let audio = $('.audio')[0];
         let dur = data.duration;
@@ -17,59 +26,64 @@ $(function() {
         let nolyric = false;
         let lyricContent = '';
         let screeenFits = true;
-
-        this.init = function() {
+        this.init = function () {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
             $('.player').on('mousemove touchmove', this.move);
-            $('.player').on('mouseup touchend', {this:this} ,this.end);
+            $('.player').on('mouseup touchend', {
+                this: this
+            }, this.end);
             $(window).off('resize').on('resize', this.resize);
             this.resize();
             $('.text_process .all_time').text(durStr);
-            $('.global_play_btn').off().on('click', {this:this}, this.play);
-            $('.dismiss_queue').off().on('click',this.dismissQueue);
-            $('.queue_btn').off().on('click',this.showQueue);
-            audio.src = data.path;
+            $('.global_play_btn').off().on('click', {
+                this: this
+            }, this.play);
+            $('.dismiss_queue').off().on('click', this.dismissQueue);
+            $('.queue_btn').off().on('click', this.showQueue);
+            audio.src = data.src;
             audio.volume = 0;
-            audio.onended = function() {
+            audio.onended = function () {
                 $('body').removeClass('playing');
                 $('.text_process .now_time').text('0:00');
-                $('.process_bar').css({'width':'0%'});
+                $('.process_bar').css({
+                    'width': '0%'
+                });
                 audio.pause();
                 audio.removeAttribute('src');
                 audio.load();
                 globalAudioPaused = true;
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
-                audio.src = data.path;
+                audio.src = data.src;
                 $('title').html('Jacky.Q');
             }
-            audio.onpause = function(){
+            audio.onpause = function () {
                 $('body').removeClass('playing');
                 globalAudioPaused = true;
                 $('title').html('Paused - ' + data.name);
             }
-            audio.onplay = function(){
+            audio.onplay = function () {
                 $('body').addClass('playing');
                 globalAudioPaused = false;
                 $('title').html(data.name);
             }
             let playPromise = audio.play();
             if (playPromise !== undefined) {
-                playPromise.then(function() {
+                playPromise.then(function () {
                     audio.pause();
                     audio.currentTime = 0;
                     audio.volume = 1;
-                }).catch(function(error) {
+                }).catch(function (error) {
                     console.log(error)
                 });
             }
             $.ajax({
-                url:data.lyric,
-                type:'get',
-                dataType:'json',
-                success:function(res){
-                    if(res.nolyric){
+                url: data.lyric,
+                type: 'get',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.nolyric) {
                         nolyric = true;
                         $('.lyric').html('Just music, enjoy!');
                         return false;
@@ -78,16 +92,16 @@ $(function() {
                     let keys = Object.keys(res);
                     keys = keys.reverse();
                     for (let i = keys.length - 1; i >= 0; i--) {
-                        $('.lyric ul').append('<li data-time="'+keys[i]+'">'+res[keys[i]]+'</li>');
+                        $('.lyric ul').append('<li data-time="' + keys[i] + '">' + res[keys[i]] + '</li>');
                     }
                     $('.lyric ul li:first-child').addClass('ready');
                 },
-                error:function(e){
+                error: function (e) {
                     $('.lyric').html('loading error!');
                 }
             })
             // init route
-            let changeRoute = function(where){
+            let changeRoute = function (where) {
                 $('.nav a').removeClass('active');
                 $('.page').removeClass('active');
                 switch (where) {
@@ -110,10 +124,10 @@ $(function() {
             let home = function () {
                 changeRoute('/');
             }
-            let mywork = function(){
+            let mywork = function () {
                 changeRoute('mywork');
             }
-            let aboutme = function(){
+            let aboutme = function () {
                 changeRoute('aboutme');
             }
             let routes = {
@@ -126,62 +140,65 @@ $(function() {
             router.init('/');
             _this.updateTime();
         }
-        this.updateTime = function() {
+        this.updateTime = function () {
             let _this = this;
-            setTimeout(function() {
-                if(!globalAudioPaused){
+            let s = setTimeout(function () {
+                if (!globalAudioPaused) {
                     let t = audio.currentTime;
                     let _p = t / dur * 100;
-                    $('.process_bar').css({ 'width': _p + '%' });
+                    $('.process_bar').css({
+                        'width': _p + '%'
+                    });
                     let _min = Math.floor(audio.currentTime / 60);
                     let _sec = audio.currentTime % 60;
                     _sec = _sec.toFixed(0);
                     if (_sec < 10) _sec = '0' + _sec;
-                    if (_sec > 59) { _sec = '00';
-                        _min++; }
+                    if (_sec > 59) {
+                        _sec = '00';
+                        _min++;
+                    }
                     let _durStr = _min + ':' + _sec;
+                    $('.text_process .now_time').text(_durStr);
                     if (audio.currentTime === 0) {
                         $('.text_process .now_time').text('0:00');
                     }
-                    $('.text_process .now_time').text(_durStr);
-                    if(!nolyric && screeenFits){
+                    if (!nolyric && screeenFits) {
                         _this.updateLyric();
                     }
                 }
                 _this.updateTime();
-            },100)
+            }, 150)
         }
-        this.updateLyric = function(){
+        this.updateLyric = function () {
             let keys = Object.keys(lyricContent);
             let tempObj = '';
             for (let i = keys.length - 1; i >= 0; i--) {
-                if(audio.currentTime + 0.2 >= parseFloat(keys[i]))
-                {
-                    tempObj = $('.lyric ul li[data-time="'+ keys[i] +'"]');
+                if (audio.currentTime + 0.2 >= parseFloat(keys[i])) {
+                    tempObj = $('.lyric ul li[data-time="' + keys[i] + '"]');
                     tempObj.addClass('on').removeClass('ready');
                     try {
                         tempObj.next().addClass('ready');
                         tempObj.prev().removeClass('on ready');
-                    } catch(e) {
+                    } catch (e) {
                         console.log(e);
                     }
                     break;
                 }
-                if(audio.currentTime < parseFloat(keys[0])){
+                if (audio.currentTime < parseFloat(keys[0])) {
                     $('.lyric ul li:first-child').addClass('ready');
                 }
             }
         }
-        this.resize = function() {
+        this.resize = function () {
             winW = $(window).width();
-            if(winW < 1000){
+            if (winW < 1000) {
                 screeenFits = false;
-            }else{
-               screeenFits = true;
-               $('.lyric ul li').removeClass('ready on');
+            } else {
+                screeenFits = true;
+                $('.lyric ul li').removeClass('ready on');
             }
         }
-        this.start = function(e) {
+        this.start = function (e) {
             e.stopPropagation();
             globalAudioPaused = true;
             $('.process_bar').removeClass('t');
@@ -189,12 +206,14 @@ $(function() {
             $('.player').addClass('on');
             x = e.pageX || e.originalEvent.changedTouches[0].pageX;
         }
-        this.move = function(e) {
+        this.move = function (e) {
             if ($(this).hasClass('on')) {
                 let nowX = e.pageX || e.originalEvent.changedTouches[0].pageX;
                 let abs = nowX - x;
                 let nowP = p + abs;
-                if (nowP <= winW && nowP >= 0) $('.process_bar').css({ 'width': nowP });
+                if (nowP <= winW && nowP >= 0) $('.process_bar').css({
+                    'width': nowP
+                });
                 let percent = nowP / winW;
                 let _currentPosition = dur * percent;
                 if (_currentPosition < 0) {
@@ -207,8 +226,10 @@ $(function() {
                 let _sec = _currentPosition % 60;
                 _sec = _sec.toFixed(0);
                 if (_sec < 10) _sec = '0' + _sec;
-                if (_sec > 59) { _sec = '00';
-                    _min++; }
+                if (_sec > 59) {
+                    _sec = '00';
+                    _min++;
+                }
                 let _durStr = _min + ':' + _sec;
                 if (audio.currentTime === 0) {
                     $('.text_process .now_time').text('0:00');
@@ -217,7 +238,7 @@ $(function() {
                 $('.text_process .now_time').text(_durStr);
             }
         }
-        this.end = function(e) {
+        this.end = function (e) {
             _this = e.data.this;
             e.stopPropagation();
             $('.process_bar').addClass('t');
@@ -233,14 +254,14 @@ $(function() {
                 audio.currentTime = 0;
             }
             $('.lyric ul li').removeClass('on ready');
-            if(screeenFits){
+            if (screeenFits) {
                 _this.updateLyric();
             }
-            if(!audio.paused){
+            if (!audio.paused) {
                 globalAudioPaused = false;
             }
         }
-        this.play = function(e) {
+        this.play = function (e) {
             let _this = e.data.this;
             $('body').addClass('active');
             audio.volume = 1;
@@ -251,22 +272,22 @@ $(function() {
                 $('title').html(data.name);
             }
         }
-        this.nextSong = function() {
+        this.nextSong = function () {
 
         }
-        this.prevSong = function() {
+        this.prevSong = function () {
 
         }
-        this.dismissQueue = function(){
+        this.dismissQueue = function () {
             $('body').removeClass('show_queue');
         }
-        this.showQueue = function(){
+        this.showQueue = function () {
             $('body').addClass('show_queue');
         }
     }
     app = new app();
     app.init();
-    setTimeout(function () {
-        alert('On Building...')
-    }, 1000)
+    // setTimeout(function () {
+    //     alert('On Building...')
+    // }, 1000)
 });
