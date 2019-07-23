@@ -216,7 +216,7 @@ $(function () {
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
-                    res = JSON.parse(res);
+                    console.log(res);
                     songList = res;
                     let data = res[0];
                     _this.renderNowPlaying(data);
