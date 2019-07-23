@@ -6,7 +6,7 @@
 - [x] ~~拖拽进度条~~
 - [x] ~~歌词播放~~
 - [x] Songs made by me 列表
-- [ ] About me 页面
+- [x] About me 页面
 - [x] 图片优化
 - [x] 列表播放
 
