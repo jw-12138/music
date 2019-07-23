@@ -414,7 +414,4 @@ $(function () {
     }
     app = new app();
     app.init();
-    // setTimeout(function () {
-    //     alert('On Building...')
-    // }, 1000)
 });
