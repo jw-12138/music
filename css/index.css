@@ -29,7 +29,7 @@ header .logo{height:80px;line-height: 80px;display: flex;justify-content: center
 header .logo a{display: block;font-size:24px;color:#fff;font-weight: 300;}
 header .logo img{height:60px;}
 header .nav{height:40px;display: flex;justify-content: center;align-items: center;}
-.nav a{display: block;padding:0 10px;height:30px;line-height: 30px;color:#fff;margin-right: 10px;transition: background-color .3s ease,color .3s ease;background-color: #222;border-radius: 30px;}
+.nav a{display: block;padding:0 10px;height:30px;line-height: 30px;color:#fff;margin-right: 10px;transition: background-color .3s ease-in-out,color .3s ease-in-out;background-color: #222;border-radius: 30px;}
 .nav a:last-child{margin-right: 0;}
 .nav a:hover{background:#fff;color:#333;}
 .nav a.active{background:#fff;color:#333;}
@@ -40,9 +40,9 @@ header .nav{height:40px;display: flex;justify-content: center;align-items: cente
 .section_album{display: flex;position: relative;overflow:hidden;justify-content: center;flex-wrap: wrap;}
 .section_album .bg{position: absolute;width:100%;height:auto;z-index: 2;filter: blur(10px) brightness(0.5) saturate(200%);transform: scale(2);-ms-transform: scale(2);top:50%;margin-top:-40%;-ms-filter: blur(10px) brightness(0.5) saturate(200%);}
 .play_section{width:800px;position: relative;z-index: 3;padding:100px;}
-.play_section img{border-radius: 4px;transition: box-shadow .3s ease,transform .3s ease,filter .3s ease;}
+.play_section img{border-radius: 4px;transition: box-shadow .3s ease-in-out,transform .3s ease-in-out,filter .3s ease-in-out;}
 .play_section:hover img{box-shadow: 0 0 70px rgba(0,0,0,.3);transform: scale(1.05);filter: brightness(.9);}
-.play_section .ctrl-icon{position: absolute;z-index: 4;width:200px;height: 200px;top:50%;margin-top: -100px;left:50%;margin-left: -100px;opacity: 0;cursor: pointer;transition: opacity .3s ease;}
+.play_section .ctrl-icon{position: absolute;z-index: 4;width:200px;height: 200px;top:50%;margin-top: -100px;left:50%;margin-left: -100px;opacity: 0;cursor: pointer;transition: opacity .3s ease-in-out;}
 body .play_section:hover .ctrl-icon.play{opacity: 1;}
 body.playing .play_section:hover .ctrl-icon.pause{opacity: 1;}
 body.playing .play_section .ctrl-icon.play{opacity: 0;}
@@ -51,13 +51,13 @@ body.playing .play_section .ctrl-icon.play{opacity: 0;}
 .listen_on svg{width:16px;height:16px;}
 .platform_icon{height:24px;width:auto;margin-left: 5px;}
 footer{padding:20px;font-size: 12px;color:#fff;text-align: center;}
-.player{display: flex;position: fixed;bottom:-100px;height: 100px;background-color: rgba(0,0,0,.8);width:100%;z-index: 999;justify-content: space-between;align-items: center;box-shadow: 0 0 30px rgba(0,0,0,.3);padding:0 40px;cursor: w-resize;transition: bottom .3s ease;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+.player{display: flex;position: fixed;bottom:-100px;height: 100px;background-color: rgba(0,0,0,.7);width:100%;z-index: 999;justify-content: space-between;align-items: center;box-shadow: 0 0 30px rgba(0,0,0,.3);padding:0 40px;cursor: w-resize;transition: bottom .3s ease-in-out;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
 body.active .player{bottom:0;}
 .album{width:150px;height: 60px;display: flex;align-items: center;position: relative;z-index: 2;}
 .text_process{font-size:13px;color:#fff;margin-left:10px;display: block;flex-shrink: 0;}
 .album img{border-radius: 10px;width:60px;height:60px;cursor: default;}
 .control{display: flex;align-items: center;margin-left: 20px;position: relative;z-index: 2;}
-.control svg.player_icon{width:30px;height:30px;cursor: pointer;transition: transform .3s ease;}
+.control svg.player_icon{width:30px;height:30px;cursor: pointer;transition: transform .3s ease-in-out;}
 .control svg.player_icon.off{fill:#999;cursor: not-allowed;}
 .control svg.player_icon:hover{transform: scale(1.1);}
 .control svg.player_icon.off:hover{transform: scale(1);}
@@ -69,34 +69,39 @@ body.playing .control .playnpause svg.play{display: none;}
 .lyric .noLyric{display:none;justify-content: center;align-items: center;height:100px;}
 .lyric .noLyric.on{display:flex;}
 .lyric ul{width:100%;}
-.lyric ul li{opacity: 0;pointer-events: none;transition: top .2s ease,opacity .3s ease;text-align: center;position: absolute;width:100%;height:100px;top:10px;left:0;line-height: 100px;}
+.lyric ul li{opacity: 0;pointer-events: none;transition: top .2s ease-in-out,opacity .3s ease-in-out;text-align: center;position: absolute;width:100%;height:100px;top:10px;left:0;line-height: 100px;}
 .lyric ul li.ready{opacity: 0.3;top:20px;}
 .lyric ul li.on{opacity: 1;top:0;}
 .process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: rgba(255,255,255,.15);height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;}
 .process_bar .handle{width:24px;height: 24px;position: absolute;top:50%;margin-top:-12px;right:0;}
-.process_bar.t{transition: width .1s ease;}
+.process_bar.t{transition: width .1s ease-in-out;}
 .audio{position: absolute;top:-9999999px;width:1px;height:1px;opacity: 0;pointer-events: none;}
 .play_all{margin:30px auto;width:200px;background-color: #fff;border-radius: 50px;height:50px;font-size: 18px;color:#333;line-height: 50px;text-align: center;background:#fff;}
 .worklist{width:440px;margin:40px auto 0;cursor: pointer;padding: 20px;}
 .worklist li{width:100%;margin-bottom:30px;position: relative;}
 .worklist li:last-child{margin-bottom:0;}
-.worklist li img{width:100%;border-radius: 10px;transition: filter .3s ease;}
+.worklist li img{width:100%;border-radius: 10px;transition: filter .3s ease-in-out;}
 .worklist li .cover_block{position: relative;}
 .worklist li:hover .cover_block img{filter: brightness(.5) grayscale(.5);}
-.worklist li .workname{padding:20px;line-height: 26px;overflow:hidden;color:#fff;position: absolute;bottom:0;left:0;opacity: 0;z-index: -99999;pointer-events: none;transition: opacity .3s ease,transform .3s ease;transform:translateY(-10px);}
-.worklist li .workname .song_title{font-weight: bold;font-size: 24px;transform: translateY(-10px);transition: transform .4s ease;margin-bottom: 20px;}
+.worklist li .workname{padding:20px;line-height: 26px;overflow:hidden;color:#fff;position: absolute;bottom:0;left:0;opacity: 0;z-index: -99999;pointer-events: none;transition: opacity .3s ease-in-out,transform .3s ease-in-out;transform:translateY(-10px);}
+.worklist li .workname .song_title{font-weight: bold;font-size: 24px;transform: translateY(-10px);transition: transform .4s ease-in-out;margin-bottom: 20px;}
 .worklist li .workname .hashtag{background: rgba(255,255,255,.5);line-height: 1;padding:4px 10px;border-radius: 30px;color:#fff;}
 .worklist li:hover .workname .song_title{transform: translateY(0px);}
 .worklist li:hover .workname {opacity: 1;z-index: 999;pointer-events: auto;transform: translateY(0px);}
-.worklist li .play_this{text-decoration: underline;cursor: pointer;transition: transform .3s ease;}
+.worklist li .play_this{text-decoration: underline;cursor: pointer;transition: transform .3s ease-in-out;}
 .worklist li:nth-child(even){margin-right: 0;}
-.worklist li .release_date{padding:10px 0;line-height: 26px;overflow:hidden;color:#fff;text-align: center;}
-.queue_btn{background: #000;width:50px;height: 50px;position: fixed;bottom:120px;right:20px;border-radius: 10px;line-height: 50px;text-align: center;z-index: 9999999;box-shadow: 0 0 15px rgba(0,0,0,.3);cursor: pointer;}
-.aboutme_wrap{width:800px;padding:20px;}
-.queue_wrap{background-color: rgba(0,0,0,.5);width:100%;height:100%;position: fixed;top:0;left:0;pointer-events:none;transition: opacity .3s ease;opacity: 0;z-index: 10000000;}
-.queue_list{width:280px;position: absolute;right:-180px;top:0;height: 100%;background-color: rgba(0,0,0,.7);box-shadow: 0 0 30px rgba(0,0,0,.5);transition: right .3s ease;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+.worklist li .release-in-out_date{padding:10px 0;line-height: 26px;overflow:hidden;color:#fff;text-align: center;}
+.queue_btn{background: rgba(0,0,0,.5);width:50px;height: 50px;position: fixed;bottom:120px;right:20px;border-radius: 10px;line-height: 50px;text-align: center;z-index: 9999999;box-shadow: 0 0 15px rgba(0,0,0,.3);cursor: pointer;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+.aboutme_wrap{width:800px;padding:20px;color:#fff;margin:0 auto;line-height: 30px;}
+.aboutme_wrap audio{max-width: 100%;}
+.aboutme_wrap img{width:100%;margin:10px 0;}
+.aboutme_wrap a{color:#999;text-decoration: underline;}
+.aboutme_wrap .img_discription{display: block;text-align: center;font-size:12px;color:#666;text-align: center;line-height: 24px;}
+.aboutme_wrap p{padding: 5px 0;}
+.queue_wrap{background-color: rgba(0,0,0,.5);width:100%;height:100%;position: fixed;top:0;left:0;pointer-events:none;transition: opacity .3s ease-in-out;opacity: 0;z-index: 10000000;}
+.queue_list{width:280px;position: absolute;right:-180px;top:0;height: 100%;background-color: rgba(0,0,0,.7);box-shadow: 0 0 30px rgba(0,0,0,.5);transition: right .3s ease-in-out;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
 .queue_list ul.queue_list_ul{padding:0 0 20px;height:calc(100% - 100px);overflow: hidden;overflow-y: auto;-webkit-overflow-scrolling: touch;}
-.queue_list ul.queue_list_ul li{display: flex;border-bottom: 1px solid rgba(255,255,255,.1);padding:20px;color:#ccc;font-size: 13px;cursor: pointer;transition: transform .3s ease;}
+.queue_list ul.queue_list_ul li{display: flex;border-bottom: 1px solid rgba(255,255,255,.1);padding:20px;color:#ccc;font-size: 13px;cursor: pointer;transition: transform .3s ease-in-out;}
 .queue_list ul.queue_list_ul li .playing_this{position: absolute;width: 24px;height: 24px;top:50%;left:50%;margin-top: -12px;margin-left:-12px;display: none;}
 .queue_list ul.queue_list_ul li.on .playing_this{display: block;}
 .queue_list ul.queue_list_ul li.on {background-color: rgba(255,255,255,.1)}
@@ -107,7 +112,7 @@ body.playing .control .playnpause svg.play{display: none;}
 .queue_list ul.queue_list_ul li .artwork img{border-radius: 5px;max-height: 100%;max-width: 100%;}
 .queue_list ul.queue_list_ul li .name{line-height: 20px;display: flex;align-items: center;}
 .queue_list .dismiss_queue{height: 100px;display: flex;justify-content: center;align-items: center;}
-.queue_list .dismiss_queue ._btn{width:100px;height: 40px;border-radius: 40px;background-color: #fff;color:#000;display: flex;align-items: center;justify-content: center;cursor: pointer;border:2px solid #fff;transition: background-color .3s ease, color .3s ease;}
+.queue_list .dismiss_queue ._btn{width:100px;height: 40px;border-radius: 40px;background-color: #fff;color:#000;display: flex;align-items: center;justify-content: center;cursor: pointer;border:2px solid #fff;transition: background-color .3s ease-in-out, color .3s ease-in-out;}
 .queue_list .dismiss_queue ._btn:hover{background-color: #000;color:#fff;}
 body.show_queue{overflow: hidden;}
 body.show_queue .queue_wrap{opacity: 1;pointer-events: auto;}
@@ -117,11 +122,11 @@ body.show_queue .queue_list{right:0;}
 .no_songs a{color:#fff;text-decoration: underline;}
 .worklist li.on .current_playing{opacity: 1;}
 .current_playing{position: absolute;top:50%;left:50%;display: flex;justify-content: space-between;align-items: center;z-index: 333;height:60px;width:100px;margin-left:-50.5px;margin-top:-30px;opacity: 0;}
-.current_playing .fragment{animation: onPlaying 1s ease-in-out infinite;animation-delay: 0ms;width:14px;height:30px;background: #fff;border-radius: 4px;}
-.current_playing .fragment:nth-child(2){animation-delay: 100ms;}
-.current_playing .fragment:nth-child(3){animation-delay: 200ms;}
-.current_playing .fragment:nth-child(4){animation-delay: 300ms;}
-.current_playing .fragment:nth-child(5){animation-delay: 400ms;}
+.current_playing .fragment{animation: onPlaying 1s ease-in-out infinite;animation-delay: 0ms;width:14px;height:30px;background: #fff;}
+.current_playing .fragment:nth-child(2){animation-delay: 200ms;}
+.current_playing .fragment:nth-child(3){animation-delay: 400ms;}
+.current_playing .fragment:nth-child(4){animation-delay: 600ms;}
+.current_playing .fragment:nth-child(5){animation-delay: 800ms;}
 @media screen and (max-width: 1000px) {
     .lyric{display: none;}
     .player{padding:0 20px;}

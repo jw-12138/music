@@ -50,6 +50,7 @@ $(function () {
                 $('title').html('Paused - ' + global_data.name);
             }
             audio.onplay = function () {
+                console.log('playing');
                 $('body').addClass('playing');
                 globalAudioPaused = false;
                 $('title').html(global_data.name);
@@ -112,6 +113,7 @@ $(function () {
         }
         this.renderNowPlaying = function(data){
             playing_id = data.id;
+            $('.lyric ul').html('');
             $('.worklist li').removeClass('on');
             $('.queue_list_ul li').removeClass('on');
             $('li[data-id="'+playing_id+'"]').addClass('on');
@@ -126,7 +128,6 @@ $(function () {
                 'alt': data.name,
                 'title': data.name
             });
-            $('.lyric ul').html('')
             $('.platform_list').html('');
             for (var i = data.other_platform.length - 1; i >= 0; i--) {
                 $('.platform_list').append('<li><a href="' + data.other_platform[i].href + '" target="_blank"><img src="img/' + data.other_platform[i].name + '.png" alt="' + data.other_platform[i].name + '" class="platform_icon"> ' + data.other_platform[i].name + '</a> </li>');
@@ -216,7 +217,6 @@ $(function () {
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
-                    console.log(res);
                     songList = res;
                     let data = res[0];
                     _this.renderNowPlaying(data);
@@ -383,6 +383,10 @@ $(function () {
             }
             let nextSongData = songList[nextPosition];
             app.renderNowPlaying(nextSongData);
+            let return_this = {};
+            return_this.data = app;
+            globalAudioPaused = true;
+            app.play(return_this);
         }
         this.prevSong = function () {
             let idList = [];
@@ -396,6 +400,10 @@ $(function () {
             }
             let prevSongData = songList[prevPosition];
             app.renderNowPlaying(prevSongData);
+            let return_this = {};
+            return_this.data = app;
+            globalAudioPaused = true;
+            app.play(return_this);
         }
         this.dismissQueue = function () {
             $('body').removeClass('show_queue');
