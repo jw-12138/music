@@ -35,7 +35,7 @@
         "id": 20181228,
         "name": "Journey to the West (Jacky.Q remix)",
         "src": "src/journeyToTheWest/audio.mp3",
-        "lyric": "",
+        "lyric": "src/journeyToTheWest/lyric.json",
         "duration": 228.96,
         "artwork": "src/journeyToTheWest/cover.jpg",
         "genre": ["#ElectroHouse"],
@@ -75,5 +75,75 @@
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=562050540"
         }]
+    },
+    {
+        "id": 20180412,
+        "name": "The Color (Original Mix)",
+        "src": "src/theColor/audio.mp3",
+        "lyric": "src/theColor/lyric.json",
+        "duration": 191.53,
+        "artwork": "src/theColor/cover.jpg",
+        "genre": ["#MelodyBass"],
+        "release_date":"2018-04-12",
+        "album_discription": "",
+        "other_platform": [{
+            "name": "Netease Music (网易云音乐)",
+            "href": "https://music.163.com/#/song?id=552315062"
+        }]
+    },
+    {
+        "id": 20171109,
+        "name": "Lover ft.Tiya Manson (Original Mix)",
+        "src": "src/lover/audio.mp3",
+        "lyric": "src/lover/lyric.json",
+        "duration": 244.53,
+        "artwork": "src/lover/cover.jpg",
+        "genre": ["#Moombahton"],
+        "release_date":"2017-11-09",
+        "album_discription": "",
+        "other_platform": [{
+            "name": "Netease Music (网易云音乐)",
+            "href": "https://music.163.com/#/song?id=519816280"
+        }]
+    },
+    {
+        "id": 20170915,
+        "name": "Someone ft.DaddyLu (VIP Remix)",
+        "src": "src/someone/audio2.mp3",
+        "lyric": "src/someone/lyric2.json",
+        "duration": 309.26,
+        "artwork": "src/someone/cover.jpg",
+        "genre": ["#ElectroHouse"],
+        "release_date":"2017-09-15",
+        "album_discription": "",
+        "other_platform": []
+    },
+    {
+        "id": 20170824,
+        "name": "Someone ft.DaddyLu (Original Mix)",
+        "src": "src/someone/audio.mp3",
+        "lyric": "src/someone/lyric.json",
+        "duration": 266.81,
+        "artwork": "src/someone/cover.jpg",
+        "genre": ["#Pop"],
+        "release_date":"2017-08-24",
+        "album_discription": "",
+        "other_platform": []
+    },
+    {
+        "id": 20170802,
+        "name": "Don't You Give Up ft.Tiya Manson (Original Mix)",
+        "src": "src/dontYouGiveUp/audio.mp3",
+        "lyric": "src/dontYouGiveUp/lyric.json",
+        "duration": 266.81,
+        "artwork": "src/dontYouGiveUp/cover.jpg",
+        "genre": ["#ElectroHouse"],
+        "release_date":"2017-08-02",
+        "album_discription": "",
+        "other_platform": [{
+            "name": "Netease Music (网易云音乐)",
+            "href": "https://music.163.com/#/song?id=495063756"
+        }]
     }
+    
 ]

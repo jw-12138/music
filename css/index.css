@@ -38,7 +38,7 @@ header .nav{height:40px;display: flex;justify-content: center;align-items: cente
 .section_title{display: flex;height:60px;justify-content: center;align-items: center;margin-bottom: 30px;margin-top: 20px;}
 .section_title span{display: block;font-size:30px;color:#fff;height:60px;line-height: 60px;}
 .section_album{display: flex;position: relative;overflow:hidden;justify-content: center;flex-wrap: wrap;}
-.section_album .bg{position: absolute;width:100%;height:auto;z-index: 2;filter: blur(10px) brightness(0.5) saturate(200%);transform: scale(2);-ms-transform: scale(2);top:50%;margin-top:-40%;-ms-filter: blur(10px) brightness(0.5) saturate(200%);}
+.section_album .bg{position: absolute;width:100%;height:auto;z-index: 2;filter: blur(10px) brightness(0.5) saturate(200%);transform: scale(2);-ms-transform: scale(2);top:50%;margin-top:-40%;-ms-filter: blur(10px) brightness(0.5) saturate(150%);}
 .play_section{width:800px;position: relative;z-index: 3;padding:100px;}
 .play_section img{border-radius: 4px;transition: box-shadow .2s ease,transform .2s ease,filter .2s ease;}
 .play_section:hover img{box-shadow: 0 0 70px rgba(0,0,0,.3);transform: scale(1.05);filter: brightness(.9);}
@@ -51,7 +51,7 @@ body.playing .play_section .ctrl-icon.play{opacity: 0;}
 .listen_on svg{width:16px;height:16px;}
 .platform_icon{height:24px;width:auto;margin-left: 5px;}
 footer{padding:20px;font-size: 12px;color:#fff;text-align: center;}
-.player{display: flex;position: fixed;bottom:-100px;height: 100px;background-color: rgba(0,0,0,.7);width:100%;z-index: 999;justify-content: space-between;align-items: center;box-shadow: 0 0 30px rgba(0,0,0,.3);padding:0 40px;cursor: w-resize;transition: bottom .2s ease;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+.player{display: flex;position: fixed;bottom:-140px;height: 100px;background-color: rgba(0,0,0,.7);width:100%;z-index: 999;justify-content: space-between;align-items: center;box-shadow: 0 0 30px rgba(0,0,0,.3);padding:0 40px;cursor: w-resize;transition: bottom .2s ease;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
 body.active .player{bottom:0;}
 .album{width:150px;height: 60px;display: flex;align-items: center;position: relative;z-index: 2;}
 .text_process{font-size:13px;color:#fff;margin-left:10px;display: block;flex-shrink: 0;}
@@ -72,6 +72,7 @@ body.playing .control .playnpause svg.play{display: none;}
 .lyric ul li{opacity: 0;pointer-events: none;transition: top .2s ease,opacity .2s ease;text-align: center;position: absolute;width:100%;height:100px;top:10px;left:0;line-height: 100px;}
 .lyric ul li.ready{opacity: 0.3;top:20px;}
 .lyric ul li.on{opacity: 1;top:0;}
+
 .process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: rgba(255,255,255,.15);height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;}
 .process_bar .handle{width:24px;height: 24px;position: absolute;top:50%;margin-top:-12px;right:0;}
 .process_bar.t{transition: width .1s ease;}
@@ -83,7 +84,7 @@ body.playing .control .playnpause svg.play{display: none;}
 .worklist li img{width:100%;border-radius: 10px;transition: filter .2s ease;}
 .worklist li .cover_block{position: relative;}
 .worklist li:hover .cover_block img{filter: brightness(.5) grayscale(.5);}
-.worklist li .workname{padding:20px;line-height: 26px;overflow:hidden;color:#fff;position: absolute;bottom:0;left:0;opacity: 0;z-index: -99999;pointer-events: none;transition: opacity .2s ease,transform .2s ease;transform:translateY(-10px);}
+.worklist li .workname{padding:20px;line-height: 26px;overflow:hidden;color:#fff;position: absolute;bottom:0;left:0;opacity: 0;z-index: -99999;pointer-events: none;transition: opacity .2s ease,transform .2s ease;transform:translateY(-10px);font-size: 14px;}
 .worklist li .workname .song_title{font-weight: bold;font-size: 24px;transform: translateY(-10px);transition: transform .4s ease;margin-bottom: 20px;}
 .worklist li .workname .hashtag{background: rgba(255,255,255,.5);line-height: 1;padding:4px 10px;border-radius: 30px;color:#fff;}
 .worklist li:hover .workname .song_title{transform: translateY(0px);}
@@ -91,7 +92,8 @@ body.playing .control .playnpause svg.play{display: none;}
 .worklist li .play_this{text-decoration: underline;cursor: pointer;transition: transform .2s ease;}
 .worklist li:nth-child(even){margin-right: 0;}
 .worklist li .release_date{padding:10px 0;line-height: 26px;overflow:hidden;color:#fff;text-align: center;}
-.queue_btn{background: rgba(0,0,0,.5);width:50px;height: 50px;position: fixed;bottom:120px;right:20px;border-radius: 10px;line-height: 50px;text-align: center;z-index: 9999999;box-shadow: 0 0 15px rgba(0,0,0,.3);cursor: pointer;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+.queue_btn{background: rgba(0,0,0,.5);width:50px;height: 50px;position: fixed;bottom:20px;right:20px;border-radius: 10px;line-height: 50px;text-align: center;z-index: 9999999;box-shadow: 0 0 15px rgba(0,0,0,.3);cursor: pointer;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);transition: bottom .2s ease;}
+body.active .queue_btn{bottom:120px;}
 .aboutme_wrap{width:800px;padding:20px;color:#fff;margin:0 auto;line-height: 30px;}
 .aboutme_wrap audio{max-width: 100%;}
 .aboutme_wrap img{width:100%;margin:10px 0;}
@@ -99,9 +101,10 @@ body.playing .control .playnpause svg.play{display: none;}
 .aboutme_wrap .img_discription{display: block;text-align: center;font-size:11px;color:#666;text-align: center;line-height: 16px;margin-bottom: 5px;}
 .aboutme_wrap p{padding: 5px 0;}
 .queue_wrap{background-color: rgba(0,0,0,.5);width:100%;height:100%;position: fixed;top:0;left:0;pointer-events:none;transition: opacity .2s ease;opacity: 0;z-index: 10000000;}
-.queue_list{width:280px;position: absolute;right:-30px;top:0;height: 100%;background-color: rgba(0,0,0,.7);box-shadow: 0 0 30px rgba(0,0,0,.5);transition: right .2s ease;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
-.queue_list ul.queue_list_ul{padding:0 0 20px;height:calc(100% - 100px);overflow: hidden;overflow-y: auto;-webkit-overflow-scrolling: touch;}
+.queue_list{width:280px;position: absolute;right:-30px;top:0;height: 100%;background-color: rgba(0,0,0,.7);box-shadow: 0 0 30px rgba(0,0,0,.5);transition: right .2s ease;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);overflow-x: hidden;}
+.queue_list ul.queue_list_ul{height:calc(100% - 100px);overflow: hidden;overflow-y: auto;-webkit-overflow-scrolling: touch;}
 .queue_list ul.queue_list_ul li{display: flex;border-bottom: 1px solid rgba(255,255,255,.1);padding:20px;color:#ccc;font-size: 13px;cursor: pointer;transition: transform .2s ease;}
+.queue_list ul.queue_list_ul li:last-child{margin-bottom: 20px;}
 .queue_list ul.queue_list_ul li .playing_this{position: absolute;width: 24px;height: 24px;top:50%;left:50%;margin-top: -12px;margin-left:-12px;display: none;}
 .queue_list ul.queue_list_ul li.on .playing_this{display: block;}
 .queue_list ul.queue_list_ul li.on {background-color: rgba(255,255,255,.1)}
@@ -111,7 +114,7 @@ body.playing .control .playnpause svg.play{display: none;}
 .queue_list ul.queue_list_ul li .artwork{width:50px;flex-shrink: 0;height: 50px;overflow:hidden;display: flex;justify-content: center;align-items: center;margin-right: 10px;position: relative;}
 .queue_list ul.queue_list_ul li .artwork img{border-radius: 5px;max-height: 100%;max-width: 100%;}
 .queue_list ul.queue_list_ul li .name{line-height: 20px;display: flex;align-items: center;}
-.queue_list .dismiss_queue{height: 100px;display: flex;justify-content: center;align-items: center;}
+.queue_list .dismiss_queue{height: 100px;display: flex;justify-content: center;align-items: center;box-shadow: 0 0 40px rgba(255,255,255,.2);background-color: #000;}
 .queue_list .dismiss_queue ._btn{width:100px;height: 40px;border-radius: 40px;background-color: #fff;color:#000;display: flex;align-items: center;justify-content: center;cursor: pointer;border:2px solid #fff;transition: background-color .2s ease, color .2s ease;}
 .queue_list .dismiss_queue ._btn:hover{background-color: #000;color:#fff;}
 body.show_queue{overflow: hidden;}
@@ -128,15 +131,21 @@ body.show_queue .queue_list{right:0;}
 .current_playing .fragment:nth-child(4){animation-delay: 600ms;}
 .current_playing .fragment:nth-child(5){animation-delay: 800ms;}
 @media screen and (max-width: 1000px) {
-    .lyric{display: none;}
+    body.active{padding-bottom: 140px;}
     .player{padding:0 20px;}
+    .lyric{font-size:11px;position: absolute;width:100%;left:0;top:-40px;background-color: rgba(0,0,0,.7);backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);height:40px;pointer-events: none;}
+    .lyric ul li{height:40px;line-height: 40px;padding:0 10px;white-space: nowrap;text-overflow: ellipsis;}
+    .lyric ul li.ready{top:12px;font-size: 9px}
+    .lyric ul li.on{top:0;font-size: 12px;}
+    body.active .queue_btn{bottom:160px;}
+    .lyric .noLyric{height:40px;}
 }
 @media screen and (max-width: 800px) {
     .current_playing{top:40%;}
     .worklist li:hover .cover_block img{filter: brightness(1) grayscale(0);}
     .worklist{width:440px;}
     .worklist li{width:100%;}
-    .worklist li .workname .song_title{transform: translateY(0px);}
+    .worklist li .workname .song_title{transform: translateY(0px);margin-bottom: 0;}
     .worklist li .workname{position: static;text-align: center;opacity: 1;z-index: 999;pointer-events: auto;transform: translateY(0px);}
     .aboutme_wrap{width:100%;}
     .play_section{width:100%;height:auto;padding:50px;}
@@ -151,6 +160,12 @@ body.show_queue .queue_list{right:0;}
 @media screen and (max-width: 350px) {
     header .nav{display: block;text-align: center;height: auto;}
     header .nav a{margin:0;display: inline-block;margin-bottom: 10px;}
+    .player{height:50px;padding: 0 5px;}
+    .album{height: 40px;}
+    .album img{height: 40px;width:40px;border-radius: 3px;}
+    .process_bar{height: 50px;}
+    body.active .queue_btn{bottom:110px;}
+    body.active{padding-bottom: 90px;}
 }
 @-webkit-keyframes onPlaying{
     0%{height:30px;}

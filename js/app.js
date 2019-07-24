@@ -2,7 +2,6 @@ $(function () {
     let app = function () {
         let x, p;
         let globalAudioPaused = true;
-        let screeenFits = true;
         let audio = $('.audio')[0];
         let global_data = {};
         let nolyric = false;
@@ -96,7 +95,9 @@ $(function () {
         }
         this.setNowPlaying = function(){
             if($(this).hasClass('on')){
-                return false;
+                if(!globalAudioPaused){
+                    return false;
+                }
             }
             let idList = [];
             for (let i = 0; i < songList.length; i++) {
@@ -128,21 +129,33 @@ $(function () {
                 'title': data.name
             });
             $('.platform_list').html('');
-            for (var i = data.other_platform.length - 1; i >= 0; i--) {
-                $('.platform_list').append('<li><a href="' + data.other_platform[i].href + '" target="_blank"><img src="img/' + data.other_platform[i].name + '.png" alt="' + data.other_platform[i].name + '" class="platform_icon"> ' + data.other_platform[i].name + '</a> </li>');
+            $('.listen_on').show();
+            if(data.other_platform.length != 0){
+                for (var i = data.other_platform.length - 1; i >= 0; i--) {
+                    $('.platform_list').append('<li><a href="' + data.other_platform[i].href + '" target="_blank"><img src="img/' + data.other_platform[i].name + '.png" alt="' + data.other_platform[i].name + '" class="platform_icon"> ' + data.other_platform[i].name + '</a> </li>');
+                }
+            }
+            else{
+                $('.listen_on').hide();
             }
             global_data = data;
             let dur = data.duration;
             let min = Math.floor(dur / 60);
             let sec = dur % 60;
             sec = Math.ceil(sec);
+            if(sec < 10){
+                sec = '0' + sec;
+            }
             let durStr = min + ':' + sec;
             audio.src = data.src;
             $('.text_process .all_time').text(durStr);
             if (data.lyric == '') {
                 nolyric = true;
-                $('.lyric .noLyric').addClass('on');
-            } else {
+                $('.lyric .noLyric').addClass('on').html('Just music, enjoy!');
+            } else if(data.lyric == 'no') {
+                nolyric = false;
+                $('.lyric .noLyric').addClass('on').html('No lyrics for now');
+            }else{
                 nolyric = false;
                 $('.lyric .noLyric').removeClass('on');
                 app.renderLyric(data.lyric);
@@ -182,6 +195,7 @@ $(function () {
                         <img src="' + songList[i].artwork + '" alt="songList[i].name">\
                         <div class="workname">\
                             <div class="song_title">' + songList[i].name + '</div>\
+                            Released on : '+songList[i].release_date+'<br>\
                             ' + tags + '\
                         </div>\
                     </div>\
@@ -200,15 +214,16 @@ $(function () {
                     for (let i = keys.length - 1; i >= 0; i--) {
                         $('.lyric ul').append('<li data-time="' + keys[i] + '">' + res[keys[i]] + '</li>');
                     }
-                    $('.lyric ul li:first-child').addClass('ready');
+                    $('.lyric ul li:nth-child(1)').addClass('ready');
                 },
                 error: function (e) {
                     console.log(e);
-                    $('.lyric ul').html('<li class="on">loading error!</li>');
+                    nolyric = true;
+                    $('.lyric .noLyric').addClass('on').html('Loading error!');
                 }
             })
         }
-        this.renderNew = function () {
+        this.renderNew = function (InData) {
             $('.now_playing span').html('Brand New Single');
             let _this = this;
             $.ajax({
@@ -217,7 +232,7 @@ $(function () {
                 dataType: 'json',
                 success: function (res) {
                     songList = res;
-                    let data = res[0];
+                    let data = InData || res[0];
                     _this.renderNowPlaying(data);
                     let playPromise = audio.play();
                     if (playPromise !== undefined) {
@@ -259,7 +274,7 @@ $(function () {
                     if (audio.currentTime === 0) {
                         $('.text_process .now_time').text('0:00');
                     }
-                    if (!nolyric && screeenFits) {
+                    if (!nolyric) {
                         _this.updateLyric();
                     }
                 }
@@ -270,7 +285,7 @@ $(function () {
             let keys = Object.keys(lyricContent);
             let tempObj = '';
             for (let i = keys.length - 1; i >= 0; i--) {
-                if (audio.currentTime + 0.2 >= parseFloat(keys[i])) {
+                if (audio.currentTime + 0.15 >= parseFloat(keys[i])) {
                     tempObj = $('.lyric ul li[data-time="' + keys[i] + '"]');
                     tempObj.addClass('on').removeClass('ready');
                     try {
@@ -288,12 +303,6 @@ $(function () {
         }
         this.resize = function () {
             winW = $(window).width();
-            if (winW < 1000) {
-                screeenFits = false;
-            } else {
-                screeenFits = true;
-                $('.lyric ul li').removeClass('ready on');
-            }
         }
         this.start = function (e) {
             e.stopPropagation();
@@ -351,9 +360,7 @@ $(function () {
                 audio.currentTime = 0;
             }
             $('.lyric ul li').removeClass('on ready');
-            if (screeenFits) {
-                _this.updateLyric();
-            }
+            _this.updateLyric();
             if (!audio.paused) {
                 globalAudioPaused = false;
             }
