@@ -69,9 +69,9 @@ $(function () {
                         $('.nav a[href="#/mywork"]').addClass('active');
                         $('.page[data-page="/mywork"]').addClass('active');
                         break;
-                    case 'aboutme':
-                        $('.nav a[href="#/aboutme"]').addClass('active');
-                        $('.page[data-page="/aboutme"]').addClass('active');
+                    case 'about':
+                        $('.nav a[href="#/about"]').addClass('active');
+                        $('.page[data-page="/about"]').addClass('active');
                         break;
                     default:
                         break;
@@ -83,13 +83,13 @@ $(function () {
             let mywork = function () {
                 changeRoute('mywork');
             }
-            let aboutme = function () {
-                changeRoute('aboutme');
+            let about = function () {
+                changeRoute('about');
             }
             let routes = {
                 '/': home,
                 '/mywork': mywork,
-                '/aboutme': aboutme
+                '/about': about
             }
 
             let router = Router(routes);
