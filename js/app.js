@@ -50,11 +50,17 @@ $(function () {
                 globalAudioPaused = false;
                 $('title').html(global_data.name);
             }
+            audio.onplaying = function(){
+                $('body').removeClass('loadstart')
+            }
             _this.renderNew();
+        }
+        this.initRoute = function(){
             // init route
             let changeRoute = function (where) {
                 $('.nav a').removeClass('active');
                 $('.page').removeClass('active');
+                $('.page_loading').addClass('done');
                 switch (where) {
                     case '/':
                         $('.nav a[href="#/"]').addClass('active');
@@ -236,17 +242,10 @@ $(function () {
                     songList = res;
                     let data = InData || res[0];
                     _this.renderNowPlaying(data);
-                    // let playPromise = audio.play();
-                    // if (playPromise !== undefined) {
-                    //     playPromise.then(function () {
-                    //         audio.pause();
-                    //         audio.currentTime = 0;
-                    //         audio.volume = 1;
-                    //     }).catch(function (e) {
-                    //         console.log(e)
-                    //     });
-                    // }
-                    _this.renderList();
+                    _this.initRoute();
+                    let s1 = setTimeout(function(){
+                        _this.renderList();
+                    }, 1000)
                 },
                 error: function (e) {
                     console.log(e);
@@ -375,6 +374,7 @@ $(function () {
             if (!globalAudioPaused) {
                 audio.pause();
             } else {
+                $('body').addClass('loadstart');
                 audio.play();
                 $('title').html(global_data.name);
             }
