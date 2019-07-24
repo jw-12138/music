@@ -315,7 +315,6 @@ $(function () {
         this.move = function (e) {
             if ($(this).hasClass('on')) {
                 globalAudioPaused = true;
-                console.log('move')
                 let nowX = e.pageX || e.originalEvent.changedTouches[0].pageX;
                 let abs = nowX - x;
                 let nowP = p + abs;
