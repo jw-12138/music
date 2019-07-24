@@ -35,10 +35,6 @@ $(function () {
                 $('.process_bar').css({
                     'width': '0%'
                 });
-                audio.pause();
-                audio.removeAttribute('src');
-                audio.load();
-                globalAudioPaused = true;
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 $('title').html('Jacky.Q');
@@ -240,16 +236,16 @@ $(function () {
                     songList = res;
                     let data = InData || res[0];
                     _this.renderNowPlaying(data);
-                    let playPromise = audio.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(function () {
-                            audio.pause();
-                            audio.currentTime = 0;
-                            audio.volume = 1;
-                        }).catch(function (e) {
-                            console.log(e)
-                        });
-                    }
+                    // let playPromise = audio.play();
+                    // if (playPromise !== undefined) {
+                    //     playPromise.then(function () {
+                    //         audio.pause();
+                    //         audio.currentTime = 0;
+                    //         audio.volume = 1;
+                    //     }).catch(function (e) {
+                    //         console.log(e)
+                    //     });
+                    // }
                     _this.renderList();
                 },
                 error: function (e) {
