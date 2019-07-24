@@ -12,6 +12,7 @@
 
 - Friends 页面 - 主要介绍一些我合作过的艺人以及玩音乐的朋友们
 - 将歌曲进行Single, EP, Album的分类
+- Demo 页面，主要发一些未完成的demo
 
 ### Known bugs
 
