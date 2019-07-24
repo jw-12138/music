@@ -50,7 +50,6 @@ $(function () {
                 $('title').html('Paused - ' + global_data.name);
             }
             audio.onplay = function () {
-                console.log('playing');
                 $('body').addClass('playing');
                 globalAudioPaused = false;
                 $('title').html(global_data.name);
@@ -226,8 +225,8 @@ $(function () {
                             audio.pause();
                             audio.currentTime = 0;
                             audio.volume = 1;
-                        }).catch(function (error) {
-                            console.log(error)
+                        }).catch(function (e) {
+                            console.log(e)
                         });
                     }
                     _this.renderList();
