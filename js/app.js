@@ -307,7 +307,6 @@ $(function () {
         }
         this.start = function (e) {
             e.stopPropagation();
-            globalAudioPaused = true;
             $('.process_bar').removeClass('t');
             p = $('.process_bar').width();
             $('.player').addClass('on');
@@ -315,6 +314,8 @@ $(function () {
         }
         this.move = function (e) {
             if ($(this).hasClass('on')) {
+                globalAudioPaused = true;
+                console.log('move')
                 let nowX = e.pageX || e.originalEvent.changedTouches[0].pageX;
                 let abs = nowX - x;
                 let nowP = p + abs;
@@ -346,10 +347,13 @@ $(function () {
             }
         }
         this.end = function (e) {
+            $('.player').removeClass('on');
+            if(!globalAudioPaused){
+                return false;
+            }
             _this = e.data.this;
             e.stopPropagation();
             $('.process_bar').addClass('t');
-            $('.player').removeClass('on');
             p = $('.process_bar').width();
             let percent = p / winW;
             let nowTime = global_data.duration * percent;
