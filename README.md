@@ -8,9 +8,10 @@
   - 优化对小屏幕的适配
   - 优化过渡动画
 
-### Features might be added in the future
+### Features will be added in the future
 
 - Friends 页面 - 主要介绍一些我合作过的艺人以及玩音乐的朋友们
+- 将歌曲进行Single, EP, Album的分类
 
 ### Known bugs
 
