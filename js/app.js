@@ -113,7 +113,6 @@ $(function () {
         }
         this.renderNowPlaying = function(data){
             playing_id = data.id;
-            $('.lyric ul').html('');
             $('.worklist li').removeClass('on');
             $('.queue_list_ul li').removeClass('on');
             $('li[data-id="'+playing_id+'"]').addClass('on');
@@ -208,6 +207,7 @@ $(function () {
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
+                    $('.lyric ul').html('');
                     lyricContent = res;
                     let keys = Object.keys(res);
                     keys = keys.reverse();
