@@ -62,6 +62,7 @@ body.active .player{bottom:0;}
     0%{transform: rotate(0deg);}
     100%{transform: rotate(360deg);}
 }
+.control.disabled{pointer-events: none;}
 .control svg.player_icon{width:30px;height:30px;cursor: pointer;transition: transform .2s ease;}
 .control svg.player_icon.off{fill:#999;cursor: not-allowed;}
 .control svg.player_icon:hover{transform: scale(1.1);}
@@ -140,7 +141,7 @@ body.show_queue .queue_list{right:0;}
 .page_loading.done{height: 0;}
 .page_loading.done .current_playing{opacity: 0;}
 .current_playing{position: absolute;top:50%;left:50%;display: flex;justify-content: space-between;align-items: center;z-index: 333;height:60px;width:100px;margin-left:-50.5px;margin-top:-30px;opacity: 0;}
-.current_playing .fragment{animation: onPlaying 1s ease infinite;animation-delay: 0ms;width:14px;height:30px;background: #fff;}
+.current_playing .fragment{animation: onPlaying 1s ease infinite;animation-delay: 0ms;width:14px;height:30px;background: #fff;box-shadow: 0 0 15px rgba(0,0,0,.2);border-radius: 3px;}
 .current_playing .fragment:nth-child(2){animation-delay: 200ms;}
 .current_playing .fragment:nth-child(3){animation-delay: 400ms;}
 .current_playing .fragment:nth-child(4){animation-delay: 600ms;}

@@ -27,7 +27,6 @@ $(function () {
             $('.control .prev').off().on('click', this.prevSong);
             $(document).on('click','.worklist li', this.setNowPlaying);
             $(document).on('click','.queue_list_ul li', this.setNowPlaying);
-            $(window).on('scroll',this.scrollFun);
             audio.volume = 0;
             audio.onended = function () {
                 $('body').removeClass('playing');
@@ -98,11 +97,6 @@ $(function () {
 
             let router = Router(routes);
             router.init('/');
-        }
-        this.scrollFun = function(){
-            let s = $(window).scrollTop();
-            let sr = s * 0.23;
-            $('.section_album .bg').css({'transform':'scale(2) translateY('+ sr +'px)'})
         }
         this.setNowPlaying = function(){
             if($(this).hasClass('on')){
@@ -312,6 +306,7 @@ $(function () {
         }
         this.start = function (e) {
             e.stopPropagation();
+            $('.control').addClass('disabled');
             $('.process_bar').removeClass('t');
             p = $('.process_bar').width();
             $('.player').addClass('on');
@@ -351,6 +346,7 @@ $(function () {
             }
         }
         this.end = function (e) {
+            $('.control').removeClass('disabled');
             $('.player').removeClass('on');
             if(!globalAudioPaused){
                 return false;
