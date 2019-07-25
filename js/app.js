@@ -40,6 +40,9 @@ $(function () {
                 $('title').html('Jacky.Q');
                 app.nextSong();
             }
+            audio.onwaiting = function(){
+                $('body').addClass('loadstart')
+            }
             audio.onpause = function () {
                 $('body').removeClass('playing');
                 globalAudioPaused = true;
@@ -135,6 +138,8 @@ $(function () {
                 'alt': data.name,
                 'title': data.name
             });
+            $('.player img.wave').remove();
+            $('.player').append('<img class="wave" src="'+ data.wave +'">');
             $('.platform_list').html('');
             $('.listen_on').show();
             if(data.other_platform.length != 0){
@@ -210,12 +215,12 @@ $(function () {
             }
         }
         this.renderLyric = function (lyric) {
+            $('.lyric ul').html('');
             $.ajax({
                 url: lyric,
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
-                    $('.lyric ul').html('');
                     lyricContent = res;
                     let keys = Object.keys(res);
                     keys = keys.reverse();
@@ -354,7 +359,8 @@ $(function () {
             e.stopPropagation();
             $('.process_bar').addClass('t');
             p = $('.process_bar').width();
-            let percent = p / winW;
+            let percent = p / $('.player').outerWidth();
+            $('.process_bar').css({'width':percent * 100 + '%'});
             let nowTime = global_data.duration * percent;
             if (isNaN(nowTime)) {
                 return false;
