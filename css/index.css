@@ -81,9 +81,7 @@ body.loadstart .control .loading{display: block;}
 .lyric ul li.ready{opacity: 0.3;top:20px;}
 .lyric ul li.on{opacity: 1;top:0;text-shadow: 0 0 5px rgba(0,0,0,.5);}
 body.active .lyric{bottom: 0;}
-
 body.active .control{bottom:0;}
-
 .process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: #000;height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;border-radius: 0 5px 5px 0;}
 .process_bar .handle{width:24px;height: 24px;position: absolute;top:50%;margin-top:-12px;right:0;}
 .process_bar.t{transition: width .1s ease;}
@@ -152,7 +150,7 @@ body.show_queue .queue_list{right:0;}
     .player{padding:0 20px;background-color: rgba(0,0,0,.7);backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
     body.active .lyric{bottom: 100px;}
     .control{right:20px;}
-    .lyric{font-size:11px;position: fixed;width:100%;left:0;bottom:-100px;height:40px;pointer-events: none;}
+    .lyric{font-size:11px;position: fixed;width:100%;left:0;bottom:-100px;height:40px;pointer-events: none;background-color: rgba(0,0,0,.5);backdrop-filter: blur(20px) saturate(180%);-webkit-backdrop-filter: blur(20px) saturate(180%);}
     .lyric ul li{height:40px;line-height: 40px;padding:0 10px;white-space: nowrap;text-overflow: ellipsis;}
     .lyric ul li.ready{top:12px;font-size: 9px}
     .lyric ul li.on{top:0;font-size: 12px;}
