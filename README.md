@@ -2,6 +2,9 @@
 
 ### Version discription
 
+- 1.0.2 beta - 20190726 (MJQ HAPPY BIRTHDAY!🎂)
+  - 优化进度条和歌词更新算法
+
 - 1.0.1 beta - 20190725
   - 播放音频可视化
   - 优化音频文件响度

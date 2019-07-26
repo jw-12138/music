@@ -55,6 +55,9 @@ $(function () {
             audio.onplaying = function(){
                 $('body').removeClass('loadstart')
             }
+            audio.ontimeupdate = function(){
+                _this.updateTime();
+            }
             _this.renderNew();
         }
         this.initRoute = function(){
@@ -253,33 +256,30 @@ $(function () {
             });
         }
         this.updateTime = function () {
-            let _this = this;
-            let s = setTimeout(function () {
-                if (!globalAudioPaused) {
-                    let t = audio.currentTime;
-                    let _p = t / global_data.duration * 100;
-                    $('.process_bar').css({
-                        'width': _p + '%'
-                    });
-                    let _min = Math.floor(audio.currentTime / 60);
-                    let _sec = audio.currentTime % 60;
-                    _sec = _sec.toFixed(0);
-                    if (_sec < 10) _sec = '0' + _sec;
-                    if (_sec > 59) {
-                        _sec = '00';
-                        _min++;
-                    }
-                    let _durStr = _min + ':' + _sec;
-                    $('.text_process .now_time').text(_durStr);
-                    if (audio.currentTime === 0) {
-                        $('.text_process .now_time').text('0:00');
-                    }
-                    if (!nolyric) {
-                        _this.updateLyric();
-                    }
+            let _this = app;
+            if (!globalAudioPaused) {
+                let t = audio.currentTime;
+                let _p = t / global_data.duration * 100;
+                $('.process_bar').css({
+                    'width': _p + '%'
+                });
+                let _min = Math.floor(audio.currentTime / 60);
+                let _sec = audio.currentTime % 60;
+                _sec = _sec.toFixed(0);
+                if (_sec < 10) _sec = '0' + _sec;
+                if (_sec > 59) {
+                    _sec = '00';
+                    _min++;
                 }
-                _this.updateTime();
-            }, 150)
+                let _durStr = _min + ':' + _sec;
+                $('.text_process .now_time').text(_durStr);
+                if (audio.currentTime === 0) {
+                    $('.text_process .now_time').text('0:00');
+                }
+                if (!nolyric) {
+                    _this.updateLyric();
+                }
+            }
         }
         this.updateLyric = function () {
             let keys = Object.keys(lyricContent);
