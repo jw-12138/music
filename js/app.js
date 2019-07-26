@@ -9,6 +9,7 @@ $(function () {
         let songList = [];
         let playing_id = 0;
         let winW = $(window).width();
+        let bufferId = -1;
         this.init = function () {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -39,6 +40,9 @@ $(function () {
                 $('title').html('Jacky.Q');
                 app.nextSong();
             }
+            bufferId = setInterval(function(){
+                _this.updateBuffered();
+            }, 200)
             audio.onwaiting = function(){
                 $('body').addClass('loadstart')
             }
@@ -54,7 +58,6 @@ $(function () {
             }
             audio.ontimeupdate = function(){
                 $('body').removeClass('loadstart')
-                _this.updateBuffered();
                 _this.updateTime();
             }
             _this.renderNew();

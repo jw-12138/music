@@ -51,7 +51,7 @@ body.playing .play_section .ctrl-icon.play{opacity: 0;}
 .listen_on svg{width:16px;height:16px;}
 .platform_icon{height:24px;width:auto;margin-left: 5px;}
 footer{padding:20px;font-size: 12px;color:#fff;text-align: center;}
-.player{display: flex;position: fixed;bottom:-140px;height: 100px;width:100%;z-index: 1000;justify-content: space-between;align-items: center;box-shadow: 0 0 30px rgba(0,0,0,.3);padding:0 40px;cursor: w-resize;transition: bottom .2s ease;}
+.player{display: flex;position: fixed;bottom:-140px;height: 100px;width:100%;z-index: 1000;justify-content: space-between;align-items: center;box-shadow: 0 0 30px rgba(0,0,0,.3);padding:0 40px;cursor: w-resize;transition: bottom .2s ease;background-color: rgba(0,0,0,.7);backdrop-filter: blur(20px) saturate(180%);-webkit-backdrop-filter: blur(20px) saturate(180%);}
 body.active .player{bottom:0;}
 .album{width:150px;height: 60px;display: flex;align-items: center;position: relative;z-index: 2;}
 .text_process{font-size:13px;color:#fff;margin-left:10px;display: block;flex-shrink: 0;}
@@ -73,7 +73,7 @@ body.playing .control .playnpause svg.pause{display: block;}
 body.playing .control .playnpause svg.play{display: none;}
 body.loadstart .control .playnpause svg.pause,body.loadstart .control .playnpause svg.play{display: none;}
 body.loadstart .control .loading{display: block;}
-.lyric{font-size:14px;color:#fff;z-index: 1000;overflow:hidden;align-self: flex-start;height: 100px;position: fixed;bottom:-100px;width:100%;pointer-events: none;z-index: 999;backdrop-filter: blur(20px) saturate(180%);-webkit-backdrop-filter: blur(20px) saturate(180%);background-color: rgba(0,0,0,.7);transition: bottom .3s ease;}
+.lyric{font-size:14px;color:#fff;z-index: 1002;overflow:hidden;align-self: flex-start;height: 100px;position: fixed;bottom:-100px;width:100%;pointer-events: none;transition: bottom .3s ease;}
 .lyric .noLyric{display:none;justify-content: center;align-items: center;height:100px;}
 .lyric .noLyric.on{display:flex;}
 .lyric ul{width:100%;}
@@ -84,11 +84,11 @@ body.active .lyric{bottom: 0;}
 
 body.active .control{bottom:0;}
 
-.process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: rgba(255,255,255,.15);height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;border-radius: 0 5px 5px 0;}
+.process_bar{position: absolute;top:0;left:0;width:0%;z-index: 1;background-color: #000;height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;border-radius: 0 5px 5px 0;}
 .process_bar .handle{width:24px;height: 24px;position: absolute;top:50%;margin-top:-12px;right:0;}
 .process_bar.t{transition: width .1s ease;}
-.buffered{height: 100%;top:0;position: absolute;pointer-events: none;width:0;transition: width .2s ease;overflow:hidden;box-shadow: inset 0 0 40px rgba(255,255,255,.2);border-radius: 0 5px 5px 0;}
-img.wave{height:100%;position: absolute;top: 0;left:0;opacity:.15;max-width: none;width: 100%;pointer-events: none;}
+.buffered{height: 100%;top:0;position: absolute;pointer-events: none;width:0;transition: width .2s ease;overflow:hidden;box-shadow: inset 0 0 40px rgba(255,255,255,.2);}
+img.wave{height:100%;position: absolute;top: 0;left:0;opacity:.15;max-width: none;width: 100%;pointer-events: none;z-index: 1;}
 .audio{position: absolute;top:-9999999px;width:1px;height:1px;opacity: 0;pointer-events: none;}
 .play_all{margin:30px auto;width:200px;background-color: #fff;border-radius: 50px;height:50px;font-size: 18px;color:#333;line-height: 50px;text-align: center;background:#fff;}
 .worklist{width:440px;margin:40px auto 0;cursor: pointer;padding: 20px;}
