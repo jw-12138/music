@@ -9,6 +9,7 @@ $(function () {
         let songList = [];
         let playing_id = 0;
         let winW = $(window).width();
+        let updateBufferId = -1;
         this.init = function () {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -52,13 +53,29 @@ $(function () {
                 globalAudioPaused = false;
                 $('title').html(global_data.name);
             }
-            audio.onplaying = function(){
-                $('body').removeClass('loadstart')
-            }
             audio.ontimeupdate = function(){
+                $('body').removeClass('loadstart')
+                _this.updateBuffered();
                 _this.updateTime();
             }
             _this.renderNew();
+        }
+        this.updateBuffered = function(){
+            window.clearInterval(updateBufferId)
+            let bl = audio.buffered.length;
+            if(bl == 0){
+                return false;
+            }
+            $('.player .buffered').remove();
+            try {
+                for (var i = bl - 1; i >= 0; i--) {
+                    let left = audio.buffered.start(i) / global_data.duration * 100;
+                    let width = (audio.buffered.end(i) - audio.buffered.start(i)) / global_data.duration * 100;
+                    $('.player').append('<div class="buffered" style="left:'+left+'%;width:'+width+'%;"></div>');
+                }
+            } catch(e) {
+                console.log(e);
+            }
         }
         this.initRoute = function(){
             // init route
@@ -123,6 +140,7 @@ $(function () {
             playing_id = data.id;
             $('.worklist li').removeClass('on');
             $('.queue_list_ul li').removeClass('on');
+            $('.player .buffered').remove();
             $('li[data-id="'+playing_id+'"]').addClass('on');
             $('.section_album img.bg').attr({
                 'src': data.artwork
@@ -135,8 +153,6 @@ $(function () {
                 'alt': data.name,
                 'title': data.name
             });
-            $('.player img.wave').remove();
-            $('.player').append('<img class="wave" src="'+ data.wave +'">');
             $('.platform_list').html('');
             $('.listen_on').show();
             if(data.other_platform.length != 0){
@@ -158,6 +174,8 @@ $(function () {
             let durStr = min + ':' + sec;
             audio.src = data.src;
             $('.text_process .all_time').text(durStr);
+            $('.player img.wave').remove();
+            $('.player').append('<img class="wave" src="'+global_data.wave+'">');
             if (data.lyric == '') {
                 nolyric = true;
                 $('.lyric .noLyric').addClass('on').html('Just music, enjoy!');
@@ -362,6 +380,7 @@ $(function () {
                 return false;
             }
             audio.currentTime = nowTime;
+            $('body').addClass('loadstart');
             if (nowTime < 2) {
                 audio.currentTime = 0;
             }

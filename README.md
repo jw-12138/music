@@ -3,6 +3,7 @@
 ### Version discription
 
 - 1.0.2 beta - 20190726 (MJQ HAPPY BIRTHDAY!🎂)
+  - 添加Buffered View
   - 优化进度条和歌词更新算法
 
 - 1.0.1 beta - 20190725
