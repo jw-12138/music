@@ -1,6 +1,6 @@
 # Music Homepage of Jacky.Q
 
-### Version discription
+### Version description
 
 - 1.0.2 beta - 20190726 (MJQ HAPPY BIRTHDAY!🎂)
   - 添加Buffered View
