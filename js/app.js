@@ -9,7 +9,6 @@ $(function () {
         let songList = [];
         let playing_id = 0;
         let winW = $(window).width();
-        let updateBufferId = -1;
         this.init = function () {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -61,7 +60,6 @@ $(function () {
             _this.renderNew();
         }
         this.updateBuffered = function(){
-            window.clearInterval(updateBufferId)
             let bl = audio.buffered.length;
             if(bl == 0){
                 return false;
