@@ -8,7 +8,7 @@
         "wave":"src/leave/wave.png",
         "genre": ["#Moombahton"],
         "release_date":"2019-03-27",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "SoundCloud",
             "href": "https://soundcloud.com/jackyqofficial/leavejackyq-remix"
@@ -24,7 +24,7 @@
         "wave":"src/addictionToYou/wave.png",
         "genre": ["#FutureBass"],
         "release_date":"2019-03-09",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=1350873167"
@@ -43,7 +43,7 @@
         "wave":"src/journeyToTheWest/wave.png",
         "genre": ["#ElectroHouse"],
         "release_date":"2018-12-28",
-        "album_discription": "还记得小时候只要主题曲一响，不管在干什么总会屁颠屁颠跑到电视机前看《西游记》，美好回忆，致敬经典！",
+        "album_description": "还记得小时候只要主题曲一响，不管在干什么总会屁颠屁颠跑到电视机前看《西游记》，美好回忆，致敬经典！",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=1335960905"
@@ -59,7 +59,7 @@
         "wave":"src/saveMyHeart/wave.png",
         "genre": ["#ElectroHouse","#FutureBass"],
         "release_date":"2018-10-13",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=1317660901"
@@ -75,7 +75,7 @@
         "wave":"src/sparks/wave.png",
         "genre": ["#ElectroHouse"],
         "release_date":"2018-05-15",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=562050540"
@@ -91,7 +91,7 @@
         "wave":"src/theColor/wave.png",
         "genre": ["#MelodyBass"],
         "release_date":"2018-04-12",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=552315062"
@@ -107,7 +107,7 @@
         "wave":"src/lover/wave.png",
         "genre": ["#Moombahton"],
         "release_date":"2017-11-09",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=519816280"
@@ -123,7 +123,7 @@
         "wave":"src/someone/wave2.png",
         "genre": ["#ElectroHouse"],
         "release_date":"2017-09-15",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": []
     },
     {
@@ -136,7 +136,7 @@
         "wave":"src/someone/wave.png",
         "genre": ["#Pop"],
         "release_date":"2017-08-24",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": []
     },
     {
@@ -149,7 +149,7 @@
         "wave":"src/dontYouGiveUp/wave.png",
         "genre": ["#ElectroHouse"],
         "release_date":"2017-08-02",
-        "album_discription": "",
+        "album_description": "",
         "other_platform": [{
             "name": "Netease Music (网易云音乐)",
             "href": "https://music.163.com/#/song?id=495063756"
