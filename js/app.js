@@ -74,6 +74,7 @@ $(function () {
                 $('title').html('Paused - ' + global_data.name);
             }
             audio.onplay = function () {
+                console.log('playing');
                 $('body').addClass('playing');
                 globalAudioPaused = false;
                 $('title').html(global_data.name);
@@ -301,17 +302,7 @@ $(function () {
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
-                    if(res.success){
-                        songList = res.data;
-                        let data = InData || songList[0];
-                        _this.renderNowPlaying(data);
-                        _this.initRoute();
-                        let s1 = setTimeout(function(){
-                            _this.renderList();
-                        }, 1000)
-                    }else{
-                        console.log(e);
-                        alert('Something went wrong')
+
                     }
                 },
                 error: function (e) {
