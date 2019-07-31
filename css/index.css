@@ -167,7 +167,7 @@ body.show_detail .album_detail .album_detail_wrap{transform: translateX(0);}
 .album_detail_wrap .detail_artwork img{border-radius: 5px;box-shadow: 0 0 45px rgba(255,255,255,.2);}
 .album_detail_wrap .introduction {color:#fff;line-height: 26px;}
 .album_detail_wrap .introduction p.title{font-size: 24px;font-weight: bold;margin-top: 20px;line-height: 40px;}
-.album_detail_wrap .introduction p{margin:5px 0;font-size: 15px;padding:0 5px;}
+.album_detail_wrap .introduction p{margin:5px 0;font-size: 15px;padding:0 5px;line-height: 2;}
 .album_detail_wrap .introduction span.detail_play_btn{display: flex;padding:8px 0;border-radius:40px;font-size: 14px;color:#000;background-color: #fff;width: 172px;justify-content: center;align-items: center;border:2px solid transparent;transition: border-color .2s ease,background-color .2s ease,color .2s ease;cursor: pointer;margin-top: 10px;}
 .album_detail_wrap .introduction span.detail_play_btn:hover{border-color: #fff;background-color: transparent;color:#fff;}
 .album_detail_wrap .introduction span.detail_play_btn svg{fill:#000;margin-right: 6px;transition: fill .2s ease;}
