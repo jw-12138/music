@@ -10,6 +10,9 @@ $(function () {
         let playing_id = 0;
         let winW = $(window).width();
         let bufferId = -1;
+        let triggerTime = 0;
+        let bpmCount = 0;
+        let sob = 0;
         this.init = function () {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -26,7 +29,7 @@ $(function () {
             $('.queue_btn').off().on('click', this.showQueue);
             $('.control .next').off().on('click', this.nextSong);
             $('.control .prev').off().on('click', this.prevSong);
-            $(document).on('click','.worklist li', this.setNowPlaying);
+            $(document).on('click','.worklist li', this.showAlbumDetail);
             $(document).on('click','.queue_list_ul li', this.setNowPlaying);
             audio.volume = 0;
             audio.onended = function () {
@@ -41,8 +44,27 @@ $(function () {
                 app.nextSong();
             }
             bufferId = setInterval(function(){
-                _this.updateBuffered();
+                _this.updateBuffered();                
             }, 200)
+            let bpmId = setInterval(function(){
+                _this.updateTime();
+                if(global_data.bpm){
+                    if(audio.currentTime < global_data.bpm_start){
+                        return false;
+                    }
+                    let ac = audio.currentTime - global_data.bpm_start;
+                    let point = ac % sob;
+                    if(point < triggerTime){
+                        bpmCount++;
+                        if(bpmCount % 2 == 0){
+                            $('body').removeClass('bpm_on');
+                        }else{
+                            $('body').addClass('bpm_on');
+                        }
+                    }
+                    triggerTime = point;
+                }
+            }, 16)
             audio.onwaiting = function(){
                 $('body').addClass('loadstart')
             }
@@ -58,9 +80,20 @@ $(function () {
             }
             audio.ontimeupdate = function(){
                 $('body').removeClass('loadstart')
-                _this.updateTime();
             }
             _this.renderNew();
+        }
+        this.showAlbumDetail = function(){
+            let id = $(this).attr('data-id');
+            let pos = app.getSondPosition(id);
+            let data = songList[pos];
+        }
+        this.getSondPosition = function(id){
+            let idList = [];
+            for (let i = 0; i < songList.length; i++) {
+                idList.push(songList[i].id);
+            }
+            return idList.indexOf(id);
         }
         this.updateBuffered = function(){
             let bl = audio.buffered.length;
@@ -120,6 +153,7 @@ $(function () {
             router.init('/');
         }
         this.setNowPlaying = function(){
+            bpmCount = 0;
             if($(this).hasClass('on')){
                 if(!globalAudioPaused){
                     return false;
@@ -165,6 +199,9 @@ $(function () {
                 $('.listen_on').hide();
             }
             global_data = data;
+            if(global_data.bpm){
+                sob = 60 / global_data.bpm;
+            }
             let dur = data.duration;
             let min = Math.floor(dur / 60);
             let sec = dur % 60;
@@ -256,17 +293,26 @@ $(function () {
             $('.now_playing span').html('Brand New Single');
             let _this = this;
             $.ajax({
-                url: 'src/data.json',
+                // url: 'https://api.jw12138.com',
+                url: 'http://127.0.0.1/api.jw12138.com',
+                data:{
+                    action:'data'
+                },
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
-                    songList = res;
-                    let data = InData || res[0];
-                    _this.renderNowPlaying(data);
-                    _this.initRoute();
-                    let s1 = setTimeout(function(){
-                        _this.renderList();
-                    }, 1000)
+                    if(res.success){
+                        songList = res.data;
+                        let data = InData || songList[0];
+                        _this.renderNowPlaying(data);
+                        _this.initRoute();
+                        let s1 = setTimeout(function(){
+                            _this.renderList();
+                        }, 1000)
+                    }else{
+                        console.log(e);
+                        alert('Something went wrong')
+                    }
                 },
                 error: function (e) {
                     console.log(e);
@@ -405,13 +451,9 @@ $(function () {
             }
         }
         this.nextSong = function () {
-            let idList = [];
-            for (let i = 0; i < songList.length; i++) {
-                idList.push(songList[i].id);
-            }
-            let thisItemsPostion = idList.indexOf(playing_id);
+            let thisItemsPostion = app.getSondPosition(playing_id);
             let nextPosition = thisItemsPostion + 1;
-            if(nextPosition >= idList.length){
+            if(nextPosition >= songList.length){
                 nextPosition = 0;
             }
             let nextSongData = songList[nextPosition];
@@ -422,14 +464,10 @@ $(function () {
             app.play(return_this);
         }
         this.prevSong = function () {
-            let idList = [];
-            for (let i = 0; i < songList.length; i++) {
-                idList.push(songList[i].id);
-            }
-            let thisItemsPostion = idList.indexOf(playing_id);
+            let thisItemsPostion = app.getSondPosition(playing_id);
             let prevPosition = thisItemsPostion - 1;
             if(prevPosition < 0){
-                prevPosition = idList.length - 1;
+                prevPosition = songList.length - 1;
             }
             let prevSongData = songList[prevPosition];
             app.renderNowPlaying(prevSongData);
