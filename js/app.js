@@ -3,6 +3,7 @@ $(function () {
         let x, p;
         let globalAudioPaused = true;
         let audio = $('.audio')[0];
+        let sample = $('.aboutme_sample')[0];
         let global_data = {};
         let nolyric = false;
         let lyricContent = '';
@@ -30,7 +31,12 @@ $(function () {
             $('.control .next').off().on('click', this.nextSong);
             $('.control .prev').off().on('click', this.prevSong);
             $(document).on('click','.worklist li', this.showAlbumDetail);
+            $(document).on('click','.album_detail .close', this.hideAlbumDetail);
             $(document).on('click','.queue_list_ul li', this.setNowPlaying);
+            $(document).on('click','.detail_play_btn',this.setNowPlaying)
+            $('.sample').off().on('click',{
+                this: this
+            },this.playSample);
             audio.volume = 0;
             audio.onended = function () {
                 $('body').removeClass('playing');
@@ -47,7 +53,6 @@ $(function () {
                 _this.updateBuffered();                
             }, 200)
             let bpmId = setInterval(function(){
-                _this.updateTime();
                 if(global_data.bpm){
                     if(audio.currentTime < global_data.bpm_start){
                         return false;
@@ -74,22 +79,84 @@ $(function () {
                 $('title').html('Paused - ' + global_data.name);
             }
             audio.onplay = function () {
-                console.log('playing');
                 $('body').addClass('playing');
                 globalAudioPaused = false;
                 $('title').html(global_data.name);
             }
             audio.ontimeupdate = function(){
+                _this.updateTime();
                 $('body').removeClass('loadstart')
             }
             _this.renderNew();
+
+            sample.ontimeupdate = function(){
+                let sample_p = sample.currentTime / sample.duration * $('.sample.on').outerWidth();
+                $('.sample.on .sample_point').css({'left':sample_p + 'px'});
+            }
+            sample.onended = function () {
+                $('.sample.on .sample_point').css({'left':0});
+                $('.sample').removeClass('on');
+            }
+        }
+        this.playSample = function(e){
+            if(!globalAudioPaused){
+                app.play(e);
+            }
+            if($(this).hasClass('on')){
+                sample.pause()
+                $(this).removeClass('on');
+                return false;
+            }
+            $('.sample').removeClass('on');
+            $('.sample .sample_point').css({'left':0});
+            $(this).addClass('on');
+            let sample_src = $(this).attr('data-src');
+            sample.src = sample_src;
+            sample.play()
+        }
+        this.hideAlbumDetail = function(){
+            $('body').removeClass('show_detail');
         }
         this.showAlbumDetail = function(){
             let id = $(this).attr('data-id');
-            let pos = app.getSondPosition(id);
-            let data = songList[pos];
+            let pos = app.getSongPosition(id);
+            let song_data = songList[pos];
+            let description  = '';
+            if(song_data.album_description){
+                description = '<p>\
+                    Description: '+song_data.album_description+'\
+                </p>';
+            }
+            let genre = '';
+            if(song_data.genre){
+                for (var i = song_data.genre.length - 1; i >= 0; i--) {
+                    genre += '<span class="hashtag">'+song_data.genre[i]+'</span> ';
+                }
+            }
+            let sameSong = '';
+            if(playing_id == id && globalAudioPaused){
+                sameSong = ' on';
+            }
+            let intro = '<p class="title">'+song_data.name+'</p>\
+                <p>\
+                    Released on: '+song_data.release_date+'\
+                </p>\
+                <p>\
+                    Genre: '+genre+'\
+                </p>\
+                <p>\
+                    BPM: '+song_data.bpm+'\
+                </p>\
+                '+ description +'\
+                <p>\
+                    <span class="detail_play_btn'+sameSong+'" data-id="'+song_data.id+'"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10.8 15.9l4.67-3.5c.27-.2.27-.6 0-.8L10.8 8.1c-.33-.25-.8-.01-.8.4v7c0 .41.47.65.8.4zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg> Play This Song</span>\
+                </p>';
+            $('.album_detail_wrap .introduction').html(intro);
+            $('.album_detail_wrap .detail_artwork img').attr({'src':song_data.artwork})
+            $('body').addClass('show_detail');
         }
-        this.getSondPosition = function(id){
+        this.getSongPosition = function(id){
+            id = parseInt(id)
             let idList = [];
             for (let i = 0; i < songList.length; i++) {
                 idList.push(songList[i].id);
@@ -99,6 +166,16 @@ $(function () {
         this.updateBuffered = function(){
             let bl = audio.buffered.length;
             if(bl == 0){
+                return false;
+            }
+            let ae = audio.buffered.end(0);
+            try {
+                ae = audio.buffered.end(0);
+            } catch(e) {
+                console.log(e);
+            }
+            if(bl == 1 && Math.abs(ae - global_data.duration) < 0.1){
+                $('.player .buffered').remove();
                 return false;
             }
             $('.player .buffered').remove();
@@ -261,7 +338,7 @@ $(function () {
                         <img src="' + songList[i].artwork + '" alt="songList[i].name">\
                         <div class="workname">\
                             <div class="song_title">' + songList[i].name + '</div>\
-                            Released on : '+songList[i].release_date+'<br>\
+                            Released on: '+songList[i].release_date+'<br>\
                             ' + tags + '\
                         </div>\
                     </div>\
@@ -294,15 +371,24 @@ $(function () {
             $('.now_playing span').html('Brand New Single');
             let _this = this;
             $.ajax({
-                // url: 'https://api.jw12138.com',
-                url: 'http://127.0.0.1/api.jw12138.com',
+                url: 'https://api.jw12138.com',
                 data:{
                     action:'data'
                 },
                 type: 'get',
                 dataType: 'json',
                 success: function (res) {
-
+                    if(res.success){
+                        songList = res.data;
+                        let data = InData || songList[0];
+                        _this.renderNowPlaying(data);
+                        _this.initRoute();
+                        let s1 = setTimeout(function(){
+                            _this.renderList();
+                        }, 1000)
+                    }else{
+                        console.log(e);
+                        alert('Something went wrong')
                     }
                 },
                 error: function (e) {
@@ -429,6 +515,9 @@ $(function () {
             }
         }
         this.play = function (e) {
+            $('.sample.on .sample_point').css({'left':0});
+            $('.sample').removeClass('on');
+            sample.pause();
             let _this = e.data.this;
             $('body').addClass('active');
             $('.now_playing span').html('Now Playing')
@@ -442,7 +531,7 @@ $(function () {
             }
         }
         this.nextSong = function () {
-            let thisItemsPostion = app.getSondPosition(playing_id);
+            let thisItemsPostion = app.getSongPosition(playing_id);
             let nextPosition = thisItemsPostion + 1;
             if(nextPosition >= songList.length){
                 nextPosition = 0;
@@ -455,7 +544,7 @@ $(function () {
             app.play(return_this);
         }
         this.prevSong = function () {
-            let thisItemsPostion = app.getSondPosition(playing_id);
+            let thisItemsPostion = app.getSongPosition(playing_id);
             let prevPosition = thisItemsPostion - 1;
             if(prevPosition < 0){
                 prevPosition = songList.length - 1;

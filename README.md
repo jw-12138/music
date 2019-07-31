@@ -2,7 +2,17 @@
 
 ### Version description
 
-- 1.0.2 beta - 20190726 (MJQ HAPPY BIRTHDAY!🎂)
+- 1.0.3 beta - 20190731
+  - 当音频加载完成后，取消继续加载buffer bar
+  - 优化Sample播放形式
+  - 使用了chuan新字体(
+  - 优化进度条样式
+  - 取消压缩mp3
+  - 歌曲添加BPM信息
+  - BPM可视化
+  - 添加Album详情
+
+- 1.0.2 beta - 20190726 (MJQ 🎂)
   - 添加Buffered View
   - 优化进度条和歌词更新算法
 
