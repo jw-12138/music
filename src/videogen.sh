@@ -1,0 +1,1 @@
+ffmpeg -i audio.mp3 -filter_complex "[0:a]avectorscope=s=1280x720,format=yuv144p[v]" -map "[v]" -map 0:a avector.mp4
