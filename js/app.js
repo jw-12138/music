@@ -1,6 +1,7 @@
 $(function () {
     let app = function () {
         let x, p;
+        let px, pp;
         let globalAudioPaused = true;
         let audio = $('.audio')[0];
         let sample = $('.aboutme_sample')[0];
@@ -14,6 +15,8 @@ $(function () {
         let triggerTime = 0;
         let bpmCount = 0;
         let sob = 0;
+        let performanceOK = false;
+        let bpmId = 0;
         this.init = function () {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -21,6 +24,11 @@ $(function () {
             $('.player').on('mouseup touchend', {
                 this: this
             }, this.end);
+            $('.all_pics_show').on('mousedown touchstart', this.picStart);
+            $('.all_pics_show').on('mousemove touchmove', this.picMove);
+            $('.all_pics_show').on('mouseup touchend', {
+                this: this
+            }, this.picEnd);
             $(window).off('resize').on('resize', this.resize);
             this.resize();
             $('.global_play_btn').off().on('click', {
@@ -33,10 +41,16 @@ $(function () {
             $(document).on('click','.worklist li', this.showAlbumDetail);
             $(document).on('click','.album_detail .close', this.hideAlbumDetail);
             $(document).on('click','.queue_list_ul li', this.setNowPlaying);
-            $(document).on('click','.detail_play_btn',this.setNowPlaying)
+            $(document).on('click','.detail_play_btn',this.setNowPlaying);
+            $('.nav_menu').off().on('click',this.showNav);
+            $('.nav_dismiss ._btn').off().on('click',this.hideNav);
             $('.sample').off().on('click',{
                 this: this
             },this.playSample);
+            $('.all_pics_show ._btn._right').off().on('click',this.showNextPic);
+            $('.all_pics_show ._btn._left').off().on('click',this.showPrevPic);
+            $('.all_pics_show ._wrap .close').off().on('click',this.hidePicList);
+            $('.pic_album.able').off().on('click',this.renderPicList);
             audio.volume = 0;
             audio.onended = function () {
                 $('body').removeClass('playing');
@@ -52,24 +66,6 @@ $(function () {
             bufferId = setInterval(function(){
                 _this.updateBuffered();                
             }, 200)
-            let bpmId = setInterval(function(){
-                if(global_data.bpm){
-                    if(audio.currentTime < global_data.bpm_start){
-                        return false;
-                    }
-                    let ac = audio.currentTime - global_data.bpm_start;
-                    let point = ac % sob;
-                    if(point < triggerTime){
-                        bpmCount++;
-                        if(bpmCount % 2 == 0){
-                            $('body').removeClass('bpm_on');
-                        }else{
-                            $('body').addClass('bpm_on');
-                        }
-                    }
-                    triggerTime = point;
-                }
-            }, 16)
             audio.onwaiting = function(){
                 $('body').addClass('loadstart')
             }
@@ -96,6 +92,102 @@ $(function () {
             sample.onended = function () {
                 $('.sample.on .sample_point').css({'left':0});
                 $('.sample').removeClass('on');
+            }
+        }
+        this.updateBPM = function(){
+            window.clearTimeout(bpmId)
+            if(global_data.bpm){
+                if(audio.currentTime < global_data.bpm_start){
+                    return false;
+                }
+                let ac = audio.currentTime - global_data.bpm_start;
+                let point = ac % sob;
+                if(point < triggerTime){
+                    bpmCount++;
+                    if(bpmCount % 2 == 0){
+                        $('body').removeClass('bpm_on');
+                    }else{
+                        $('body').addClass('bpm_on');
+                    }
+                }
+                triggerTime = point;
+            }
+            if(performanceOK){
+                bpmId = setTimeout(function(){
+                    app.updateBPM();
+                }, 40)
+            }
+        }
+        this.isPerformanceOK = function(itv,callback){
+            let performanceTestCount = 0;
+            let p_data = [];
+            let t_f = function(){
+                window.clearTimeout(test)
+                let p_date_data = new Date();
+                p_data.push(p_date_data.getTime());
+                performanceTestCount++;
+                if(performanceTestCount > 10){
+                    let p_minus_data = [];
+                    for (let i = p_data.length - 1; i > 0; i--) {
+                        p_minus_data.push(p_data[i] - p_data[i-1]);
+                    }
+                    let sum = 0;
+                    for( let j = 0; j < p_minus_data.length; j++ ){
+                        sum += p_minus_data[j];
+                    }
+                    let avg = sum / p_minus_data.length;
+                    console.log(avg)
+                    $('.performance').text('avg: '+ avg);
+                    if(avg < 45){
+                        callback(true);
+                    }else{
+                        callback(false);
+                    }
+                }else{
+                    let test = setTimeout(t_f , itv)
+                }
+            }
+            let test = setTimeout(t_f , itv)
+        }
+        this.showNav = function(){
+            $('body').addClass('show_nav');
+        }
+        this.hideNav = function(){
+            $('body').removeClass('show_nav');
+        }
+        this.renderPicList = function(){
+            $('body').addClass('pics_show');
+            let pics = $(this).find('.all_pics').html();
+            let picCount = $(this).find('.all_pics img').length;
+            $('.all_pics_show .pic_list').html(pics);
+            $('.all_pics_show .pic_list img:first-child').addClass('on');
+            $('.all_pics_show .pic_list img:nth-child(2)').addClass('next');
+            $('.now_pic .all').text(picCount);
+            $('.now_pic .now').text('1');
+        }
+        this.hidePicList = function(){
+            $('body').removeClass('pics_show');
+        }
+        this.showNextPic = function(){
+            let nowPic = $('.pic_list img.on');
+            if(nowPic.next().length){
+                nowPic.removeClass('on').addClass('prev');
+                nowPic.next().addClass('on').removeClass('next');
+                nowPic.next().next().addClass('next');
+                nowPic.prev().removeClass('prev');
+                let nowIndex = parseInt($('.now_pic .now').html());
+                $('.now_pic .now').html(nowIndex+1);
+            }
+        }
+        this.showPrevPic = function(){
+            let nowPic = $('.pic_list img.on');
+            if(nowPic.prev().length){
+                nowPic.removeClass('on').addClass('next');
+                nowPic.prev().addClass('on').removeClass('prev');
+                nowPic.prev().prev().addClass('prev');
+                nowPic.next().removeClass('next');
+                let nowIndex = parseInt($('.now_pic .now').html());
+                $('.now_pic .now').html(nowIndex-1);
             }
         }
         this.playSample = function(e){
@@ -129,7 +221,7 @@ $(function () {
             }
             let genre = '';
             if(song_data.genre){
-                for (var i = song_data.genre.length - 1; i >= 0; i--) {
+                for (let i = song_data.genre.length - 1; i >= 0; i--) {
                     genre += '<span class="hashtag">'+song_data.genre[i]+'</span> ';
                 }
             }
@@ -180,7 +272,7 @@ $(function () {
             }
             $('.player .buffered').remove();
             try {
-                for (var i = bl - 1; i >= 0; i--) {
+                for (let i = bl - 1; i >= 0; i--) {
                     let left = audio.buffered.start(i) / global_data.duration * 100;
                     let width = (audio.buffered.end(i) - audio.buffered.start(i)) / global_data.duration * 100;
                     $('.player').append('<div class="buffered" style="left:'+left+'%;width:'+width+'%;"></div>');
@@ -192,6 +284,7 @@ $(function () {
         this.initRoute = function(){
             // init route
             let changeRoute = function (where) {
+                $('body').removeClass('show_nav');
                 $('.nav a').removeClass('active');
                 $('.page').removeClass('active');
                 $('.page_loading').addClass('done');
@@ -203,10 +296,18 @@ $(function () {
                     case 'mywork':
                         $('.nav a[href="#/mywork"]').addClass('active');
                         $('.page[data-page="/mywork"]').addClass('active');
+                        if($('body').hasClass('worklist_rendered')){
+                            break;
+                        }
+                        app.renderWorkList();
                         break;
                     case 'about':
                         $('.nav a[href="#/about"]').addClass('active');
                         $('.page[data-page="/about"]').addClass('active');
+                        break;
+                    case 'friends':
+                        $('.nav a[href="#/friends"]').addClass('active');
+                        $('.page[data-page="/friends"]').addClass('active');
                         break;
                     default:
                         break;
@@ -221,10 +322,14 @@ $(function () {
             let about = function () {
                 changeRoute('about');
             }
+            let friends = function () {
+                changeRoute('friends');
+            }
             let routes = {
                 '/': home,
                 '/mywork': mywork,
-                '/about': about
+                '/about': about,
+                '/friends': friends
             }
 
             let router = Router(routes);
@@ -269,7 +374,7 @@ $(function () {
             $('.platform_list').html('');
             $('.listen_on').show();
             if(data.other_platform.length != 0){
-                for (var i = data.other_platform.length - 1; i >= 0; i--) {
+                for (let i = data.other_platform.length - 1; i >= 0; i--) {
                     $('.platform_list').append('<li><a href="' + data.other_platform[i].href + '" target="_blank"><img src="img/' + data.other_platform[i].name + '.png" alt="' + data.other_platform[i].name + '" class="platform_icon"> ' + data.other_platform[i].name + '</a> </li>');
                 }
             }
@@ -304,6 +409,19 @@ $(function () {
                 app.renderLyric(data.lyric);
             }
             app.updateTime();
+            setTimeout(function(){
+                app.isPerformanceOK(10,function(ok){
+                    if(ok){
+                        performanceOK = true;
+                        console.log('Your current device\'s web performance is OK!')
+                        app.updateBPM();
+                    }else{
+                        performanceOK = false;
+                        console.warn('Considering your current device\'s web performance, the metronome is now disabled!')
+                        $('.bpm_set').hide();
+                    }
+                })
+            }, 400)
         }
         this.renderList = function () {
             for (let i = 0; i < songList.length; i++) {
@@ -313,7 +431,7 @@ $(function () {
                 }
                 $('.queue_list_ul').append('<li data-id="' + songList[i].id + '" class="' + classOn + '">\
                     <div class="artwork">\
-                        <img src="' + songList[i].artwork + '" alt="' + songList[i].name + '">\
+                        <img src="' + songList[i].artwork_s + '" alt="' + songList[i].name + '">\
                         <svg class="playing_this" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#fff">\
                         <path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18c.62-.39.62-1.29 0-1.69L9.54 5.98C8.87 5.55 8 6.03 8 6.82z" /></svg>\
                     </div>\
@@ -321,6 +439,14 @@ $(function () {
                         ' + songList[i].name + '\
                     </div>\
                 </li>')
+            }
+        }
+        this.renderWorkList = function(){
+            for (let i = 0; i < songList.length; i++) {
+                let classOn = '';
+                if (i == 0) {
+                    classOn = 'on'
+                }
                 let genre = songList[i].genre;
                 let tags = '';
                 for (let j = 0; j < genre.length; j++) {
@@ -344,6 +470,7 @@ $(function () {
                     </div>\
                 </li>');
             }
+            $('body').addClass('worklist_rendered')
         }
         this.renderLyric = function (lyric) {
             $('.lyric ul').html('');
@@ -445,6 +572,9 @@ $(function () {
         }
         this.resize = function () {
             winW = $(window).width();
+            if(winW > 800){
+                $('body').removeClass('show_nav');
+            }
         }
         this.start = function (e) {
             e.stopPropagation();
@@ -513,6 +643,24 @@ $(function () {
             if (!audio.paused) {
                 globalAudioPaused = false;
             }
+        }
+
+        this.picStart = function(e){
+            e.stopPropagation();
+            $('.all_pics_show').addClass('on');
+            px = e.pageX || e.originalEvent.changedTouches[0].pageX;
+            pp = $('.all_pics_show').width();
+        }
+        this.picMove = function(e){
+            if($('.all_pics_show').hasClass('on')){
+                let now_px = e.pageX || e.originalEvent.changedTouches[0].pageX;
+                let abs_px =  now_px - px;
+                let percent = abs_px / pp * 10;
+                console.log(abs_px , percent)
+            }
+        }
+        this.picEnd = function(e){
+            $('.all_pics_show').removeClass('on');
         }
         this.play = function (e) {
             $('.sample.on .sample_point').css({'left':0});

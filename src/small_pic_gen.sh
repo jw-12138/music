@@ -1,0 +1,1 @@
+ffmpeg -i cover.jpg -vf scale=300:-1 cover_s.jpg
