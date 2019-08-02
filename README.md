@@ -2,10 +2,6 @@
 
 ### Version description
 
-- 1.0.4 beta - 20190802
-  - 由于大部分设备原因，在没有找到更好的方法更新BPM之前，暂时取消节拍器section
-  - 添加Friends页面
-
 - 1.0.3 beta - 20190731
   - 当音频加载完成后，取消继续加载buffer bar
   - 优化Sample播放形式
