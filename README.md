@@ -3,7 +3,7 @@
 ### Version description
 
 - 1.0.4 beta - 20190802
-  - 由于大部分设备原因，在没有找到更好的方法更新BPM之前，暂时取消节拍器section
+  - 由于大部分设备性能原因，在没有找到更好的方法更新BPM之前，暂时取消节拍器section
   - 添加Friends页面
 
 - 1.0.3 beta - 20190731
