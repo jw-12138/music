@@ -215,7 +215,7 @@ body.show_detail .album_detail .album_detail_wrap{transform: translateX(0);-webk
 @media screen and (max-width: 1000px) {
     .pic_album.able .see_all{opacity: 1;pointer-events: auto;text-indent: 0;}
     body.active{padding-bottom: 140px;}
-    .player{padding:0 20px;background-color: rgba(0,0,0,.7);backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+    .player{padding:0 20px;background-color: #000;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
     body.active .lyric{bottom: 100px;}
     .control{right:20px;}
     .lyric{font-size:11px;position: fixed;width:100%;left:0;bottom:-100px;height:40px;pointer-events: none;background-color: #000;backdrop-filter: blur(20px) saturate(180%);-webkit-backdrop-filter: blur(20px) saturate(180%);}
