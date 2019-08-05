@@ -208,7 +208,7 @@ $(function() {
             if (bl == 0) {
                 return false;
             }
-            let ae = audio.buffered.end(0);
+            let ae = 0;
             try {
                 ae = audio.buffered.end(0);
             } catch (e) {
@@ -487,7 +487,6 @@ $(function() {
                 $('.lyric ul li:nth-child(2)').addClass('ready');
             }
             if(audio.currentTime + 0.15 > parseFloat(keys[currentLyricIndex - 1]) ){
-                console.log(currentLyricIndex)
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:nth-child(' + currentLyricIndex + ')').addClass('on');
                 $('.lyric ul li:nth-child(' + nextLyricIndex + ')').addClass('ready');
