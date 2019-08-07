@@ -14,6 +14,7 @@ $(function() {
         let bufferId = -1;
         let picChangable = true;
         let currentLyricIndex = 1;
+        this.wave_data = false;
         this.init = function() {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -306,6 +307,7 @@ $(function() {
             }, 350)
         }
         this.renderNowPlaying = function(data) {
+            app.wave_data = false;
             playing_id = data.id;
             $('.worklist li').removeClass('on');
             $('.queue_list_ul li').removeClass('on');
@@ -342,8 +344,11 @@ $(function() {
             let durStr = min + ':' + sec;
             audio.src = data.src;
             $('.text_process .all_time').text(durStr);
-            $('.player img.wave').remove();
-            $('.player').append('<img class="wave" src="' + global_data.wave + '">');
+            $('.player .wave').remove();
+            $('.player').append('<div class="wave"></div>');
+            if(global_data.wave_data){
+                app.renderWave(global_data.wave_data);
+            }
             if (data.lyric == '') {
                 nolyric = true;
                 $('.lyric .noLyric').addClass('on').html('Just music, enjoy!');
@@ -357,6 +362,56 @@ $(function() {
             }
             currentLyricIndex = 1;
             app.updateTime();
+        }
+        this.renderWave = function(src){
+            $('.player .wave').html('');
+            let doIt = function(res){
+                // set bar width in px
+                let barWidth = 4;
+                let splitPoint = Math.floor($('body').width() / barWidth);
+                let x = parseInt(res.c0.length / splitPoint);
+                for (let i = 1; i <= splitPoint ; i++) {
+                    let r = x * i;
+                    let sum0 = 0;
+                    let avg0 = 0;
+                    for(let j = 0;j < x; j++){
+                        sum0 += Math.abs(res.c0[r - j]);
+                    }
+                    avg0 = sum0 / x;
+                    console.log(sum0,avg0,x)
+                    let sum1 = 0;
+                    let avg1 = 0;
+                    for(let j = 0;j < x; j++){
+                        sum1 += Math.abs(res.c1[r - j]);
+                    }
+                    avg1 = sum1 / x;
+                    let h1;
+                    let h2;
+                    let h3;
+                    if(isNaN(avg0) || isNaN(avg1)){
+                        break;
+                    }
+                    h1 = Math.abs(avg0) * 80;
+                    h2 = Math.abs(avg1) * 80;
+                    h3 = parseInt(h1 + h2);
+                    $('.player .wave').append('<div class="vs" style="height:'+h3+'px"></div>');
+                }
+            }
+            if(app.wave_data){
+                doIt(app.wave_data);
+            }else{
+                $.ajax({
+                    url:src,
+                    dataType:'json',
+                    success:function(res){
+                        doIt(res);
+                    },
+                    error:function () {
+                        console.log('failed to get wave data')
+                    }
+                })
+            }
+            
         }
         this.renderList = function() {
             for (let i = 0; i < songList.length; i++) {

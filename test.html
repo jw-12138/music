@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-version="1.0.3 beta">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -21,7 +21,6 @@
 <body>
     <button class="play">play</button>
     <audio class="mp3" src="src/addictionToYou/audio.mp3" controls="controls" style="width: 100%;"></audio>
-    <img class="wavePic" src="src/addictionToYou/wave.png" alt="">
     <div class="wave one">
         
     </div>
@@ -42,7 +41,7 @@
 
         function getData() {
             var request = new XMLHttpRequest();
-            request.open('GET', 'src/addictionToYou/audio.mp3', true);
+            request.open('GET', 'src/sparks/audio.mp3', true);
             request.responseType = 'arraybuffer';
             request.onload = function() {
                 var audioData = request.response;
@@ -57,7 +56,8 @@
                     // set bar width in px
                     let barWidth = 3 + 1;
 
-                    let splitPoint = Math.floor($('body').width() / barWidth);
+                    // let splitPoint = Math.floor($('body').width() / barWidth);
+                    let splitPoint = 2000;
                     let x = channelOne.length / splitPoint;
                     let data = {
                         c0:[],
@@ -88,8 +88,8 @@
             }
             request.send();
         }
+        getData();
         $('.play').click(function(){
-            getData();
             $('.wave').html('');
         });
     });

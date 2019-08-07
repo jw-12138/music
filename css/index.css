@@ -79,15 +79,17 @@ body.loadstart .control .loading{display: block;}
 .lyric .noLyric.on{display:flex;}
 .lyric ul{width:100%;}
 .lyric ul li{opacity: 0;pointer-events: none;transition: top .1s ease;text-align: center;position: absolute;width:100%;height:100px;top:10px;left:0;line-height: 100px;text-overflow: ellipsis;overflow: hidden;}
-.lyric ul li.ready{opacity: 0.3;top:20px;}
+.lyric ul li.ready{top:20px;opacity: .2;}
 .lyric ul li.on{opacity: 1;top:0;text-shadow: 0 0 5px rgba(0,0,0,.5);}
 body.active .lyric{bottom: 0;}
 body.active .control{bottom:0;}
-.process_bar{position: absolute;top:0;left:0;width:0%;z-index: 2;background-color: rgba(0,0,0,.4);height: 100px;pointer-events: none;display: felx;justify-content: flex-end;overflow: hidden;align-items: center;border-right:1px solid rgba(255,255,255,.2);}
+.process_bar{position: absolute;top:0;left:0;width:0%;z-index: 2;background-color: rgba(0,0,0,.4);height: 100px;pointer-events: none;display: flex;justify-content: flex-end;overflow: hidden;align-items: center;border-right:1px solid rgba(255,255,255,.2);}
 .process_bar .handle{width:24px;height: 24px;position: absolute;top:50%;margin-top:-12px;right:0;}
 .process_bar.t{transition: width .1s ease;}
 .buffered{height: 100%;top:0;position: absolute;pointer-events: none;width:0;transition: width .2s ease;overflow:hidden;background-color: rgba(255,255,255,.1);}
-img.wave{height:100%;position: absolute;top: 0;left:0;opacity:.2;max-width: none;width: 100%;pointer-events: none;z-index: 1;}
+.player .wave{height:100%;position: absolute;top: 0;left:0;max-width: none;width: 100%;pointer-events: none;z-index: 1;display: flex;align-items: center;}
+.player .wave .vs{border-radius: 5px ;background-color: #d9d9d9;max-height: 80px;margin-right: 1px;width: 3px;opacity: 0.2;min-height: 1px;}
+.player .wave .vs:last-child{margin-right: 0;flex-shrink: 0;}
 .audio{position: absolute;top:-9999999px;width:1px;height:1px;opacity: 0;pointer-events: none;}
 .play_all{margin:30px auto;width:200px;background-color: #fff;border-radius: 50px;height:50px;font-size: 18px;color:#333;line-height: 50px;text-align: center;background:#fff;}
 .worklist{width:440px;margin:40px auto 0;cursor: pointer;padding: 20px;}
