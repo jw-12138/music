@@ -19,6 +19,7 @@ $(function() {
         this.active_step = 0;
         this.init = function() {
             let _this = this;
+            $(window).on('keyup',this.keyEvents);
             $('.player').on('mousedown touchstart', this.start);
             $('.player').on('mousemove touchmove', this.move);
             $('.player').on('mouseup touchend', {
@@ -316,7 +317,7 @@ $(function() {
                 app.renderNowPlaying(songList[position]);
                 let return_this = {};
                 return_this.data = app;
-                globalAudioPaused = true;
+                globalAudioPaused = false;
                 app.play(return_this);
             }, 350)
         }
@@ -717,6 +718,28 @@ $(function() {
         }
         this.showQueue = function() {
             $('body').addClass('show_queue');
+        }
+        this.keyEvents = function(e){
+            let k = e.keyCode;
+            switch (k) {
+                case 37:
+                    // left
+                    if(globalAudioPaused){
+                        break;
+                    }
+                    app.prevSong()
+                    break;
+                case 39:
+                    // right
+                    if(globalAudioPaused){
+                        break;
+                    }
+                    app.nextSong()
+                    break;
+                default:
+                    // statements_def
+                    break;
+            }
         }
     }
     app = new app();
