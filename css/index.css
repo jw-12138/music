@@ -88,8 +88,14 @@ body.active .control{bottom:0;}
 .process_bar.t{transition: width .1s ease;}
 .buffered{height: 100%;top:0;position: absolute;pointer-events: none;width:0;transition: width .2s ease;overflow:hidden;background-color: rgba(255,255,255,.1);}
 .player .wave{height:100%;position: absolute;top: 0;left:0;max-width: none;width: 100%;pointer-events: none;z-index: 1;display: flex;align-items: center;}
-.player .wave .vs{border-radius: 5px ;background-color: #d9d9d9;max-height: 80px;margin-right: 1px;width: 3px;opacity: 0.2;min-height: 1px;}
-.player .wave .vs:last-child{margin-right: 0;flex-shrink: 0;}
+.player .wave .vs{border-radius: 5px ;background-color: #d9d9d9;max-height: 80%;margin-right: 1px;width: 10px;opacity: 0.2;min-height: 1px;max-height: 0;justify-content: center;transition: opacity .2s ease;}
+.player .wave .vs.on{opacity: .5;}
+.ani_h{animation: ani_h .2s ease;animation-fill-mode: forwards;}
+@keyframes ani_h{
+    0%{max-height: 0;}
+    100%{max-height: 100%;}
+}
+.player .wave .vs:last-child{margin-right: 0;}
 .audio{position: absolute;top:-9999999px;width:1px;height:1px;opacity: 0;pointer-events: none;}
 .play_all{margin:30px auto;width:200px;background-color: #fff;border-radius: 50px;height:50px;font-size: 18px;color:#333;line-height: 50px;text-align: center;background:#fff;}
 .worklist{width:440px;margin:40px auto 0;cursor: pointer;padding: 20px;}
@@ -217,7 +223,7 @@ body.show_detail .album_detail .album_detail_wrap{transform: translateX(0);-webk
 @media screen and (max-width: 1000px) {
     .pic_album.able .see_all{opacity: 1;pointer-events: auto;text-indent: 0;}
     body.active{padding-bottom: 140px;}
-    .player{padding:0 20px;background-color: #000;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);}
+    .player{padding:0 20px;background-color: #000;backdrop-filter: saturate(180%) blur(20px);-webkit-backdrop-filter: saturate(180%) blur(20px);border-top:1px solid #111;}
     body.active .lyric{bottom: 100px;}
     .control{right:20px;}
     .lyric{font-size:11px;position: fixed;width:100%;left:0;bottom:-100px;height:40px;pointer-events: none;background-color: #000;backdrop-filter: blur(20px) saturate(180%);-webkit-backdrop-filter: blur(20px) saturate(180%);}

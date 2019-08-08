@@ -14,7 +14,10 @@ $(function() {
         let bufferId = -1;
         let picChangable = true;
         let currentLyricIndex = 1;
+        let sampleId = -1;
         this.wave_data = false;
+        this.wave_steps = 0;
+        this.active_step = 0;
         this.init = function() {
             let _this = this;
             $('.player').on('mousedown touchstart', this.start);
@@ -80,14 +83,25 @@ $(function() {
                 $('body').removeClass('loadstart')
             }
             _this.renderNew();
-
-            sample.ontimeupdate = function() {
-                let sample_p = sample.currentTime / sample.duration * $('.sample.on').outerWidth();
-                $('.sample.on .sample_point').css({ 'left': sample_p + 'px' });
+            sample.onplay = function() {
+                window.clearTimeout(sampleId)
+                sampleId = setTimeout(function() {
+                    _this.updateSampleTime()
+                }, 50)
             }
             sample.onended = function() {
                 $('.sample.on .sample_point').css({ 'left': -1 + 'px' });
                 $('.sample').removeClass('on');
+            }
+        }
+        this.updateSampleTime = function() {
+            sample_p = sample.currentTime / sample.duration * $('.sample.on').outerWidth();
+            $('.sample.on .sample_point').css({ 'left': sample_p + 'px' });
+            if (!sample.paused) {
+                window.clearTimeout(sampleId)
+                sampleId = setTimeout(function() {
+                    app.updateSampleTime()
+                }, 50)
             }
         }
         this.showNav = function() {
@@ -316,9 +330,9 @@ $(function() {
             $('.section_album img.bg').attr({
                 'src': data.artwork
             });
-            $('.player .album img').attr({
-                'src': data.artwork
-            })
+            // $('.player .album img').attr({
+            //     'src': data.artwork
+            // })
             $('.js-front-album').attr({
                 'src': data.artwork,
                 'alt': data.name,
@@ -346,72 +360,61 @@ $(function() {
             $('.text_process .all_time').text(durStr);
             $('.player .wave').remove();
             $('.player').append('<div class="wave"></div>');
-            if(global_data.wave_data){
+            if (global_data.wave_data) {
                 app.renderWave(global_data.wave_data);
             }
-            if (data.lyric == '') {
-                nolyric = true;
-                $('.lyric .noLyric').addClass('on').html('Just music, enjoy!');
-            } else if (data.lyric == 'no') {
-                nolyric = false;
-                $('.lyric .noLyric').addClass('on').html('No lyrics for now');
-            } else {
-                nolyric = false;
-                $('.lyric .noLyric').removeClass('on');
-                app.renderLyric(data.lyric);
-            }
+            app.renderLyric(data.lyric);
             currentLyricIndex = 1;
             app.updateTime();
         }
-        this.renderWave = function(src){
+        this.renderWave = function(src) {
             $('.player .wave').html('');
-            let doIt = function(res){
+            let doIt = function(res) {
                 // set bar width in px
                 let barWidth = 4;
                 let splitPoint = Math.floor($('body').width() / barWidth);
-                let x = parseInt(res.c0.length / splitPoint);
-                for (let i = 1; i <= splitPoint ; i++) {
-                    let r = x * i;
+                app.wave_steps = splitPoint;
+                let _x = parseInt(res.c0.length / splitPoint);
+                for (let i = 1; i <= splitPoint; i++) {
+                    let r = _x * i;
                     let sum0 = 0;
                     let avg0 = 0;
-                    for(let j = 0;j < x; j++){
+                    for (let j = 0; j < _x; j++) {
                         sum0 += Math.abs(res.c0[r - j]);
                     }
-                    avg0 = sum0 / x;
-                    console.log(sum0,avg0,x)
+                    avg0 = sum0 / _x;
                     let sum1 = 0;
                     let avg1 = 0;
-                    for(let j = 0;j < x; j++){
+                    for (let j = 0; j < _x; j++) {
                         sum1 += Math.abs(res.c1[r - j]);
                     }
-                    avg1 = sum1 / x;
+                    avg1 = sum1 / _x;
                     let h1;
                     let h2;
                     let h3;
-                    if(isNaN(avg0) || isNaN(avg1)){
+                    if (isNaN(avg0) || isNaN(avg1)) {
                         break;
                     }
                     h1 = Math.abs(avg0) * 80;
                     h2 = Math.abs(avg1) * 80;
                     h3 = parseInt(h1 + h2);
-                    $('.player .wave').append('<div class="vs" style="height:'+h3+'px"></div>');
+                    $('.player .wave').append('<div class="vs ani_h" style="height:' + h3 + '%;animation-delay:' + i * 2 + 'ms"></div>');
                 }
             }
-            if(app.wave_data){
+            if (app.wave_data) {
                 doIt(app.wave_data);
-            }else{
+            } else {
                 $.ajax({
-                    url:src,
-                    dataType:'json',
-                    success:function(res){
+                    url: src,
+                    dataType: 'json',
+                    success: function(res) {
                         doIt(res);
                     },
-                    error:function () {
+                    error: function() {
                         console.log('failed to get wave data')
                     }
                 })
             }
-            
         }
         this.renderList = function() {
             for (let i = 0; i < songList.length; i++) {
@@ -466,6 +469,7 @@ $(function() {
         }
         this.renderLyric = function(lyric) {
             $('.lyric ul').html('');
+            $('.lyric .noLyric').removeClass('on');
             $.ajax({
                 url: lyric,
                 type: 'get',
@@ -481,7 +485,6 @@ $(function() {
                 },
                 error: function(e) {
                     console.log(e);
-                    nolyric = true;
                     $('.lyric .noLyric').addClass('on').html('Loading error!');
                 }
             })
@@ -513,6 +516,8 @@ $(function() {
             if (!globalAudioPaused) {
                 let t = audio.currentTime;
                 let _p = t / global_data.duration * 100;
+                app.active_step = parseInt(app.wave_steps * (_p / 100)) + 1;
+                $('.wave .vs:nth-child(-n+' + app.active_step + ')').addClass('on');
                 $('.process_bar').css({
                     'width': _p + '%'
                 });
@@ -529,9 +534,7 @@ $(function() {
                 if (audio.currentTime === 0) {
                     $('.text_process .now_time').text('0:00');
                 }
-                if (!nolyric) {
-                    _this.updateLyric();
-                }
+                _this.updateLyric();
             }
         }
         this.updateLyric = function() {
@@ -541,11 +544,11 @@ $(function() {
                 $('.lyric ul li:nth-child(1)').addClass('on');
                 $('.lyric ul li:nth-child(2)').addClass('ready');
             }
-            if(audio.currentTime + 0.15 > parseFloat(keys[currentLyricIndex - 1]) ){
+            if (audio.currentTime + 0.15 > parseFloat(keys[currentLyricIndex - 1])) {
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:nth-child(' + currentLyricIndex + ')').addClass('on');
                 $('.lyric ul li:nth-child(' + nextLyricIndex + ')').addClass('ready');
-                currentLyricIndex  = currentLyricIndex + 1;
+                currentLyricIndex = currentLyricIndex + 1;
             }
         }
         this.resize = function() {
@@ -628,6 +631,8 @@ $(function() {
                     break;
                 }
             }
+            app.active_step = parseInt(app.wave_steps * percent) + 1;
+            $('.wave .vs:nth-child(n+' + app.active_step + ')').removeClass('on');
             currentLyricIndex = tempIndex + 1;
         }
         this.picStart = function(e) {
