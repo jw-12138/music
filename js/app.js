@@ -6,7 +6,6 @@ $(function() {
         let audio = $('.audio')[0];
         let sample = $('.aboutme_sample')[0];
         let global_data = {};
-        let nolyric = false;
         let lyricContent = '';
         let songList = [];
         let playing_id = 0;
@@ -60,7 +59,7 @@ $(function() {
                 $('.lyric ul li').removeClass('on ready');
                 $('.lyric ul li:first-child').addClass('ready');
                 $('title').html('Jacky.Q');
-                app.nextSong();
+                _this.nextSong();
             }
             bufferId = setInterval(function() {
                 _this.updateBuffered();
@@ -95,12 +94,13 @@ $(function() {
             }
         }
         this.updateSampleTime = function() {
+            let _this = app;
             sample_p = sample.currentTime / sample.duration * $('.sample.on').outerWidth();
             $('.sample.on .sample_point').css({ 'left': sample_p + 'px' });
             if (!sample.paused) {
                 window.clearTimeout(sampleId)
                 sampleId = setTimeout(function() {
-                    app.updateSampleTime()
+                    _this.updateSampleTime()
                 }, 50)
             }
         }
