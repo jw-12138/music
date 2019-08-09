@@ -596,7 +596,7 @@ $(function () {
                 if (waveReGenTimer == 1) {
                     let regen_fun = function () {
                         winW = $(window).width();
-                        if (archiveWinW == winW) {
+                        if (archiveWinW != winW) {
                             _this.renderWave();
                             waveReGenTimer = 0;
                             archiveWinW = 0;
