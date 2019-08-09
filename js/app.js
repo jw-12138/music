@@ -248,6 +248,10 @@ $(function() {
         this.initRoute = function() {
             // init route
             let changeRoute = function(where) {
+                app.dismissQueue();
+                app.hideNav();
+                app.hideAlbumDetail();
+                app.hidePicList();
                 $('body').removeClass('show_nav');
                 $('.nav a').removeClass('active');
                 $('.page').removeClass('active');
@@ -314,7 +318,6 @@ $(function() {
             let obj = $(this);
             $('body').removeClass('show_queue');
             $('body').removeClass('show_detail');
-            console.log(obj.hasClass('on'), $('body').hasClass('playing'))
             if (obj.hasClass('on')) {
                 if ($('body').hasClass('playing')) {
                     app.showTips('You are now playing this Song!', 2500, 'one');
