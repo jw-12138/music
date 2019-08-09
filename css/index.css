@@ -828,7 +828,40 @@ body.active .drag_tip img {
     align-items: center;
 }
 
+.togglePlayer {
+    background: rgba(0, 0, 0, .5);
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    border-radius: 10px;
+    z-index: 9999999;
+    box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+    cursor: pointer;
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    transition: bottom .2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.togglePlayer svg {
+    fill: #fff;
+    transform: rotate(0deg);
+    transition: transform .4s ease;
+}
+
+body.active .togglePlayer svg {
+    transform: rotate(180deg)
+}
+
 body.active .queue_btn {
+    bottom: 120px;
+}
+
+body.active .togglePlayer {
     bottom: 120px;
 }
 
@@ -1652,6 +1685,10 @@ body.show_detail .album_detail .album_detail_wrap {
         bottom: 160px;
     }
 
+    body.active .togglePlayer {
+        bottom: 160px;
+    }
+
     .lyric .noLyric {
         height: 40px;
     }
@@ -1890,6 +1927,10 @@ body.show_detail .album_detail .album_detail_wrap {
     }
 
     body.active .queue_btn {
+        bottom: 110px;
+    }
+
+    body.active .togglePlayer {
         bottom: 110px;
     }
 

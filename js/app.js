@@ -25,10 +25,12 @@ $(function () {
             let waveReGenTimer = 0;
             let archiveWinW = winW;
             let regenID;
+            let playCount = 0;
             this.wave_data = false;
             this.wave_steps = 0;
             this.active_step = 0;
             this.init = function () {
+                $('.togglePlayer').off().on('click',this.togglePlayer);
                 $(window).on('keyup', this.keyEvents);
                 $('.player').on('mousedown touchstart', this.start);
                 $('.player').on('mousemove touchmove', this.move);
@@ -106,6 +108,13 @@ $(function () {
                     $('.sample').removeClass('on');
                 };
             };
+            this.togglePlayer = function(){
+                if($('body').hasClass('active')){
+                    $('body').removeClass('active');
+                }else{
+                    $('body').addClass('active');
+                }
+            }
             this.updateSampleTime = function () {
                 sample_p = sample.currentTime / sample.duration * $('.sample.on').outerWidth();
                 $('.sample.on .sample_point').css({
@@ -753,7 +762,10 @@ $(function () {
                 });
                 $('.sample').removeClass('on');
                 sample.pause();
-                $('body').addClass('active');
+                if(playCount < 1){
+                    $('body').addClass('active');
+                }
+                playCount++;
                 $('.now_playing span').html('Now Playing');
                 audio.volume = 1;
                 if (!globalAudioPaused) {

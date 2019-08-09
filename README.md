@@ -4,6 +4,7 @@
 
 - 1.0.6 beta - 20190809
   - fixed some bugs
+  - 添加隐藏播放器按钮
   - 添加Tips view
   - 进一步优化样式
 
