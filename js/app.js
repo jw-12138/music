@@ -814,21 +814,18 @@ $(function () {
                 let k = e.keyCode;
                 switch (k) {
                     case 37:
-                        // left
                         if (globalAudioPaused) {
                             break;
                         }
                         _this.prevSong();
                         break;
                     case 39:
-                        // right
                         if (globalAudioPaused) {
                             break;
                         }
                         _this.nextSong();
                         break;
                     default:
-                        // statements_def
                         break;
                 }
             };
