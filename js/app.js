@@ -23,7 +23,7 @@ $(function () {
             let sample_p = -1;
             let waveReGen = false;
             let waveReGenTimer = 0;
-            let archiveWinW = 0;
+            let archiveWinW = winW;
             let regenID;
             this.wave_data = false;
             this.wave_steps = 0;
