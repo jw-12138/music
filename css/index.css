@@ -370,7 +370,7 @@ footer a {
     padding: 0 40px;
     cursor: w-resize;
     transition: bottom .2s ease;
-    background-color: #000;
+    background-color: rgba(0, 0, 0, .8);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
 }
@@ -567,7 +567,7 @@ body.active .control {
     justify-content: flex-end;
     overflow: hidden;
     align-items: center;
-    border-right: 1px solid #222;
+    border-right: 1px solid #ddd;
 }
 
 .process_bar .handle {
@@ -613,7 +613,7 @@ body.active .control {
     max-height: 80%;
     margin-right: 1px;
     width: 10px;
-    opacity: 0.2;
+    opacity: 0.15;
     min-height: 1px;
     max-height: 0;
     justify-content: center;
@@ -1605,7 +1605,6 @@ body.show_detail .album_detail .album_detail_wrap {
 
     .player {
         padding: 0 20px;
-        background-color: #000;
         backdrop-filter: saturate(180%) blur(20px);
         -webkit-backdrop-filter: saturate(180%) blur(20px);
         border-top: 1px solid #222;
@@ -1627,7 +1626,7 @@ body.show_detail .album_detail .album_detail_wrap {
         bottom: -100px;
         height: 40px;
         pointer-events: none;
-        background-color: #000;
+        background-color: rgba(0, 0, 0, .5);
         backdrop-filter: blur(20px) saturate(180%);
         -webkit-backdrop-filter: blur(20px) saturate(180%);
     }
