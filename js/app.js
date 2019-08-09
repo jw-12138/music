@@ -19,7 +19,7 @@ $(function() {
         this.active_step = 0;
         this.init = function() {
             let _this = this;
-            $(window).on('keyup',this.keyEvents);
+            $(window).on('keyup', this.keyEvents);
             $('.player').on('mousedown touchstart', this.start);
             $('.player').on('mousemove touchmove', this.move);
             $('.player').on('mouseup touchend', {
@@ -190,7 +190,7 @@ $(function() {
                 }
             }
             let sameSong = '';
-            if (playing_id == id && globalAudioPaused) {
+            if (playing_id == id) {
                 sameSong = ' on';
             }
             let intro = '<p class="title">' + song_data.name + '</p>\
@@ -299,11 +299,25 @@ $(function() {
             let router = Router(routes);
             router.init('/');
         }
+        this.showTips = function(text, d, index) {
+            let st1 = setTimeout(function() {
+                $('.tips').addClass('on').append('<div class="tp ' + index + '">' + text + '<div class="pss" style="animation-duration:' + d + 'ms;"></div></div>');
+                let st2 = setTimeout(function() {
+                    $('.tips').find('.tp.' + index).addClass('r');
+                    let st3 = setTimeout(function() {
+                        $('.tips').removeClass('on').find('.tp.' + index).remove();
+                    }, 300)
+                }, d)
+            }, 300)
+        }
         this.setNowPlaying = function() {
+            let obj = $(this);
             $('body').removeClass('show_queue');
             $('body').removeClass('show_detail');
-            if ($(this).hasClass('on')) {
-                if (!globalAudioPaused) {
+            console.log(obj.hasClass('on'), $('body').hasClass('playing'))
+            if (obj.hasClass('on')) {
+                if ($('body').hasClass('playing')) {
+                    app.showTips('You are now playing this Song!', 2500, 'one');
                     return false;
                 }
             }
@@ -311,15 +325,18 @@ $(function() {
             for (let i = 0; i < songList.length; i++) {
                 idList.push(songList[i].id);
             }
-            let this_id = parseInt($(this).attr('data-id'));
+            let this_id = parseInt(obj.attr('data-id'));
             let position = idList.indexOf(this_id);
             setTimeout(function() {
                 app.renderNowPlaying(songList[position]);
-                let return_this = {};
-                return_this.data = app;
-                globalAudioPaused = false;
+                let return_this = {
+                    data: {
+                        this: app
+                    }
+                };
+                globalAudioPaused = true;
                 app.play(return_this);
-            }, 350)
+            }, 300)
         }
         this.renderNowPlaying = function(data) {
             app.wave_data = false;
@@ -671,19 +688,20 @@ $(function() {
             $('.pic_list li.next').css({ 'transform': 'translateX(20%)' });
             $('.pic_list li.prev').css({ 'transform': 'translateX(-20%)' });
         }
-        this.play = function(e) {
+        this.play = function() {
             $('.sample.on .sample_point').css({ 'left': -1 + 'px' });
             $('.sample').removeClass('on');
             sample.pause();
-            let _this = e.data.this;
             $('body').addClass('active');
             $('.now_playing span').html('Now Playing')
             audio.volume = 1;
             if (!globalAudioPaused) {
                 audio.pause();
+                globalAudioPaused = true;
             } else {
                 $('body').addClass('loadstart');
                 audio.play();
+                globalAudioPaused = false;
                 $('title').html(global_data.name);
             }
         }
@@ -695,8 +713,11 @@ $(function() {
             }
             let nextSongData = songList[nextPosition];
             app.renderNowPlaying(nextSongData);
-            let return_this = {};
-            return_this.data = app;
+            let return_this = {
+                data: {
+                    this: app
+                }
+            };
             globalAudioPaused = true;
             app.play(return_this);
         }
@@ -708,8 +729,11 @@ $(function() {
             }
             let prevSongData = songList[prevPosition];
             app.renderNowPlaying(prevSongData);
-            let return_this = {};
-            return_this.data = app;
+            let return_this = {
+                data: {
+                    this: app
+                }
+            };
             globalAudioPaused = true;
             app.play(return_this);
         }
@@ -719,19 +743,19 @@ $(function() {
         this.showQueue = function() {
             $('body').addClass('show_queue');
         }
-        this.keyEvents = function(e){
+        this.keyEvents = function(e) {
             let k = e.keyCode;
             switch (k) {
                 case 37:
                     // left
-                    if(globalAudioPaused){
+                    if (globalAudioPaused) {
                         break;
                     }
                     app.prevSong()
                     break;
                 case 39:
                     // right
-                    if(globalAudioPaused){
+                    if (globalAudioPaused) {
                         break;
                     }
                     app.nextSong()
