@@ -472,9 +472,14 @@ $(function () {
                 }
             };
             this.renderWorkList = function () {
+                let idList = [];
+                for (let i = 0; i < songList.length; i++) {
+                    idList.push(songList[i].id);
+                }
+                let position = idList.indexOf(playing_id);
                 for (let i = 0; i < songList.length; i++) {
                     let classOn = '';
-                    if (i == 0) {
+                    if (i == position) {
                         classOn = 'on';
                     }
                     let genre = songList[i].genre;
