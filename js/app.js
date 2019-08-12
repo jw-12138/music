@@ -415,7 +415,6 @@ $(function () {
             this.renderWave = function (src) {
                 let doIt = function (res) {
                     $('.player .wave').html('');
-                    // set bar width in px
                     let barWidth = 3;
                     let splitPoint = Math.floor($('.player').outerWidth() / barWidth);
                     let inter = 0;
