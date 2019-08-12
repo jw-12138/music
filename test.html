@@ -11,7 +11,7 @@
         .wave.one{align-items: flex-end;}
         .wave.two{align-items: flex-start;}
         .wave.three{height: 200px;}
-        .wave .point{background-color: #666;border-radius: 5px;min-height: 1px;width: 3px;margin-right: 1px;}
+        .wave .point{background-color: #666;border-radius: 5px;min-height: 1px;width: 2px;margin-right: 1px;}
         .wave.one .point{border-radius: 5px 5px 0 0;}
         .wave.two .point{border-radius: 0 0 5px 5px;}
         .wavePic{height: 100px;display: block;width: 100%;}
@@ -20,13 +20,14 @@
 
 <body>
     <button class="play">play</button>
-    <audio class="mp3" src="src/test.mp3" controls="controls" style="width: 100%;"></audio>
-    <div class="wave one">
+    <audio class="mp3" src="src/thecolor/audio.mp3" controls="controls" style="width: 100%;"></audio>
+    <img src="src/thecolor/wave.png" alt="" class="wavePic">
+    <!-- <div class="wave one">
         
     </div>
     <div class="wave two">
         
-    </div>
+    </div> -->
     <div class="wave three">
         
     </div>
@@ -41,7 +42,7 @@
 
         function getData() {
             var request = new XMLHttpRequest();
-            request.open('GET', 'src/test.mp3', true);
+            request.open('GET', 'src/thecolor/audio.mp3', true);
             request.responseType = 'arraybuffer';
             request.onload = function() {
                 var audioData = request.response;
@@ -50,37 +51,52 @@
                     audioRate = decodedData.sampleRate;
                     channelOne = decodedData.getChannelData(0);
                     channelTwo = decodedData.getChannelData(1);
+                    console.log(channelOne);
+                    let i = 1;
 
                     // set bar width in px
-                    let barWidth = 3 + 1;
+                    let barWidth = 3;
 
-                    let splitPoint = Math.floor($('body').width() / barWidth);
-                    // let splitPoint = 2000;
-                    let x = channelOne.length / splitPoint;
+                    let splitPoint = 1000;
+                    // let splitPoint = Math.floor($('body').width() / barWidth);
+                    let _x = channelOne.length / splitPoint;
                     let data = {
                         c0:[],
                         c1:[]
                     };
-                    for (let i = 1; i <= splitPoint ; i++) {
-                        let r = parseInt(x * i);
-                        let cr1 = channelOne[r];
-                        let cr2 = channelTwo[r];
+                    let go = function(){
+                        let r = parseInt(_x * i);
+                        let sum0 = 0;
+                        let avg0 = 0;
+                        for (let j = 0; j < _x; j++) {
+                            sum0 += Math.abs(parseFloat(channelOne[r - j]));
+                        }
+                        avg0 = sum0 / _x;
+                        let sum1 = 0;
+                        let avg1 = 0;
+                        for (let j = 0; j < _x; j++) {
+                            sum1 += Math.abs(parseFloat(channelTwo[r - j]));
+                        }
+                        avg1 = sum1 / _x;
                         let h1;
                         let h2;
                         let h3;
-                        if(isNaN(cr1) || isNaN(cr2)){
-                            break;
+                        if (isNaN(avg0) || isNaN(avg1)) {
+                            return false;
                         }
-                        data.c0.push(cr1);
-                        data.c1.push(cr2);
-                        h1 = Math.abs(cr1) * 100;
-                        h2 = Math.abs(cr2) * 100;
-                        h3 = h1 + h2;
-                        $('.wave.one').append('<div class="point" style="height:'+h1+'px"></div>');
-                        $('.wave.two').append('<div class="point" style="height:'+h2+'px"></div>');
+                        data.c0.push(avg0);
+                        data.c1.push(avg1);
+                        h1 = Math.abs(avg0) * 100;
+                        h2 = Math.abs(avg1) * 100;
+                        h3 = parseInt(h1 + h2);
                         $('.wave.three').append('<div class="point" style="height:'+h3+'px"></div>');
+                        i++;
+                        if(i >= splitPoint){
+                            window.clearInterval(g);
+                            console.log(data)
+                        }
                     }
-                    console.log(data)
+                    let g = setInterval(go,1);
                     mp3.play();
                 });
             }
