@@ -1,7 +1,7 @@
 [{
         "id": 20190327,
         "name": "Leave (Jacky.Q Remix)",
-        "src": "src/leave/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/leave/audio.mp3",
         "lyric": "src/leave/lyric.json",
         "duration": 197.83,
         "artwork": "src/leave/cover.jpg",
@@ -21,7 +21,7 @@
     {
         "id": 20190309,
         "name": "Addiction to You (Jacky.Q remix)",
-        "src": "src/addictionToYou/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/addictionToYou/audio.mp3",
         "lyric": "src/addictionToYou/lyric.json",
         "duration": 233.38,
         "artwork": "src/addictionToYou/cover.jpg",
@@ -44,7 +44,7 @@
     {
         "id": 20181228,
         "name": "Journey to the West (Jacky.Q remix)",
-        "src": "src/journeyToTheWest/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/journeyToTheWest/audio.mp3",
         "lyric": "src/journeyToTheWest/lyric.json",
         "duration": 229.49,
         "artwork": "src/journeyToTheWest/cover.jpg",
@@ -64,7 +64,7 @@
     {
         "id": 20181013,
         "name": "Save My Heart (Jacky.Q remix)",
-        "src": "src/saveMyHeart/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/saveMyHeart/audio.mp3",
         "lyric": "src/saveMyHeart/lyric.json",
         "duration": 210.57,
         "artwork": "src/saveMyHeart/cover.jpg",
@@ -84,7 +84,7 @@
     {
         "id": 20180515,
         "name": "Sparks (Jacky.Q remix)",
-        "src": "src/sparks/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/sparks/audio.mp3",
         "lyric": "src/sparks/lyric.json",
         "duration": 265.85,
         "artwork": "src/sparks/cover.jpg",
@@ -104,7 +104,7 @@
     {
         "id": 20180412,
         "name": "The Color ft.Marcia Bane (Original Mix)",
-        "src": "src/theColor/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/theColor/audio.mp3",
         "lyric": "src/theColor/lyric.json",
         "duration": 186.46,
         "artwork": "src/theColor/cover.jpg",
@@ -124,7 +124,7 @@
     {
         "id": 20171109,
         "name": "Lover ft.Tiya Manson (Original Mix)",
-        "src": "src/lover/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/lover/audio.mp3",
         "lyric": "src/lover/lyric.json",
         "duration": 244.51,
         "artwork": "src/lover/cover.jpg",
@@ -144,7 +144,7 @@
     {
         "id": 20170915,
         "name": "Someone ft.DaddyLu (VIP Remix)",
-        "src": "src/someone/audio2.mp3",
+        "src": "https://jacky97.top/d/m/src/someone/audio2.mp3",
         "lyric": "src/someone/lyric2.json",
         "duration": 310.15,
         "artwork": "src/someone/cover.jpg",
@@ -161,7 +161,7 @@
     {
         "id": 20170824,
         "name": "Someone ft.DaddyLu (Original Mix)",
-        "src": "src/someone/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/someone/audio.mp3",
         "lyric": "src/someone/lyric.json",
         "duration": 268.56,
         "artwork": "src/someone/cover.jpg",
@@ -178,7 +178,7 @@
     {
         "id": 20170802,
         "name": "Don't You Give Up ft.Tiya Manson (Original Mix)",
-        "src": "src/dontYouGiveUp/audio.mp3",
+        "src": "https://jacky97.top/d/m/src/dontYouGiveUp/audio.mp3",
         "lyric": "src/dontYouGiveUp/lyric.json",
         "duration": 261.69,
         "artwork": "src/dontYouGiveUp/cover.jpg",
