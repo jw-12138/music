@@ -30,7 +30,7 @@ $(function () {
             this.wave_steps = 0;
             this.active_step = 0;
             this.init = function () {
-                $('.togglePlayer').off().on('click',this.togglePlayer);
+                $('.togglePlayer').off().on('click', this.togglePlayer);
                 $(window).on('keyup', this.keyEvents);
                 $('.player').on('mousedown touchstart', this.start);
                 $('.player').on('mousemove touchmove', this.move);
@@ -108,10 +108,10 @@ $(function () {
                     $('.sample').removeClass('on');
                 };
             };
-            this.togglePlayer = function(){
-                if($('body').hasClass('active')){
+            this.togglePlayer = function () {
+                if ($('body').hasClass('active')) {
                     $('body').removeClass('active');
-                }else{
+                } else {
                     $('body').addClass('active');
                 }
             }
@@ -415,12 +415,15 @@ $(function () {
             this.renderWave = function (src) {
                 let doIt = function (res) {
                     $('.player .wave').html('');
-                    let barWidth = 3;
+                    let barWidth = 2;
                     let splitPoint = Math.floor($('.player').outerWidth() / barWidth);
+                    if(splitPoint > res.c0.length){
+                        splitPoint = 1000;
+                    }
                     let inter = 0;
                     _this.wave_steps = splitPoint;
                     let _x = res.c0.length / splitPoint;
-                    let go = function(){
+                    let go = function () {
                         let r = parseInt(_x * inter);
                         let sum0 = 0;
                         let avg0 = 0;
@@ -440,7 +443,7 @@ $(function () {
                         if (isNaN(avg0)) {
                             avg0 = 0;
                         }
-                        if(isNaN(avg1)){
+                        if (isNaN(avg1)) {
                             avg1 = 0;
                         }
                         h1 = Math.abs(avg0) * 80;
@@ -448,11 +451,11 @@ $(function () {
                         h3 = parseInt(h1 + h2);
                         $('.player .wave').append(`<div class="vs ani_h" style="height:${h3}%;"></div>`);
                         inter++;
-                        if(inter >= splitPoint){
+                        if (inter >= splitPoint) {
                             window.clearInterval(goFor);
                         }
                     }
-                    let goFor = setInterval(go,1);
+                    let goFor = setInterval(go, 1);
                 };
                 if (_this.wave_data) {
                     doIt(_this.wave_data);
@@ -770,7 +773,7 @@ $(function () {
                 });
                 $('.sample').removeClass('on');
                 sample.pause();
-                if(playCount < 1){
+                if (playCount < 1) {
                     $('body').addClass('active');
                 }
                 playCount++;

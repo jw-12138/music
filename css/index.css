@@ -89,7 +89,7 @@ body.active .control{bottom:0}
 .process_bar.t{transition:width .1s ease}
 .buffered{height:100%;top:0;position:absolute;pointer-events:none;width:0;transition:width .2s ease;overflow:hidden;background-color:rgba(255,255,255,.1)}
 .player .wave{height:100%;position:absolute;top:0;left:0;max-width:none;width:100%;pointer-events:none;z-index:1;display:flex;align-items:center}
-.player .wave .vs{border-radius:5px;background-color:#d9d9d9;max-height:80%;width:2px;margin-right:1px;opacity:.15;min-height:1px;max-height:0;transition:opacity .2s ease}
+.player .wave .vs{background-color:#d9d9d9;max-height:80%;width:1px;margin-right:1px;opacity:.15;min-height:1px;max-height:0;transition:opacity .2s ease}
 .player .wave .vs.on{opacity:.5}
 .ani_h{animation:ani_h .2s ease;animation-fill-mode:forwards}
 @keyframes ani_h{
