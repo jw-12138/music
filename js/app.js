@@ -415,7 +415,7 @@ $(function () {
             this.renderWave = function (src) {
                 let doIt = function (res) {
                     $('.player .wave').html('');
-                    let barWidth = 2;
+                    let barWidth = 4;
                     let splitPoint = Math.floor($('.player').outerWidth() / barWidth);
                     if(splitPoint > res.c0.length){
                         splitPoint = 1000;
