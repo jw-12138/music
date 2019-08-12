@@ -611,12 +611,11 @@ body.active .control {
     border-radius: 5px;
     background-color: #d9d9d9;
     max-height: 80%;
+    width: 2px;
     margin-right: 1px;
-    width: 10px;
     opacity: 0.15;
     min-height: 1px;
     max-height: 0;
-    justify-content: center;
     transition: opacity .2s ease;
 }
 

@@ -416,12 +416,13 @@ $(function () {
                 let doIt = function (res) {
                     $('.player .wave').html('');
                     // set bar width in px
-                    let barWidth = 4;
-                    let splitPoint = Math.floor($('body').width() / barWidth);
+                    let barWidth = 3;
+                    let splitPoint = Math.floor($('.player').outerWidth() / barWidth);
+                    let inter = 0;
                     _this.wave_steps = splitPoint;
-                    let _x = parseInt(res.c0.length / splitPoint);
-                    for (let i = 1; i <= splitPoint; i++) {
-                        let r = _x * i;
+                    let _x = res.c0.length / splitPoint;
+                    let go = function(){
+                        let r = parseInt(_x * inter);
                         let sum0 = 0;
                         let avg0 = 0;
                         for (let j = 0; j < _x; j++) {
@@ -437,14 +438,22 @@ $(function () {
                         let h1;
                         let h2;
                         let h3;
-                        if (isNaN(avg0) || isNaN(avg1)) {
-                            break;
+                        if (isNaN(avg0)) {
+                            avg0 = 0;
+                        }
+                        if(isNaN(avg1)){
+                            avg1 = 0;
                         }
                         h1 = Math.abs(avg0) * 80;
                         h2 = Math.abs(avg1) * 80;
                         h3 = parseInt(h1 + h2);
-                        $('.player .wave').append(`<div class="vs ani_h" style="height:${h3}%;animation-delay:${i * 2}ms"></div>`);
+                        $('.player .wave').append(`<div class="vs ani_h" style="height:${h3}%;"></div>`);
+                        inter++;
+                        if(inter >= splitPoint){
+                            window.clearInterval(goFor);
+                        }
                     }
+                    let goFor = setInterval(go,1);
                 };
                 if (_this.wave_data) {
                     doIt(_this.wave_data);
