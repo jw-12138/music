@@ -22,6 +22,7 @@ $(function () {
             let sampleId = -1;
             let sample_p = -1;
             let waveReGen = false;
+            let renderWaveID = 0;
             let waveReGenTimer = 0;
             let archiveWinW = winW;
             let regenID;
@@ -413,6 +414,9 @@ $(function () {
                 _this.updateTime();
             };
             this.renderWave = function (src) {
+                try {
+                    window.clearInterval(renderWaveID);
+                } catch (e) { }
                 let doIt = function (res) {
                     $('.player .wave').html('');
                     let barWidth = 4;
@@ -452,10 +456,10 @@ $(function () {
                         $('.player .wave').append(`<div class="vs ani_h" style="height:${h3}%;"></div>`);
                         inter++;
                         if (inter >= splitPoint) {
-                            window.clearInterval(goFor);
+                            window.clearInterval(renderWaveID);
                         }
                     }
-                    let goFor = setInterval(go, 1);
+                    renderWaveID = setInterval(go, 1);
                 };
                 if (_this.wave_data) {
                     doIt(_this.wave_data);
