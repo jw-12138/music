@@ -22,7 +22,7 @@ $(function () {
             let sampleId = -1;
             let sample_p = -1;
             let waveReGen = false;
-            let renderWaveID = 0;
+            let renderWaveID;
             let waveReGenTimer = 0;
             let archiveWinW = winW;
             let regenID;
