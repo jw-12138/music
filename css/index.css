@@ -7,7 +7,7 @@ a{text-decoration:none;color:#333}
 fieldset,img{border:0;vertical-align:middle;max-width:100%}
 button,input,select,textarea{font-size:100%}
 table{border-collapse:collapse;border-spacing:0}
-html{font-size:1em;font-family:'Catamaran','Microsoft Yahei UI',sans-serif;height:100%}
+html{font-size:1em;font-family:'Google Sans','Microsoft Yahei UI',sans-serif;height:100%}
 input[type="button"],input[type="submit"],input[type="reset"]{-webkit-appearance:none}
 input,img{outline:0}
 img,svg{border:0;vertical-align:middle}
