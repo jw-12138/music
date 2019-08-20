@@ -152,6 +152,8 @@ body.active .togglePlayer{bottom:120px}
 .friends_wrap p a.normal_a{display:inline}
 .friends_wrap img{width:100%;margin:10px 0}
 .friends_wrap img.pic_icon{height:18px;width:auto;margin:0;display:inline-block;margin-left:5px}
+.friends_tag{margin-top:10px;}
+.friends_tag span{display: inline-block;padding:3px 10px;border-radius: 40px;background: rgba(255,255,255,.5);color:#fff;line-height: 1;margin-right:3px;}
 .queue_wrap{background-color:rgba(0,0,0,.8);width:100%;height:100%;position:fixed;top:0;left:0;pointer-events:none;transition:opacity .2s ease;opacity:0;z-index:10000000}
 .queue_list{width:280px;position:absolute;right:-280px;top:0;height:100%;background-color:#000;box-shadow:0 0 30px rgba(0,0,0,.5);transition:right .2s ease;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);overflow-x:hidden}
 .queue_list ul.queue_list_ul{height:calc(100% - 100px);overflow:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch}
