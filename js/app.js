@@ -91,8 +91,7 @@ $(function () {
                     globalAudioPaused = false;
                     $('title').html(global_data.name);
                 };
-                audio.ontimeupdate = function () {
-                    _this.updateTime();
+                audio.ontimeupdate = function () {                    
                     $('body').removeClass('loadstart');
                 };
                 _this.renderNew();
@@ -108,6 +107,7 @@ $(function () {
                     });
                     $('.sample').removeClass('on');
                 };
+                let updateTimeID = setInterval(_this.updateTime, 100)
             };
             this.togglePlayer = function () {
                 if ($('body').hasClass('active')) {
@@ -411,7 +411,6 @@ $(function () {
                 }
                 _this.renderLyric(data.lyric);
                 currentLyricIndex = 1;
-                _this.updateTime();
             };
             this.renderWave = function (src) {
                 try {
@@ -579,7 +578,7 @@ $(function () {
             this.updateTime = function () {
                 if (!globalAudioPaused) {
                     let t = audio.currentTime;
-                    let _p = t / global_data.duration * 100;
+                    let _p = (t+0.75) / global_data.duration * 100;
                     _this.active_step = parseInt(_this.wave_steps * (_p / 100)) + 1;
                     $('.wave .vs:nth-child(-n+' + _this.active_step + ')').addClass('on');
                     $('.process_bar').css({
@@ -688,11 +687,11 @@ $(function () {
                 $('.text_process').removeClass('on');
                 $('.control').removeClass('disabled');
                 $('.player').removeClass('on');
+                $('.process_bar').addClass('t');
                 if (!globalAudioPaused) {
                     return false;
                 }
                 e.stopPropagation();
-                $('.process_bar').addClass('t');
                 p = $('.process_bar').width();
                 let percent = p / $('.player').outerWidth();
                 $('.process_bar').css({
