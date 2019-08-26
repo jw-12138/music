@@ -109,7 +109,7 @@ body.active .drag_tip img{animation:img_tip 2s ease-in-out 1.3s}
 .player .wave .vs:last-child{margin-right:0}
 .audio{position:absolute;top:-9999999px;width:1px;height:1px;opacity:0;pointer-events:none}
 .play_all{margin:30px auto;width:200px;background-color:#fff;border-radius:50px;height:50px;font-size:18px;color:#333;line-height:50px;text-align:center;background:#fff}
-.worklist{width:440px;margin:40px auto 0;cursor:pointer;padding:20px}
+.worklist{width:440px;margin:40px auto 0;cursor:pointer;padding:20px;margin-top:0;}
 .worklist li{width:100%;margin-bottom:30px;position:relative}
 .worklist li:last-child{margin-bottom:0}
 .worklist li img{width:100%;border-radius:10px;transition:filter .2s ease}
@@ -200,12 +200,12 @@ body.pics_show .all_pics_show{opacity:1;pointer-events:auto}
 .no_songs{display:flex;justify-content:center;align-items:center;color:#fff;font-size:14px;flex-wrap:wrap;height:calc(100% - 100px);line-height:calc(100% - 100px);flex-flow:wrap}
 .no_songs br{content:'\A';display:contents;white-space:pre}
 .no_songs a{color:#fff;text-decoration:underline}
-.worklist li.on .current_playing{opacity:1}
+.worklist li.on .current_playing{opacity:1;display: flex;}
 .page_loading{position:relative;height:400px;pointer-events:none;overflow:hidden}
-.page_loading .current_playing{opacity:1}
+.page_loading .current_playing{opacity:1;display: flex;}
 .page_loading.done{height:0}
 .page_loading.done .current_playing{opacity:0}
-.current_playing{position:absolute;top:50%;left:50%;display:flex;justify-content:space-between;align-items:center;z-index:333;height:60px;width:100px;margin-left:-50px;margin-top:-30px;opacity:0}
+.current_playing{position:absolute;top:50%;left:50%;display:flex;justify-content:space-between;align-items:center;z-index:333;height:60px;width:100px;margin-left:-50px;margin-top:-30px;opacity:0;display: none;}
 .current_playing .fragment{animation:onPlaying 1s ease infinite;animation-delay:0ms;width:14px;height:30px;background:#fff;box-shadow:0 0 15px rgba(0,0,0,.2);border-radius:3px}
 .current_playing .fragment:nth-child(2){animation-delay:200ms}
 .current_playing .fragment:nth-child(3){animation-delay:400ms}
@@ -236,6 +236,8 @@ body.show_detail .album_detail .album_detail_wrap{transform:translateX(0);-webki
 .tips .tp{margin-bottom:10px;transform:translateX(100%);width:100%;padding:10px;color:#fff;background-color:#000;box-shadow:0 0 15px rgba(0,0,0,.5);border-radius:5px 0 0 5px;animation:tp .3s ease;animation-fill-mode:forwards;opacity:0;font-size:14px;position:relative;overflow:hidden}
 .tips .tp .pss{height:2px;position:absolute;bottom:0;left:0;background-color:#fff;animation:pss linear}
 .tips .tp.r{animation:tpr .3s ease;animation-fill-mode:forwards}
+.nav .icon{display:none;}
+.nav .icon svg{width:24px;height: 24px;vertical-align: middle}
 @keyframes pss{
     0%{width:0}
     100%{width:100%}
@@ -268,6 +270,9 @@ body.show_detail .album_detail .album_detail_wrap{transform:translateX(0);-webki
 body.show_nav{overflow:hidden}
 body.show_nav .page.active{transform:translateX(50px)}
 body.show_nav header .nav{left:0}
+body.show_nav header .nav .icon{display: inline-block;margin-right:10px;}
+body.show_nav header .nav .icon svg{fill:#fff;}
+body.show_nav header .nav a.active .icon svg{fill:#000;}
 body.show_nav .nav_wrap{opacity:1;pointer-events:auto}
 header .nav{display:block;text-align:center;height:auto;position:absolute;width:280px;height:100%;background-color:#000;top:0;left:-250px;box-shadow:0 0 40px rgba(0,0,0,.8);padding-bottom:100px;overflow-y:auto;transition:left .2s ease;padding-top:20px}
 header .nav a{display:flex;text-align:left;width:100%;height:50px;align-items:center;background-color:#000;border-radius:0 50px 50px 0}
@@ -279,7 +284,7 @@ header .nav a.active:hover{background-color:#fff;color:#000;border-left:none}
 .nav_wrap{background-color:rgba(0,0,0,.8);position:fixed;z-index:999999999;width:100%;height:100%;top:0;left:0;transition:opacity .2s ease;pointer-events:none;opacity:0}
 .friends_wrap{width:100%}
 .worklist li:hover .cover_block img{filter:brightness(1) grayscale(0)}
-.worklist{width:440px}
+.worklist{width:440px;margin-top:0;}
 .worklist li{width:100%}
 .worklist li .workname .song_title{transform:translateY(0px);margin-bottom:0}
 .worklist li .workname{position:static;text-align:center;opacity:1;z-index:999;pointer-events:auto;transform:translateY(0px)}

@@ -31,6 +31,12 @@ $(function () {
             this.wave_steps = 0;
             this.active_step = 0;
             this.init = function () {
+                window.onbeforeunload = function(e){
+                    if(!globalAudioPaused){
+                        e.preventDefault();
+                        e.returnValue = 'This action will stop the audio, are you sure to keep going?';
+                    }
+                }
                 $('.togglePlayer').off().on('click', this.togglePlayer);
                 $(window).on('keyup', this.keyEvents);
                 $('.player').on('mousedown touchstart', this.start);
