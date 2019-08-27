@@ -38,8 +38,8 @@ header .nav{height:40px;display:flex;justify-content:center;align-items:center;-
 .section_title{display:flex;height:60px;justify-content:center;align-items:center;margin-bottom:30px;margin-top:20px}
 .section_title span{display:block;font-size:30px;color:#fff;height:60px;line-height:60px}
 .section_album{display:flex;position:relative;justify-content:center;flex-wrap:wrap}
-.bg{position:fixed;width:100%;filter:blur(20px) brightness(0.4) saturate(200%);transform:scale(2);-ms-transform:scale(2);top:50%;margin-top:-50%;-ms-filter:blur(20px) brightness(0.4) saturate(150%);pointer-events: none;z-index: 0;animation: fadein 1s ease forwards;}
-.bg.t{animation:fadeout 1s ease forwards;z-index:1;}
+.bg{position:fixed;width:100%;filter:blur(20px) brightness(0.4) saturate(200%);transform:scale(2);-ms-transform:scale(2);top:50%;margin-top:-50%;-ms-filter:blur(20px) brightness(0.4) saturate(150%);pointer-events: none;z-index: 1;animation: fadein 1s ease forwards;}
+.bg.t{animation:fadeout 1s ease forwards;z-index:2;}
 @keyframes fadein{
     0%{opacity:0}
     100%{opacity:1}
