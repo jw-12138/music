@@ -2,6 +2,9 @@
 
 ### Version description
 
+- 1.0.7 - 20190827
+  - 优化样式
+
 - 1.0.6 beta - 20190809
   - fixed some bugs
   - 添加隐藏播放器按钮

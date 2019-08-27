@@ -113,7 +113,7 @@ $(function () {
                     });
                     $('.sample').removeClass('on');
                 };
-                let updateTimeID = setInterval(_this.updateTime, 100)
+                let updateTimeID = setInterval(_this.updateTime, 150)
             };
             this.togglePlayer = function () {
                 if ($('body').hasClass('active')) {
@@ -375,12 +375,12 @@ $(function () {
                 $('.queue_list_ul li').removeClass('on');
                 $('.player .buffered').remove();
                 $('li[data-id="' + playing_id + '"]').addClass('on');
-                $('.section_album img.bg').attr({
-                    'src': data.artwork
-                });
-                // $('.player .album img').attr({
-                //     'src': data.artwork
-                // })
+                let prev_bg = $('.bg');
+                prev_bg.addClass('t');
+                $('body').append('<img src="'+data.artwork+'" alt="'+data.name+'" class="bg">');
+                let bgid = setTimeout(function(){
+                    prev_bg.remove();
+                },1000);
                 $('.js-front-album').attr({
                     'src': data.artwork,
                     'alt': data.name,
