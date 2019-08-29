@@ -90,6 +90,7 @@ $(function () {
                 $('.all_pics_show ._wrap .close').off().on('click', this.hidePicList);
                 $('.pic_album.able').off().on('click', this.renderPicList);
                 $('.switch').off().on('click',this.changeLanguage);
+                $('.section_like').off().on('click',this.likeThisSong);
                 audio.volume = 0;
                 audio.onended = function () {
                     $('body').removeClass('playing');
@@ -426,6 +427,59 @@ $(function () {
                     $('body').append(`<img class="preload" src="${songList[i].artwork}"/>`);
                 }
             }
+            this.likeThisSong = function(){
+                let obj = $(this);
+                if(obj.hasClass('on')){
+                    return false;
+                }
+                if(!playing_id || playing_id == 0){
+                    return false;
+                }
+                $.ajax({
+                    url:'https://api.jacky97.top/',
+                    data:{
+                        playing_id: playing_id,
+                        action:'like'
+                    },
+                    dataType:'json',
+                    beforeSend:function(){
+                        obj.addClass('on');
+                    },
+                    success:function(res){
+                        obj.removeClass('on');
+                        if(res.success){
+                            $('.section_like span.num').text(res.like_count);
+                        }else{
+                            console.log('500');
+                        }
+                    },
+                    error:function(e){
+                        console.log(e);
+                        obj.removeClass('on');
+                    }
+                });
+            }
+            this.getLike = function (id) {
+                $('.section_like span.num').text('-');
+                $.ajax({
+                    url:'https://api.jacky97.top/',
+                    data:{
+                        playing_id:id,
+                        action:'get_like'
+                    },
+                    dataType:'json',
+                    success:function(res){
+                        if(res.success){
+                            $('.section_like span.num').text(res.like_count);
+                        }else{
+                            console.log('500');
+                        }
+                    },
+                    error:function(e){
+                        console.log(e);
+                    }
+                });
+            }
             this.renderNowPlaying = function (data) {
                 let idList = [];
                 for (let i = 0; i < songList.length; i++) {
@@ -441,6 +495,7 @@ $(function () {
                     });
                 }
                 playing_id = data.id;
+                _this.getLike(playing_id);
                 $('.worklist li').removeClass('on');
                 $('.queue_list_ul li').removeClass('on');
                 $('li[data-id="' + playing_id + '"]').addClass('on');
