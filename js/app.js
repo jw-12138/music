@@ -23,8 +23,8 @@ $(function () {
             let sample_p = -1;
             let playCount = 0;
             this.init = function () {
-                window.onbeforeunload = function(e){
-                    if(!globalAudioPaused){
+                window.onbeforeunload = function (e) {
+                    if (!globalAudioPaused) {
                         e.preventDefault();
                         e.returnValue = 'This action will stop the audio, are you sure to keep going?';
                     }
@@ -89,10 +89,9 @@ $(function () {
                     globalAudioPaused = false;
                     $('title').html(global_data.name);
                 };
-                audio.ontimeupdate = function () {                    
+                audio.ontimeupdate = function () {
                     $('body').removeClass('loadstart');
                 };
-                _this.renderNew();
                 sample.onplay = function () {
                     window.clearTimeout(sampleId);
                     sampleId = setTimeout(function () {
@@ -106,6 +105,7 @@ $(function () {
                     $('.sample').removeClass('on');
                 };
                 let updateTimeID = setInterval(_this.updateTime, 150)
+                _this.renderNew();
             };
             this.togglePlayer = function () {
                 if ($('body').hasClass('active')) {
@@ -361,11 +361,11 @@ $(function () {
                 }, 300);
             };
             this.renderNowPlaying = function (data) {
-                if(!$('.player .wave').length){
+                if (!$('.player .wave').length) {
                     $('.player').append(`<img src="${data.wave}" class="wave">`);
-                }else{
+                } else {
                     $('.player .wave').attr({
-                        src:data.wave
+                        src: data.wave
                     });
                 }
                 playing_id = data.id;
@@ -375,10 +375,10 @@ $(function () {
                 $('li[data-id="' + playing_id + '"]').addClass('on');
                 let prev_bg = $('.bg');
                 prev_bg.addClass('t');
-                $('body').append('<img src="'+data.artwork+'" alt="'+data.name+'" class="bg">');
-                let bgid = setTimeout(function(){
+                $('body').append('<img src="' + data.artwork + '" alt="' + data.name + '" class="bg">');
+                let bgid = setTimeout(function () {
                     prev_bg.remove();
-                },1000);
+                }, 1000);
                 $('.js-front-album').attr({
                     'src': data.artwork,
                     'alt': data.name,
