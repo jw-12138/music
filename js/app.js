@@ -442,8 +442,8 @@ $(function () {
                 }
                 playing_id = data.id;
                 $('.worklist li').removeClass('on');
-                $('li[data-id="' + playing_id + '"]').addClass('on');
                 $('.queue_list_ul li').removeClass('on');
+                $('li[data-id="' + playing_id + '"]').addClass('on');
                 $('.player .buffered').remove();
                 let prev_bg = $('.bg');
                 prev_bg.addClass('t');
