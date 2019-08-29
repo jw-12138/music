@@ -35,7 +35,7 @@ header .nav{height:40px;display:flex;justify-content:center;align-items:center;-
 .nav a.active{background:#fff;color:#333}
 .page{pointer-events:none;display:none;position: relative;z-index: 6;}
 .page.active{pointer-events:auto;display:block;transition:transform .2s ease;transform:translateX(0)}
-.section_title{display:flex;height:60px;justify-content:center;align-items:center;margin-bottom:30px;margin-top:20px}
+.section_title{display:flex;height:60px;justify-content:center;align-items:center;margin-bottom:15px;margin-top:20px}
 .section_title span{display:block;font-size:30px;color:#fff;height:60px;line-height:60px}
 .section_album{display:flex;position:relative;justify-content:center;flex-wrap:wrap}
 .bg{position:fixed;width:100%;filter:blur(100px) brightness(0.4) saturate(200%);-webkit-filter:blur(100px) brightness(0.4) saturate(200%);transform:scale(2);-ms-transform:scale(2);top:50%;margin-top:-50%;-ms-filter:blur(100px) brightness(0.4) saturate(150%);pointer-events: none;z-index: 1;animation: fadein 1s ease forwards;}
