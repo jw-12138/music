@@ -492,7 +492,7 @@ $(function () {
             this.renderNew = function (InData) {
                 $('.now_playing span').html('Brand New Single');
                 $.ajax({
-                    url: 'src/data.json',
+                    url: 'https://jacky97.top/d/m/src/data.json',
                     type: 'get',
                     dataType: 'json',
                     success: function (res) {
