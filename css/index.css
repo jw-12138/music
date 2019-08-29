@@ -58,7 +58,7 @@ header .nav{height:40px;display:flex;justify-content:center;align-items:center;-
 body .play_section:hover .ctrl-icon.play{opacity:1}
 body.playing .play_section:hover .ctrl-icon.pause{opacity:1}
 body.playing .play_section .ctrl-icon.play{opacity:0}
-.listen_on{width:100%;text-align:center;text-align:center;font-size:18px;position:relative;z-index:3;padding:20px;color:#aaa;line-height:30px}
+.listen_on{width:100%;text-align:center;text-align:center;font-size:12px;position:relative;z-index:3;padding:20px;color:#aaa;line-height:30px}
 .listen_on a{color:#fff;font-size:15px}
 .listen_on svg{width:16px;height:16px}
 .platform_icon{height:18px;width:auto;margin-left:5px}
