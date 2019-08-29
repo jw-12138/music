@@ -21,15 +21,7 @@ $(function () {
             let currentLyricIndex = 1;
             let sampleId = -1;
             let sample_p = -1;
-            let waveReGen = false;
-            let renderWaveID;
-            let waveReGenTimer = 0;
-            let archiveWinW = winW;
-            let regenID;
             let playCount = 0;
-            this.wave_data = false;
-            this.wave_steps = 0;
-            this.active_step = 0;
             this.init = function () {
                 window.onbeforeunload = function(e){
                     if(!globalAudioPaused){
@@ -369,7 +361,13 @@ $(function () {
                 }, 300);
             };
             this.renderNowPlaying = function (data) {
-                _this.wave_data = false;
+                if(!$('.player .wave').length){
+                    $('.player').append(`<img src="${data.wave}" class="wave">`);
+                }else{
+                    $('.player .wave').attr({
+                        src:data.wave
+                    });
+                }
                 playing_id = data.id;
                 $('.worklist li').removeClass('on');
                 $('.queue_list_ul li').removeClass('on');
@@ -410,77 +408,8 @@ $(function () {
                 let durStr = min + ':' + sec;
                 audio.src = data.src;
                 $('.text_process .all_time').text(durStr);
-                $('.player .wave').remove();
-                $('.player').append('<div class="wave"></div>');
-                if (global_data.wave_data) {
-                    _this.renderWave(global_data.wave_data);
-                }
                 _this.renderLyric(data.lyric);
                 currentLyricIndex = 1;
-            };
-            this.renderWave = function (src) {
-                try {
-                    window.clearInterval(renderWaveID);
-                } catch (e) { }
-                let doIt = function (res) {
-                    $('.player .wave').html('');
-                    let barWidth = 4;
-                    let splitPoint = Math.floor($('.player').outerWidth() / barWidth);
-                    if(splitPoint > res.c0.length){
-                        splitPoint = 1000;
-                    }
-                    let inter = 0;
-                    _this.wave_steps = splitPoint;
-                    let _x = res.c0.length / splitPoint;
-                    let go = function () {
-                        let r = parseInt(_x * inter);
-                        let sum0 = 0;
-                        let avg0 = 0;
-                        for (let j = 0; j < _x; j++) {
-                            sum0 += Math.abs(res.c0[r - j]);
-                        }
-                        avg0 = sum0 / _x;
-                        let sum1 = 0;
-                        let avg1 = 0;
-                        for (let j = 0; j < _x; j++) {
-                            sum1 += Math.abs(res.c1[r - j]);
-                        }
-                        avg1 = sum1 / _x;
-                        let h1;
-                        let h2;
-                        let h3;
-                        if (isNaN(avg0)) {
-                            avg0 = 0;
-                        }
-                        if (isNaN(avg1)) {
-                            avg1 = 0;
-                        }
-                        h1 = Math.abs(avg0) * 80;
-                        h2 = Math.abs(avg1) * 80;
-                        h3 = parseInt(h1 + h2);
-                        $('.player .wave').append(`<div class="vs ani_h" style="height:${h3}%;"></div>`);
-                        inter++;
-                        if (inter >= splitPoint) {
-                            window.clearInterval(renderWaveID);
-                        }
-                    }
-                    renderWaveID = setInterval(go, 1);
-                };
-                if (_this.wave_data) {
-                    doIt(_this.wave_data);
-                } else {
-                    $.ajax({
-                        url: src,
-                        dataType: 'json',
-                        success: function (res) {
-                            doIt(res);
-                            _this.wave_data = res;
-                        },
-                        error: function () {
-                            console.log('failed to get wave data');
-                        }
-                    });
-                }
             };
             this.renderList = function () {
                 for (let i = 0; i < songList.length; i++) {
@@ -584,9 +513,7 @@ $(function () {
             this.updateTime = function () {
                 if (!globalAudioPaused) {
                     let t = audio.currentTime;
-                    let _p = (t+0.75) / global_data.duration * 100;
-                    _this.active_step = parseInt(_this.wave_steps * (_p / 100)) + 1;
-                    $('.wave .vs:nth-child(-n+' + _this.active_step + ')').addClass('on');
+                    let _p = t / global_data.duration * 100;
                     $('.process_bar').css({
                         'width': _p + '%'
                     });
@@ -621,25 +548,7 @@ $(function () {
                     currentLyricIndex = currentLyricIndex + 1;
                 }
             }
-            this.resizeDetect = function () {
-                if (waveReGenTimer == 1) {
-                    let regen_fun = function () {
-                        winW = $(window).width();
-                        if (archiveWinW != winW) {
-                            _this.renderWave();
-                            waveReGenTimer = 0;
-                            archiveWinW = 0;
-                            window.clearInterval(regenID);
-                        }
-                        archiveWinW = winW;
-                    }
-                    regenID = setInterval(regen_fun, 500);
-                }
-            }
             this.resize = function () {
-                _this.resizeDetect();
-                waveReGenTimer++;
-
                 winW = $(window).width();
                 if (winW > 800) {
                     $('body').removeClass('show_nav');
@@ -724,8 +633,6 @@ $(function () {
                         break;
                     }
                 }
-                _this.active_step = parseInt(_this.wave_steps * percent) + 1;
-                $('.wave .vs:nth-child(n+' + _this.active_step + ')').removeClass('on');
                 currentLyricIndex = tempIndex + 1;
             };
             this.picStart = function (e) {
