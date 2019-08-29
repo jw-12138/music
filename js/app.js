@@ -146,7 +146,7 @@ $(function () {
                 }
                 db.setItem('lan',lan);
                 _this.renderLanguage(language_set[lan]);
-                _this.showTips(`${lan_pack.switch_success}!`, 2500);
+                _this.showTips(`${lan_pack.switch_success}`, 2500);
             }
             this.renderLanguage = function(data,call){
                 lan_pack = data;
@@ -393,7 +393,7 @@ $(function () {
                 $('body').removeClass('show_detail');
                 if (obj.hasClass('on')) {
                     if ($('body').hasClass('playing')) {
-                        _this.showTips(`${lan_pack.playing_this_song}!`, 2500);
+                        _this.showTips(`${lan_pack.playing_this_song}`, 2500);
                         return false;
                     }
                 }
