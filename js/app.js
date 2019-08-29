@@ -30,11 +30,11 @@ $(function () {
             this.load = function(){
                 if(db.getItem('lan')){
                     lan = db.getItem('lan');
-                    if(lan == 'cn'){
-                        $('.switch').addClass('en');
-                    }else{
-                        $('.switch').addClass('cn');
-                    }
+                }
+                if(lan == 'cn'){
+                    $('.switch').addClass('en');
+                }else{
+                    $('.switch').addClass('cn');
                 }
                 $.ajax({
                     url:'https://jacky97.top/d/m/src/lan.json',
