@@ -1,6 +1,11 @@
 $(function () {
     class app {
         constructor() {
+            let tips_count = 0;
+            let lan = 'en';
+            let lan_pack = {};
+            let language_set = {};
+            let renderLanguageID;
             let db = window.localStorage;
             let _this = this;
             let x;
@@ -22,6 +27,29 @@ $(function () {
             let sampleId = -1;
             let sample_p = -1;
             let playCount = 0;
+            this.load = function(){
+                if(db.getItem('lan')){
+                    lan = db.getItem('lan');
+                    if(lan == 'cn'){
+                        $('.switch').addClass('en');
+                    }else{
+                        $('.switch').addClass('cn');
+                    }
+                }
+                $.ajax({
+                    url:'https://jacky97.top/d/m/src/lan.json',
+                    dataType:'json',
+                    success:function(res){
+                        language_set = res;
+                        _this.renderLanguage(language_set[lan],function(){
+                            _this.init();
+                        });
+                    },
+                    error:function(e){
+                        alert('Failed to load language pack, refresh this page and try again?');
+                    }
+                })
+            }
             this.init = function () {
                 window.onbeforeunload = function (e) {
                     if (!globalAudioPaused) {
@@ -61,6 +89,7 @@ $(function () {
                 }, this.playSample);
                 $('.all_pics_show ._wrap .close').off().on('click', this.hidePicList);
                 $('.pic_album.able').off().on('click', this.renderPicList);
+                $('.switch').off().on('click',this.changeLanguage);
                 audio.volume = 0;
                 audio.onended = function () {
                     $('body').removeClass('playing');
@@ -75,14 +104,15 @@ $(function () {
                 };
                 bufferId = setInterval(function () {
                     _this.updateBuffered();
-                }, 200);
+                    _this.updateTime();
+                }, 150);
                 audio.onwaiting = function () {
                     $('body').addClass('loadstart');
                 };
                 audio.onpause = function () {
                     $('body').removeClass('playing');
                     globalAudioPaused = true;
-                    $('title').html('Paused - ' + global_data.name);
+                    $('title').html(`${lan_pack.paused} - ${global_data.name}` );
                 };
                 audio.onplay = function () {
                     $('body').addClass('playing');
@@ -104,9 +134,31 @@ $(function () {
                     });
                     $('.sample').removeClass('on');
                 };
-                let updateTimeID = setInterval(_this.updateTime, 150)
                 _this.renderNew();
             };
+            this.changeLanguage = function(){
+                if($(this).hasClass('cn')){
+                    lan = 'cn';
+                    $(this).removeClass(lan).addClass('en');
+                }else{
+                    lan = 'en';
+                    $(this).removeClass(lan).addClass('cn');
+                }
+                db.setItem('lan',lan);
+                _this.renderLanguage(language_set[lan]);
+                _this.showTips(`${lan_pack.switch_success}!`, 2500);
+            }
+            this.renderLanguage = function(data,call){
+                lan_pack = data;
+                let l = $('span.lan').length;
+                for (let i = 0; i < l; i++) {
+                    let lanindex = $($('span.lan')[i]).attr('data-lanindex');
+                    $($('span.lan')[i]).html(lan_pack[lanindex]);
+                }
+                if(call){
+                    call();
+                }
+            }
             this.togglePlayer = function () {
                 if ($('body').hasClass('active')) {
                     $('body').removeClass('active');
@@ -202,7 +254,7 @@ $(function () {
                 let song_data = songList[pos];
                 let description = '';
                 if (song_data.album_description) {
-                    description = `<p>Description: ${song_data.album_description}</p>`;
+                    description = `<p>${lan_pack.description}: ${song_data.album_description}</p>`;
                 }
                 let genre = '';
                 if (song_data.genre) {
@@ -215,15 +267,15 @@ $(function () {
                     sameSong = ' on';
                 }
                 let intro = `<p class="title">${song_data.name}</p>
-                    <p>Released on: ${song_data.release_date}</p>
-                    <p>Genre: ${genre}</p>
+                    <p>${lan_pack.released_on}: ${song_data.release_date}</p>
+                    <p>${lan_pack.genre}: ${genre}</p>
                     <p>BPM: ${song_data.bpm}</p>
                     ${description}
                 <p>
                 <span class="detail_play_btn ${sameSong}" data-id="${song_data.id}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M10.8 15.9l4.67-3.5c.27-.2.27-.6 0-.8L10.8 8.1c-.33-.25-.8-.01-.8.4v7c0 .41.47.65.8.4zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                    </svg> Play This Song</span>
+                    </svg> ${lan_pack.play_this_song}</span>
                 </p>`;
                 $('.album_detail_wrap .introduction').html(intro);
                 $('.album_detail_wrap .detail_artwork img').attr({
@@ -322,16 +374,18 @@ $(function () {
                 let router = Router(routes);
                 router.init('/');
             };
-            this.showTips = function (text, d, index) {
+            this.showTips = function (text, d) {
+                let index = 'tips_' + tips_count;
                 let st1 = setTimeout(function () {
-                    $('.tips').addClass('on').append(`<div class="tp ${index}">${text}<div class="pss" style="animation-duration:${d}ms;"></div></div>`);
+                    $('.tips').append(`<div class="tp ${index}">${text}<div class="pss" style="animation-duration:${d}ms;"></div></div>`);
                     let st2 = setTimeout(function () {
                         $('.tips').find('.tp.' + index).addClass('r');
                         let st3 = setTimeout(function () {
-                            $('.tips').removeClass('on').find('.tp.' + index).remove();
-                        }, 300);
+                            $('.tips').find('.tp.' + index).remove();
+                        }, 600);
                     }, d);
-                }, 300);
+                }, 400);
+                tips_count++;
             };
             this.setNowPlaying = function () {
                 let obj = $(this);
@@ -339,7 +393,7 @@ $(function () {
                 $('body').removeClass('show_detail');
                 if (obj.hasClass('on')) {
                     if ($('body').hasClass('playing')) {
-                        _this.showTips('You are now playing this Song!', 2500, 'one');
+                        _this.showTips(`${lan_pack.playing_this_song}!`, 2500);
                         return false;
                     }
                 }
@@ -360,7 +414,25 @@ $(function () {
                     _this.play(return_this);
                 }, 300);
             };
+            this.preloadNextAlbum = function(i){
+                if(i >= songList.length){
+                    i = 0;
+                }
+                if($('.preload').length){
+                    $('.preload').attr({
+                        src: songList[i].artwork
+                    });
+                }else{
+                    $('body').append(`<img class="preload" src="${songList[i].artwork}"/>`);
+                }
+            }
             this.renderNowPlaying = function (data) {
+                let idList = [];
+                for (let i = 0; i < songList.length; i++) {
+                    idList.push(songList[i].id);
+                }
+                let position = idList.indexOf(data.id);
+                _this.preloadNextAlbum(position + 1);
                 if (!$('.player .wave').length) {
                     $('.player').append(`<img src="${data.wave}" class="wave">`);
                 } else {
@@ -370,20 +442,22 @@ $(function () {
                 }
                 playing_id = data.id;
                 $('.worklist li').removeClass('on');
+                $('li[data-id="' + playing_id + '"]').addClass('on');
                 $('.queue_list_ul li').removeClass('on');
                 $('.player .buffered').remove();
-                $('li[data-id="' + playing_id + '"]').addClass('on');
                 let prev_bg = $('.bg');
                 prev_bg.addClass('t');
                 $('body').append('<img src="' + data.artwork + '" alt="' + data.name + '" class="bg">');
                 let bgid = setTimeout(function () {
                     prev_bg.remove();
+                    prevAlbum.remove();
                 }, 1000);
-                $('.js-front-album').attr({
-                    'src': data.artwork,
-                    'alt': data.name,
-                    'title': data.name
-                });
+                $('.play_section').append(`<img class="js-front-album front-album" src="${data.artwork}" alt="${data.name}" title="${data.name}">`);
+                let prevAlbum = $('.js-front-album:not(:last-child)');
+                prevAlbum.addClass('t').removeClass('o');
+                $('.js-front-album').on('load',function(){
+                    $('.js-front-album').addClass('o');
+                })
                 $('.platform_list').html('');
                 $('.listen_on').show();
                 if (data.other_platform.length != 0) {
@@ -459,7 +533,7 @@ $(function () {
                             </div>
                             <div class="workname">
                                 <div class="song_title">${songList[i].name}</div>
-                                Released on: ${songList[i].release_date}<br>
+                                ${lan_pack.released_on}: ${songList[i].release_date}<br>
                                 ${tags}
                             </div>
                         </div>
@@ -485,12 +559,12 @@ $(function () {
                     },
                     error: function (e) {
                         console.log(e);
-                        $('.lyric .noLyric').addClass('on').html('Loading error!');
+                        $('.lyric .noLyric').addClass('on').html(lan_pack.loading_err);
                     }
                 });
             };
             this.renderNew = function (InData) {
-                $('.now_playing span').html('Brand New Single');
+                $('.now_playing span').html(lan_pack.new_single);
                 $.ajax({
                     url: 'https://jacky97.top/d/m/src/data.json',
                     type: 'get',
@@ -548,11 +622,19 @@ $(function () {
                     currentLyricIndex = currentLyricIndex + 1;
                 }
             }
+            this.set_playSectionWidth = function(){
+                let w = winW;
+                if(winW > 800){
+                    w = 800;
+                }
+                $('.play_section').css({'height':w+'px'});
+            };
             this.resize = function () {
                 winW = $(window).width();
                 if (winW > 800) {
                     $('body').removeClass('show_nav');
                 }
+                _this.set_playSectionWidth();
             };
             this.start = function (e) {
                 e.stopPropagation();
@@ -693,7 +775,7 @@ $(function () {
                     $('body').addClass('active');
                 }
                 playCount++;
-                $('.now_playing span').html('Now Playing');
+                $('.now_playing span').html(lan_pack.now_playing);
                 audio.volume = 1;
                 if (!globalAudioPaused) {
                     audio.pause();
@@ -776,5 +858,5 @@ $(function () {
         }
     }
     app = new app();
-    app.init();
+    app.load();
 });
