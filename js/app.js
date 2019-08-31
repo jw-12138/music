@@ -588,7 +588,7 @@ $(function () {
                             </div>
                             <div class="workname">
                                 <div class="song_title">${songList[i].name}</div>
-                                ${lan_pack.released_on}: ${songList[i].release_date}<br>
+                                <span class="lan" data-lanindex="released_on">${lan_pack.released_on}</span>: ${songList[i].release_date}<br>
                                 ${tags}
                             </div>
                         </div>
@@ -830,7 +830,8 @@ $(function () {
                     $('body').addClass('active');
                 }
                 playCount++;
-                $('.now_playing span').html(lan_pack.now_playing);
+                $('.now_playing span.lan').html(lan_pack.now_playing);
+                $('.now_playing span.lan').attr({'data-lanindex':'now_playing'});
                 audio.volume = 1;
                 if (!globalAudioPaused) {
                     audio.pause();
