@@ -621,7 +621,7 @@ $(function () {
             this.renderNew = function (InData) {
                 $('.now_playing span').html(lan_pack.new_single);
                 $.ajax({
-                    url: 'https://jacky97.top/d/m/src/data.json',
+                    url: 'src/data.json',
                     type: 'get',
                     dataType: 'json',
                     success: function (res) {
