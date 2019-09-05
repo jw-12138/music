@@ -27,36 +27,36 @@ $(function () {
             let sampleId = -1;
             let sample_p = -1;
             let playCount = 0;
-            this.load = function(){
-                if(db.getItem('lan')){
+            this.load = function () {
+                if (db.getItem('lan')) {
                     lan = db.getItem('lan');
                 }
-                if(lan == 'cn'){
+                if (lan == 'cn') {
                     $('.switch').addClass('en');
-                }else{
+                } else {
                     $('.switch').addClass('cn');
                 }
                 $.ajax({
-                    url:'https://jacky97.top/d/m/src/lan.json',
-                    dataType:'json',
-                    success:function(res){
+                    url: 'https://jacky97.top/d/m/src/lan.json',
+                    dataType: 'json',
+                    success: function (res) {
                         language_set = res;
-                        _this.renderLanguage(language_set[lan],function(){
+                        _this.renderLanguage(language_set[lan], function () {
                             _this.init();
                         });
                     },
-                    error:function(e){
+                    error: function (e) {
                         alert('Failed to load language pack, refresh this page and try again?');
                     }
-                })
-            }
+                });
+            };
             this.init = function () {
                 window.onbeforeunload = function (e) {
                     if (!globalAudioPaused) {
                         e.preventDefault();
                         e.returnValue = 'This action will stop the audio, are you sure to keep going?';
                     }
-                }
+                };
                 $('.togglePlayer').off().on('click', this.togglePlayer);
                 $(window).on('keyup', this.keyEvents);
                 $('.player').on('mousedown touchstart', this.start);
@@ -89,8 +89,8 @@ $(function () {
                 }, this.playSample);
                 $('.all_pics_show ._wrap .close').off().on('click', this.hidePicList);
                 $('.pic_album.able').off().on('click', this.renderPicList);
-                $('.switch').off().on('click',this.changeLanguage);
-                $('.section_like').off().on('click',this.likeThisSong);
+                $('.switch').off().on('click', this.changeLanguage);
+                $('.section_like').off().on('click', this.likeThisSong);
                 audio.volume = 0;
                 audio.onended = function () {
                     $('body').removeClass('playing');
@@ -113,7 +113,8 @@ $(function () {
                 audio.onpause = function () {
                     $('body').removeClass('playing');
                     globalAudioPaused = true;
-                    $('title').html(`${lan_pack.paused} - ${global_data.name}` );
+                    $('title').html(`${lan_pack.paused} - ${global_data.name}`);
+                    $('.wave.t').css({'animation-play-state':'paused'});
                 };
                 audio.onplay = function () {
                     $('body').addClass('playing');
@@ -137,36 +138,36 @@ $(function () {
                 };
                 _this.renderNew();
             };
-            this.changeLanguage = function(){
-                if($(this).hasClass('cn')){
+            this.changeLanguage = function () {
+                if ($(this).hasClass('cn')) {
                     lan = 'cn';
                     $(this).removeClass(lan).addClass('en');
-                }else{
+                } else {
                     lan = 'en';
                     $(this).removeClass(lan).addClass('cn');
                 }
-                db.setItem('lan',lan);
+                db.setItem('lan', lan);
                 _this.renderLanguage(language_set[lan]);
                 _this.showTips(`${lan_pack.switch_success}`, 2500);
-            }
-            this.renderLanguage = function(data,call){
+            };
+            this.renderLanguage = function (data, call) {
                 lan_pack = data;
                 let l = $('span.lan').length;
                 for (let i = 0; i < l; i++) {
                     let lanindex = $($('span.lan')[i]).attr('data-lanindex');
                     $($('span.lan')[i]).html(lan_pack[lanindex]);
                 }
-                if(call){
+                if (call) {
                     call();
                 }
-            }
+            };
             this.togglePlayer = function () {
                 if ($('body').hasClass('active')) {
                     $('body').removeClass('active');
                 } else {
                     $('body').addClass('active');
                 }
-            }
+            };
             this.updateSampleTime = function () {
                 sample_p = sample.currentTime / sample.duration * $('.sample.on').outerWidth();
                 $('.sample.on .sample_point').css({
@@ -390,14 +391,14 @@ $(function () {
             };
             this.setNowPlaying = function () {
                 let obj = $(this);
-                $('body').removeClass('show_queue');
-                $('body').removeClass('show_detail');
                 if (obj.hasClass('on')) {
                     if ($('body').hasClass('playing')) {
                         _this.showTips(`${lan_pack.playing_this_song}`, 2500);
                         return false;
                     }
                 }
+                $('body').removeClass('show_queue');
+                $('body').removeClass('show_detail');
                 let idList = [];
                 for (let i = 0; i < songList.length; i++) {
                     idList.push(songList[i].id);
@@ -415,71 +416,71 @@ $(function () {
                     _this.play(return_this);
                 }, 300);
             };
-            this.preloadNextAlbum = function(i){
-                if(i >= songList.length){
+            this.preloadNextAlbum = function (i) {
+                if (i >= songList.length) {
                     i = 0;
                 }
-                if($('.preload').length){
+                if ($('.preload').length) {
                     $('.preload').attr({
                         src: songList[i].artwork
                     });
-                }else{
+                } else {
                     $('body').append(`<img class="preload" src="${songList[i].artwork}"/>`);
                 }
-            }
-            this.likeThisSong = function(){
+            };
+            this.likeThisSong = function () {
                 let obj = $(this);
-                if(obj.hasClass('on')){
+                if (obj.hasClass('on')) {
                     return false;
                 }
-                if(!playing_id || playing_id == 0){
+                if (!playing_id || playing_id == 0) {
                     return false;
                 }
                 $.ajax({
-                    url:'https://api.jacky97.top/',
-                    data:{
+                    url: 'https://api.jacky97.top/',
+                    data: {
                         playing_id: playing_id,
-                        action:'like'
+                        action: 'like'
                     },
-                    dataType:'json',
-                    beforeSend:function(){
+                    dataType: 'json',
+                    beforeSend: function () {
                         obj.addClass('on');
                     },
-                    success:function(res){
+                    success: function (res) {
                         obj.removeClass('on');
-                        if(res.success){
+                        if (res.success) {
                             $('.section_like span.num').text(res.like_count);
-                        }else{
+                        } else {
                             console.log('500');
                         }
                     },
-                    error:function(e){
+                    error: function (e) {
                         console.log(e);
                         obj.removeClass('on');
                     }
                 });
-            }
+            };
             this.getLike = function (id) {
                 $('.section_like span.num').text('-');
                 $.ajax({
-                    url:'https://api.jacky97.top/',
-                    data:{
-                        playing_id:id,
-                        action:'get_like'
+                    url: 'https://api.jacky97.top/',
+                    data: {
+                        playing_id: id,
+                        action: 'get_like'
                     },
-                    dataType:'json',
-                    success:function(res){
-                        if(res.success){
+                    dataType: 'json',
+                    success: function (res) {
+                        if (res.success) {
                             $('.section_like span.num').text(res.like_count);
-                        }else{
+                        } else {
                             console.log('500');
                         }
                     },
-                    error:function(e){
+                    error: function (e) {
                         console.log(e);
                     }
                 });
-            }
+            };
             this.renderNowPlaying = function (data) {
                 let idList = [];
                 for (let i = 0; i < songList.length; i++) {
@@ -487,32 +488,23 @@ $(function () {
                 }
                 let position = idList.indexOf(data.id);
                 _this.preloadNextAlbum(position + 1);
-                if (!$('.player .wave').length) {
-                    $('.player').append(`<img src="${data.wave}" class="wave">`);
-                } else {
-                    $('.player .wave').attr({
-                        src: data.wave
-                    });
-                }
+                $('.togglePlayer .wave').remove();
+                $('.togglePlayer').append(`<img src="${data.wave}" class="wave">`);
                 playing_id = data.id;
                 _this.getLike(playing_id);
                 $('.worklist li').removeClass('on');
                 $('.queue_list_ul li').removeClass('on');
                 $('li[data-id="' + playing_id + '"]').addClass('on');
                 $('.player .buffered').remove();
-                let prev_bg = $('.bg');
-                prev_bg.addClass('t');
-                $('body').append('<img src="' + data.artwork + '" alt="' + data.name + '" class="bg">');
                 let bgid = setTimeout(function () {
-                    prev_bg.remove();
                     prevAlbum.remove();
-                }, 1000);
+                }, 500);
                 $('.play_section').append(`<img class="js-front-album front-album" src="${data.artwork}" alt="${data.name}" title="${data.name}">`);
                 let prevAlbum = $('.js-front-album:not(:last-child)');
                 prevAlbum.addClass('t').removeClass('o');
-                $('.js-front-album').on('load',function(){
+                $('.js-front-album').on('load', function () {
                     $('.js-front-album').addClass('o');
-                })
+                });
                 $('.platform_list').html('');
                 $('.listen_on').show();
                 if (data.other_platform.length != 0) {
@@ -661,8 +653,17 @@ $(function () {
                         $('.text_process .now_time').text('0:00');
                     }
                     _this.updateLyric();
+                    _this.updateWave(_p);
                 }
             };
+            this.updateWave = function (_p) {
+                if(globalAudioPaused){
+                    return false;
+                }
+                $('.wave').css({
+                    'left': -(_p / 100 * 3600) + 46 + 'px'
+                });
+            }
             this.updateLyric = function () {
                 let keys = Object.keys(lyricContent);
                 let nextLyricIndex = currentLyricIndex + 1;
@@ -676,13 +677,15 @@ $(function () {
                     $('.lyric ul li:nth-child(' + nextLyricIndex + ')').addClass('ready');
                     currentLyricIndex = currentLyricIndex + 1;
                 }
-            }
-            this.set_playSectionWidth = function(){
+            };
+            this.set_playSectionWidth = function () {
                 let w = winW;
-                if(winW > 800){
+                if (winW > 800) {
                     w = 800;
                 }
-                $('.play_section').css({'height':w+'px'});
+                $('.play_section').css({
+                    'height': w + 'px'
+                });
             };
             this.resize = function () {
                 winW = $(window).width();
@@ -831,7 +834,9 @@ $(function () {
                 }
                 playCount++;
                 $('.now_playing span.lan').html(lan_pack.now_playing);
-                $('.now_playing span.lan').attr({'data-lanindex':'now_playing'});
+                $('.now_playing span.lan').attr({
+                    'data-lanindex': 'now_playing'
+                });
                 audio.volume = 1;
                 if (!globalAudioPaused) {
                     audio.pause();
@@ -840,14 +845,14 @@ $(function () {
                     $('body').addClass('loadstart');
                     audio.play();
                     if (!db.getItem('drag_tip')) {
-                        db.setItem('drag_tip', 'played on this browser!')
+                        db.setItem('drag_tip', 'played on this browser!');
                         let s1_fun = function () {
                             $('.drag_tip').addClass('on');
                             let s2 = setTimeout(s2_fun, 2500);
-                        }
+                        };
                         let s2_fun = function () {
                             $('.drag_tip').removeClass('on');
-                        }
+                        };
                         let s1 = setTimeout(s1_fun, 1000);
                     }
                     globalAudioPaused = false;
