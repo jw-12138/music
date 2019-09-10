@@ -37,7 +37,7 @@ $(function () {
                     $('.switch').addClass('cn');
                 }
                 $.ajax({
-                    url: 'https://jacky97.top/d/m/src/lan.json',
+                    url: 'https://content.jw12138.com/m/src/lan.json',
                     dataType: 'json',
                     success: function (res) {
                         language_set = res;
@@ -437,7 +437,7 @@ $(function () {
                     return false;
                 }
                 $.ajax({
-                    url: 'https://api.jacky97.top/',
+                    url: 'https://api.jw12138.com/',
                     data: {
                         playing_id: playing_id,
                         action: 'like'
@@ -463,7 +463,7 @@ $(function () {
             this.getLike = function (id) {
                 $('.section_like span.num').text('-');
                 $.ajax({
-                    url: 'https://api.jacky97.top/',
+                    url: 'https://api.jw12138.com/',
                     data: {
                         playing_id: id,
                         action: 'get_like'
