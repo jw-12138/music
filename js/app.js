@@ -5,7 +5,6 @@ $(function () {
             let lan = 'en';
             let lan_pack = {};
             let language_set = {};
-            let renderLanguageID;
             let db = window.localStorage;
             let _this = this;
             let x;
