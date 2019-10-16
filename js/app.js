@@ -36,7 +36,7 @@ $(function () {
                     $('.switch').addClass('cn');
                 }
                 $.ajax({
-                    url: 'https://content.jw12138.com/m/src/lan.json',
+                    url: 'https://c.jacky97.top/music/src/lan.json',
                     dataType: 'json',
                     success: function (res) {
                         language_set = res;
