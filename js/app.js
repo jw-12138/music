@@ -436,7 +436,7 @@ $(function () {
                     return false;
                 }
                 $.ajax({
-                    url: 'https://api.jw12138.com/',
+                    url: 'https://api.jacky97.top/',
                     data: {
                         playing_id: playing_id,
                         action: 'like'
@@ -462,7 +462,7 @@ $(function () {
             this.getLike = function (id) {
                 $('.section_like span.num').text('-');
                 $.ajax({
-                    url: 'https://api.jw12138.com',
+                    url: 'https://api.jacky97.top/',
                     data: {
                         playing_id: id,
                         action: 'get_like'
