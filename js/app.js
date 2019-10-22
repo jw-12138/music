@@ -248,11 +248,20 @@ $(function () {
             };
             this.hideAlbumDetail = function () {
                 $('body').removeClass('show_detail');
+                let st = setTimeout(function () {
+                    $('.album_detail_wrap .detail_artwork img').attr({
+                        'src': ''
+                    });
+                    $('.album_detail_wrap .introduction').html('');
+                }, 300)
             };
             this.showAlbumDetail = function () {
                 let id = $(this).attr('data-id');
                 let pos = _this.getSongPosition(id);
                 let song_data = songList[pos];
+                $('.album_detail_wrap .detail_artwork img').attr({
+                    'src': song_data.artwork
+                });
                 let description = '';
                 if (song_data.album_description) {
                     description = `<p>${lan_pack.description}: ${song_data.album_description}</p>`;
@@ -279,9 +288,6 @@ $(function () {
                     </svg> ${lan_pack.play_this_song}</span>
                 </p>`;
                 $('.album_detail_wrap .introduction').html(intro);
-                $('.album_detail_wrap .detail_artwork img').attr({
-                    'src': song_data.artwork
-                });
                 $('body').addClass('show_detail');
             };
             this.getSongPosition = function (id) {
