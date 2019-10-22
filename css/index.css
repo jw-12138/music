@@ -1,5 +1,8 @@
 @charset "utf-8";
-
+@font-face {
+    font-family: 'Google Sans';
+    src: url('https://api.jacky97.top/file/?name=blog/fonts/googleSans.woff2') format('woff2');
+}
 body,
 h1,
 h2,
@@ -81,9 +84,9 @@ table {
 
 html {
     font-size: 1em;
-    font-family: 'Google Sans', 'Noto Sans SC', sans-serif;
+    font-family: 'Google Sans', 'Microsoft Yahei UI', sans-serif;
     height: 100%;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 input[type="button"],
