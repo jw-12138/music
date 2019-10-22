@@ -26,6 +26,7 @@ $(function () {
             let sampleId = -1;
             let sample_p = -1;
             let playCount = 0;
+            let yearLoad = 0;
             this.load = function () {
                 if (db.getItem('lan')) {
                     lan = db.getItem('lan');
@@ -136,7 +137,48 @@ $(function () {
                     $('.sample').removeClass('on');
                 };
                 _this.renderNew();
+                _this.getRealYear();
             };
+            this.getRealYear = function() {
+                $.ajax({
+                    url: 'https://api.jacky97.top/year.php',
+                    beforeSend: function() {
+                        let interval = 0;
+                        window.clearInterval(yearLoad);
+                        yearLoad = setInterval(function() {
+                            if (interval > 5) {
+                                interval = 0;
+                            }
+                            if (interval == 0) {
+                                $('.copy_right_year').text('#===');
+                            }
+                            if (interval == 1) {
+                                $('.copy_right_year').text('=#==');
+                            }
+                            if (interval == 2) {
+                                $('.copy_right_year').text('==#=');
+                            }
+                            if (interval == 3) {
+                                $('.copy_right_year').text('===#');
+                            }
+                            if (interval == 4) {
+                                $('.copy_right_year').text('==#=');
+                            }
+                            if (interval == 5) {
+                                $('.copy_right_year').text('=#==');
+                            }
+                            interval++;
+                        }, 100)
+                    },
+                    success: function(res) {
+                        window.clearInterval(yearLoad);
+                        $('.copy_right_year').text(res);
+                    },
+                    error: function(e) {
+                        _.getRealYear();
+                    }
+                })
+            }
             this.changeLanguage = function () {
                 if ($(this).hasClass('cn')) {
                     lan = 'cn';
