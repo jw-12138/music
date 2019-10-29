@@ -80,7 +80,7 @@ table {
 
 html {
     font-size: 1em;
-    font-family: 'Open Sans', 'Microsoft Yahei UI', sans-serif;
+    font-family: 'Google Sans', 'Microsoft Yahei UI', sans-serif;
     height: 100%;
     font-weight: 400;
 }
@@ -448,7 +448,7 @@ body.active .player {
     margin-left: 10px;
     display: block;
     flex-shrink: 0;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace
+    font-family: "Fira Code"
 }
 
 .text_process.on .now_time {
