@@ -574,7 +574,19 @@ $(function () {
                     sec = '0' + sec;
                 }
                 let durStr = min + ':' + sec;
-                audio.src = data.src;
+                let m3u8_src = data.src.split('.');
+                m3u8_src = m3u8_src[0] + '.m3u8';
+                console.log(m3u8_src);
+                if (Hls.isSupported()) {
+                    let hls = new Hls();
+                    hls.loadSource(m3u8_src);
+                    hls.attachMedia(audio);
+                }
+                else if (audio.canPlayType('application/vnd.apple.mpegurl')) {
+                    audio.src = m3u8_src;
+                }else{
+                    audio.src = data.src;
+                }
                 $('.text_process .all_time').text(durStr);
                 _this.renderLyric(data.lyric);
                 currentLyricIndex = 1;

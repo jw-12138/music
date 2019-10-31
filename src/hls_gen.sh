@@ -1,0 +1,1 @@
+ffmpeg -i audio.mp3 -profile:v baseline -level 3.0 -start_number 0 -hls_time 10 -hls_list_size 0 -f hls audio.m3u8
