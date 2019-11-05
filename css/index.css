@@ -172,6 +172,7 @@ body.active {
 header {
     position: relative;
     z-index: 10;
+    user-select: none;
 }
 
 header .logo {
@@ -191,6 +192,11 @@ header .logo a {
 
 header .logo img {
     height: 60px
+}
+
+header .logo svg{
+    height:40px;
+    fill:#fff;
 }
 
 header .nav {
@@ -421,8 +427,6 @@ footer a {
     cursor: w-resize;
     transition: bottom .2s ease;
     background-color: rgba(0, 0, 0, .8);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%)
 }
 
 body.active .player {
@@ -652,10 +656,8 @@ body.active .control {
     width: 100%;
     pointer-events: none;
     z-index: 1;
-    opacity: .3;
+    opacity: .2;
     width: 3600px;
-    width: 3600px;
-    max-width: 3600px;
     transition: left .15s linear;
 }
 
@@ -850,8 +852,6 @@ body.active .drag_tip img {
     z-index: 9;
     box-shadow: 0 0 15px rgba(0, 0, 0, .3);
     cursor: pointer;
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
     transition: bottom .2s ease;
     display: flex;
     justify-content: center;
@@ -869,8 +869,6 @@ body.active .drag_tip img {
     z-index: 9;
     box-shadow: 0 0 15px rgba(0, 0, 0, .3);
     cursor: pointer;
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
     transition: bottom .2s ease;
     display: flex;
     justify-content: center;
@@ -1081,8 +1079,6 @@ span.sample img {
     background-color: #000;
     box-shadow: 0 0 30px rgba(0, 0, 0, .5);
     transition: right .2s ease;
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
     overflow-x: hidden
 }
 
@@ -1704,8 +1700,6 @@ body.show_detail .album_detail .album_detail_wrap {
 
     .player {
         padding: 0 20px;
-        backdrop-filter: saturate(180%) blur(20px);
-        -webkit-backdrop-filter: saturate(180%) blur(20px);
         border-top: 1px solid #222
     }
 
@@ -1726,8 +1720,6 @@ body.show_detail .album_detail .album_detail_wrap {
         height: 40px;
         pointer-events: none;
         background-color: rgba(0, 0, 0, .5);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%)
     }
 
     .lyric ul li {

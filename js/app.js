@@ -106,7 +106,7 @@ $(function () {
                 bufferId = setInterval(function () {
                     _this.updateBuffered();
                     _this.updateTime();
-                }, 150);
+                }, 200);
                 audio.onwaiting = function () {
                     $('body').addClass('loadstart');
                 };
@@ -433,7 +433,7 @@ $(function () {
                             $('.tips').find('.tp.' + index).remove();
                         }, 600);
                     }, d);
-                }, 400);
+                }, 100);
                 tips_count++;
             };
             this.setNowPlaying = function () {
@@ -576,7 +576,6 @@ $(function () {
                 let durStr = min + ':' + sec;
                 let m3u8_src = data.src.split('.');
                 m3u8_src = m3u8_src[0] + '.m3u8';
-                console.log(m3u8_src);
                 if (Hls.isSupported()) {
                     let hls = new Hls();
                     hls.loadSource(m3u8_src);
