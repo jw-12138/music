@@ -658,6 +658,7 @@ body.active .control {
     z-index: 1;
     opacity: .2;
     width: 3600px;
+    min-width: 3600px;
     transition: left .15s linear;
 }
 
