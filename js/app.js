@@ -556,9 +556,13 @@ $(function () {
                 $('.listen_on').show();
                 if (data.other_platform.length != 0) {
                     for (let i = data.other_platform.length - 1; i >= 0; i--) {
+                        let logo_path = `img/${data.other_platform[i].name}.png`;
+                        if(data.other_platform[i].logo){
+                            logo_path = data.other_platform[i].logo;
+                        }
                         $('.platform_list').append(`<li>
                             <a href="${data.other_platform[i].href}" target="_blank">
-                                <img src="img/${data.other_platform[i].name}.png" alt="${data.other_platform[i].name}" class="platform_icon"> ${data.other_platform[i].name}
+                                <img src="${logo_path}" alt="${data.other_platform[i].name}" class="platform_icon"> ${data.other_platform[i].name}
                             </a>
                         </li>`);
                     }

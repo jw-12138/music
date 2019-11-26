@@ -355,7 +355,10 @@ header .nav {
     margin-left: -100px;
     opacity: 0;
     cursor: pointer;
-    transition: opacity .2s ease
+    transition: opacity .2s ease;
+    box-shadow: 0 0 15px rgba(0,0,0,.1);
+    background: rgba(0,0,0,.2);
+    border-radius: 100%;
 }
 
 body .play_section:hover .ctrl-icon.play {
@@ -2136,4 +2139,15 @@ body.show_detail .album_detail .album_detail_wrap {
     height: 10px;
     display: none;
     margin-left: 5px;
+}
+
+.platform_list li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height:42px;
+}
+
+.platform_list li img{
+    vertical-align: middle;
 }
