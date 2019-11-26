@@ -429,7 +429,7 @@ footer a {
     padding: 0 40px;
     cursor: w-resize;
     transition: bottom .2s ease;
-    background-color: rgba(0, 0, 0, .8);
+    background-color: rgba(0, 0, 0, .9);
 }
 
 body.active .player {
@@ -1736,7 +1736,7 @@ body.show_detail .album_detail .album_detail_wrap {
         bottom: -100px;
         height: 40px;
         pointer-events: none;
-        background-color: rgba(0, 0, 0, .5);
+        background-color: rgba(0, 0, 0, .9);
     }
 
     .lyric ul li {
