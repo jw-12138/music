@@ -663,6 +663,19 @@ body.active .control {
     width: 3600px;
     min-width: 3600px;
     transition: left .15s linear;
+    animation: shake 10s linear infinite;
+}
+
+@keyframes shake{
+    0%{
+        transform: translateY(0px)
+    }
+    50%{
+        transform: translateY(-1px)
+    }
+    100%{
+        transform: translateY(0px)
+    }
 }
 
 .ani_h {
