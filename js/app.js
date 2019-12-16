@@ -37,7 +37,7 @@ $(function () {
                     $('.switch').addClass('cn');
                 }
                 $.ajax({
-                    url: 'https://api.jacky97.top/file/?name=music/src/lan.json',
+                    url: 'https://api.jw12138.com/file/?name=music/src/lan.json',
                     dataType: 'json',
                     success: function (res) {
                         language_set = res;
@@ -141,7 +141,7 @@ $(function () {
             };
             this.getRealYear = function() {
                 $.ajax({
-                    url: 'https://api.jacky97.top/year.php',
+                    url: 'https://api.jw12138.com/year.php',
                     beforeSend: function() {
                         let interval = 0;
                         window.clearInterval(yearLoad);
@@ -484,7 +484,7 @@ $(function () {
                     return false;
                 }
                 $.ajax({
-                    url: 'https://api.jacky97.top/',
+                    url: 'https://api.jw12138.com/',
                     data: {
                         playing_id: playing_id,
                         action: 'like'
@@ -510,7 +510,7 @@ $(function () {
             this.getLike = function (id) {
                 $('.section_like span.num').text('-');
                 $.ajax({
-                    url: 'https://api.jacky97.top/',
+                    url: 'https://api.jw12138.com/',
                     data: {
                         playing_id: id,
                         action: 'get_like'
