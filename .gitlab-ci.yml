@@ -1,0 +1,6 @@
+pages:
+  stage: deploy
+  script:
+    - python3 /e/wwwroot/jacky97.top/pull.py "music" "github"
+  only:
+    - master
