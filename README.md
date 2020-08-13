@@ -1,5 +1,3 @@
-<audio src="/src/addictionToYou/audio.mp3" controls autoplay>
-
 # Music Homepage of Jacky.Q
 
 ### Version description
