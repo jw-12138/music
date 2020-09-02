@@ -37,7 +37,7 @@ $(function () {
                     $('.switch').addClass('cn');
                 }
                 $.ajax({
-                    url: 'https://api.jacky97.top/file/?name=music/src/lan.json',
+                    url: 'src/lan.json',
                     dataType: 'json',
                     success: function (res) {
                         language_set = res;
@@ -90,7 +90,7 @@ $(function () {
                 $('.all_pics_show ._wrap .close').off().on('click', this.hidePicList);
                 $('.pic_album.able').off().on('click', this.renderPicList);
                 $('.switch').off().on('click', this.changeLanguage);
-                $('.section_like').off().on('click', this.likeThisSong);
+                // $('.section_like').off().on('click', this.likeThisSong);
                 audio.volume = 0;
                 audio.onended = function () {
                     $('body').removeClass('playing');
@@ -137,7 +137,7 @@ $(function () {
                     $('.sample').removeClass('on');
                 };
                 _this.renderNew();
-                _this.getRealYear();
+                // _this.getRealYear();
             };
             this.getRealYear = function() {
                 $.ajax({
@@ -175,7 +175,7 @@ $(function () {
                         $('.copy_right_year').text(res);
                     },
                     error: function(e) {
-                        _.getRealYear();
+                        // _.getRealYear();
                     }
                 })
             }
@@ -538,7 +538,7 @@ $(function () {
                 $('.togglePlayer .wave').remove();
                 $('.togglePlayer').append(`<img src="${data.wave}" class="wave">`);
                 playing_id = data.id;
-                _this.getLike(playing_id);
+                // _this.getLike(playing_id);
                 $('.worklist li').removeClass('on');
                 $('.queue_list_ul li').removeClass('on');
                 $('li[data-id="' + playing_id + '"]').addClass('on');
